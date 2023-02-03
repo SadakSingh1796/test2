@@ -1,0 +1,153 @@
+<div data-aos="fade-left" data-aos-duration="1000" *ngIf="!_showOfficial">
+    <div>
+        <div class="topBar">
+            <div class="headings">
+                <div class="flex-sb mb-2">
+                    <h4 class="p-green"><b>List of Added Officials</b></h4>
+                    <div class="flex-vc p-links" (click)="importMembers()">
+                        <p class="p-combine"><b>Import Member</b></p>
+                        <i class="i-small ms-2 p-combine pi pi-download"></i>
+                    </div>
+                </div>
+                <div class="flex-sb mb-2">
+                    <p class="p-green p-small">View a list of all officials added to the event or import more members
+                    </p>
+                    <div class="flex-vc p-links">
+                        <button [disabled]="true" class="btn btn_green w-auto m-0" (click)="openAddOfficial()">
+                            <i class="pi pi-plus-circle i-small me-2"></i>
+                            Add Member
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="centerElement">
+                <div class="common-tabView mt-4">
+                    <p-tabView (onChange)="tabSelection($event)">
+                        <p-tabPanel header="List of officials">
+                            <div class="top-searchbar mt-3 mb-3">
+                                <div class="flex-vc">
+                                    <div class="innerBox-input">
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input type="text" [(ngModel)]="_searchByPlayerName" pInputText
+                                                (keydown)="searchPlayer()" (keypress)="searchPlayer()"
+                                                (keyup)="searchPlayer()" placeholder="Search..." />
+                                        </span>
+                                    </div>
+                                    <!-- <div class="innerBox p-links">
+                                        <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+                                    </div>
+                                    <div class="innerBox p-links">
+                                        <i class="pi pi-align-right i-small p-secondary-dark"></i>
+                                    </div> -->
+                                </div>
+                            </div>
+                            <div class="innerContent">
+                                <table class="officialTable table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">State</th>
+                                            <th scope="col">Email</th>
+                                            <!-- <th scope="col">Payment</th> -->
+                                            <th scope="col">Verification</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of _officialList">
+                                            <th scope="row"><b>{{data.name}}</b></th>
+                                            <td>{{data.role}}</td>
+                                            <td>{{data.state}}</td>
+                                            <td>{{data.email}}</td>
+                                            <!-- <td
+                                                [style.color]="data.payment ==='Unpaid'?'var(--danger-color)':'var(--success-color)'">
+                                               {{'Success'}}
+                                            </td> -->
+                                            <td
+                                                [style.color]="data.verified==false || data.verified==null?'var(--danger-color)':'var(--success-color)'">
+                                                {{data.verified?'Verified':'Not Verified'}}</td>
+                                            <!-- Not Verified -->
+                                            <td class="remover p-links" (click)="removeOfficial(data)"><b>Remove</b>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="_officialList.length==0">
+                                            <td colspan="8">No record found.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </p-tabPanel>
+                        <p-tabPanel header="Recently Removed">
+                            <div class="top-searchbar mt-3 mb-3">
+                                <div class="flex-vc">
+                                    <div class="innerBox-input">
+                                        <span class="p-input-icon-left">
+                                            <i class="pi pi-search"></i>
+                                            <input type="text" [(ngModel)]="_searchByPlayerNameD" pInputText
+                                                (keydown)="searchRecentDelatedPlayer()"
+                                                (keypress)="searchRecentDelatedPlayer()"
+                                                (keyup)="searchRecentDelatedPlayer()" placeholder="Search..." />
+                                        </span>
+                                    </div>
+                                    <div class="innerBox p-links">
+                                        <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+                                    </div>
+                                    <div class="innerBox p-links">
+                                        <i class="pi pi-align-right i-small p-secondary-dark"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="innerContent">
+                                <table class="officialTable table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Role</th>
+                                            <th scope="col">State</th>
+                                            <th scope="col">Email</th>
+                                            <th scope="col">Payment</th>
+                                            <th scope="col">Verification</th>
+                                            <th scope="col" class="flex-hc">Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr *ngFor="let data of _officialRecentDeletedList">
+                                            <th scope="row"><b>{{data.name}}</b></th>
+                                            <td>{{data.role}}</td>
+                                            <td>{{data.state}}</td>
+                                            <td>{{data.email}}</td>
+                                            <td
+                                                [style.color]="data.payment ==='Unpaid'?'var(--danger-color)':'var(--success-color)'">
+                                                <!-- {{data.payment}} -->{{'Success'}}
+                                            </td>
+                                            <td
+                                                [style.color]="data.verified==false || data.verified==null?'var(--danger-color)':'var(--success-color)'">
+                                                {{data.verified?'Verified':'Not Verified'}}</td>
+                                            <td class="flex-hc"><i class="p-links p-combine i-small pi pi-download"
+                                                    (click)="addEventOfficial(data)"></i>
+                                            </td>
+                                        </tr>
+                                        <tr *ngIf="_officialRecentDeletedList.length==0">
+                                            <td colspan="8">No record found.</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </p-tabPanel>
+                    </p-tabView>
+                </div>
+            </div>
+        </div>
+        <p-dialog [style]="{'width':'70vw'}" header="Import Members" [(visible)]="_showDialog" [modal]="true"
+            [draggable]="false" [baseZIndex]="10000" (onHide)="Close()">
+            <stupa-import-member-dialog (getOfficial)="importMembers()"
+                [_importOfficialListCopy]="_importOfficialListCopy"
+                [_importOfficialList]="_importOfficialList"></stupa-import-member-dialog>
+        </p-dialog>
+    </div>
+</div>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>
+<stupa-create-official (landPage)="landPage($event)" *ngIf="_showOfficial"></stupa-create-official>

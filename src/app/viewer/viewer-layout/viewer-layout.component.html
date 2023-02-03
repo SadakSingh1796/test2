@@ -1,0 +1,30 @@
+<div class="topbar">
+    <div class="top-banner">
+        <div class="innerContent">
+            <img [src]=" this._eventDetails[0]?.image_url" class="img-cover" alt="Unable to Upload Images">
+            <div class="innerInfo">
+                <div class="backBtn flex-vc p-links" routerLink="/home">
+                    <i class="pi pi-arrow-left text-white"></i>
+                    <p class="text-white ms-2">Back</p>
+                </div>
+                <div class="title">
+                    <h3 class="text-white"><b>{{ this._eventDetails[0]?.event_name}}</b></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="common-tabView mt-2">
+    <p-tabView [activeIndex]="_tabIndex" (onChange)="getTabIndex($event)">
+        <p-tabPanel *ngFor="let item of _tabList" [header]="item.header">
+            <div class="innerContent mt-3" [routerLink]=[item.path]>
+                <div class="topBar">
+                    <!-- <div class="flex-sb flex-vc"></div> -->
+                </div>
+            </div>
+        </p-tabPanel>
+    </p-tabView>
+</div>
+<div class="content">
+    <router-outlet></router-outlet>
+</div>

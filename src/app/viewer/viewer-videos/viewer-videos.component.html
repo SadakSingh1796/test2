@@ -1,0 +1,77 @@
+<div class="container-xxl">
+    <div class="topBar">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="innerContent me-4">
+                    <p class="heading mb-0"><b class="">Participant Type</b></p>
+                    <p-dropdown class="m-0" [options]="_participantTypesList" [(ngModel)]="_selectedParticipantTypes"
+                        optionLabel="participant_description" appendTo="body" (onChange)="setType($event)"
+                        placeholder="Type">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div *ngIf="_showFixtureFormat" class="col-lg-6">
+                <div class="innerContent ms-4">
+                    <p class="heading mb-0"><b>Category</b></p>
+                    <p-dropdown class="m-0" [options]="_categoryList" [(ngModel)]="_categoryList.category_description"
+                        optionLabel="category_description" [autoDisplayFirst]="true" appendTo="body"
+                        placeholder="Category" (onChange)="tabSelection($event)">
+                    </p-dropdown>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="centerElement">
+        <div class="category">
+            <div class="radioBox mt-2">
+                <div class="flex-vc gap-4">
+                    <div class="flex-vc field-radiobutton" *ngFor="let item of _fixtureFormat">
+                        <p-radioButton name="participantType" [value]="item" [(ngModel)]="_fixtureFormat[0]"
+                            [inputId]="item.key"></p-radioButton>
+                        <label for="city1">{{item.name}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+        <div class="class">
+            <div class="container">
+                <h2>Videos</h2>
+                <p class="my-3">Streamed Videos</p>
+                <div class="flex-vc flexing">
+                    <span class="p-input-icon-left">
+                        <i class="p-green pi pi-search"></i>
+                        <input id="headerInput" pInputText type="text" placeholder="Find User" />
+                    </span>
+                    <!-- <div class="filter__image ">
+                        <img src="../../../../assets/icons/svg/filter.svg" alt="">
+                    </div>
+                    <div class="filter__image">
+                        <img src="../../../../assets/icons/svg/menu .svg" alt="">
+                    </div> -->
+                </div>
+        
+        
+        
+                <div class="row my-3">
+                    <div class="col-sm-3 my-2 flex-vc flexing" *ngFor="let item of _streamedVideos">
+                        <mux-player stream-type="on-demand" attr.playback-id="{{item.asset_playback_id}}" metadata-video-title="Test VOD"
+                        metadata-viewer-user-id="user-24601"></mux-player>
+                    </div>
+                </div>
+                <!-- <div class="col-sm-3 ">
+                    <video src="https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4" width="100%" controls></video>
+                </div>
+            </div>
+        </div>
+        </div> -->
+            </div>
+        </div>
+       
+    </div>
+
+
+
+

@@ -1,0 +1,14 @@
+
+.backBtn {
+    background: none;
+    border: 1px solid black;
+    border-radius: 50px;
+    position: absolute;
+    left: 368px;
+    height: 25px;
+    width: 25px;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

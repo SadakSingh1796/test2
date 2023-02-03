@@ -1,0 +1,70 @@
+$border-radius: 7px;
+
+@mixin flexing($justify) {
+  display: flex;
+  justify-content: $justify;
+  align-item: center;
+}
+@mixin magrinPlusBold($margin, $fweight) {
+  margin-top: $margin;
+  font-weight: $fweight;
+}
+.personal-details-container {
+  .container {
+    padding: 2rem;
+    .FirstSection {
+      @include flexing(space-between);
+      p {
+        font-size: 1.5rem;
+        color: #4d4d4d;
+        font-weight: bold;
+      }
+      button {
+        padding: 0.2rem 0.9rem;
+        border-radius: $border-radius;
+        width: 8vw;
+        height: 5vh;
+        align-self: center;
+        color: white;
+        font-weight: bold;
+        border: none;
+        border-radius: 7px;
+        background: #1b403a;
+      }
+    }
+    .aligncards {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 3rem;
+      margin-top:2rem;
+      .cards {
+        min-width: calc(100% - 70%);
+        border: 1px solid black;
+        min-height: 24vh;
+        padding: 1.3rem;
+        border-radius: $border-radius;
+        .card_upperSection {
+            // @include flexing(start);
+        //   display: flex;
+        //   align-items: center;
+        //   justify-content: start;
+        //   display: flex;
+          gap: 1rem;
+          @include flexing(flex-start);
+          align-items: center;
+          .profilename {
+            font-weight: bold;
+          }
+        }
+        .card_LowerSection {
+          .card_LowerSection:first-child {
+            margin-top: 1rem;
+          }
+          .item {   
+            @include magrinPlusBold(0.3rem, bold);
+          }
+        }
+      }
+    }
+  }
+}

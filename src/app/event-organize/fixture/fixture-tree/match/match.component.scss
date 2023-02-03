@@ -1,0 +1,110 @@
+// @import '../../styles/ngtt-variables';
+@import "../../../../../stylesfiles/ngtt-variables.scss";
+
+.ngtt__match-wrapper {
+  display: flex;
+  height: 1;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  flex-direction: column;
+  width: $ngtt-match-wrapper-width;
+  background-color: $ngtt-background-primary;
+  border-radius: 0px;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 90%;
+  border: 1px solid $ngtt-accent-primary;
+
+  .note {
+    position: relative;
+  }
+  .note:last-child {
+    border-top: 1px solid $ngtt-accent-primary;
+  }
+}
+
+.common-popup {
+  .topBar,
+  .player-list {
+    padding: 10px 5px;
+  }
+}
+
+.ngtt__team-wrapper {
+  display: flex;
+  width: 100%;
+  height: 50px;
+  flex-direction: row;
+  padding: 12px 6px;
+  align-items: center;
+}
+.ngtt__team-wrapper:last-child {
+  border-top: 1px solid #bebebe;
+}
+.ngtt__team-avatar {
+  margin-left: 12px;
+  height: 25px;
+  width: 25px;
+  border-radius: 25px;
+  background-color: darkgray;
+  display: inline-block;
+  flex-shrink: 1;
+}
+
+.ngtt__team-title {
+  margin-left: 12px;
+  color: var(--secondary_dark-color);
+  font-weight: lighter;
+  display: inline-block;
+  flex-grow: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.ngtt__team-score {
+  padding: 0 20px 0 10px;
+  flex-shrink: 1;
+  color: var(--combinating-color);
+}
+
+.score-panel {
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  background-color: white;
+  .innerContent {
+    padding: 1rem;
+    position: relative;
+    .playerRow:not(:first-child) {
+      margin-top: 1rem !important;
+    }
+  }
+  .divider {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 51%;
+    transform: translate(0, -50%);
+    padding: 1rem;
+    .vs {
+      padding: 0.1rem 0.3rem;
+      font-size: 10px;
+      background-color: #f2f2f2;
+      color: #d9d9d9;
+      border-radius: 4px;
+      margin-left: 1rem;
+    }
+    ::ng-deep {
+      p-divider {
+        height: 20px;
+        display: flex;
+        justify-self: center;
+        align-items: center;
+        overflow: hidden;
+      }
+      .p-divider-right {
+        margin: 0 !important;
+      }
+    }
+  }
+}

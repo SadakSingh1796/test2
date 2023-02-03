@@ -1,0 +1,42 @@
+.flexing {
+    gap: 30px;
+  }
+  
+  .p-tabview .p-tabview-panels {
+    padding: 0;
+  }
+  
+  .filter__image {
+    border: 1px solid var(--secondary-color);
+    padding: 8px 10px;
+    transition: background 1s, border-radius 1s;
+  }
+  .filter__image:hover {
+    background: var(--secondary-color);
+    color: white;
+    border-radius: 7px;
+  }
+  
+  .container {
+    h2 {
+      color: var(--main-color);
+    }
+    p {
+      font-size: 14px;
+      font-weight: 900;
+      color: var(--main-color-light);
+    }
+    video {
+      border-radius: 7px;
+      box-shadow: 0px 2px 10px 2px black;
+      transition: transform .8s;
+    }
+  
+    .row2 {
+      margin-top: 2px;
+    }
+  }
+  
+  video:hover {
+    transform: scale(1.2);
+  }

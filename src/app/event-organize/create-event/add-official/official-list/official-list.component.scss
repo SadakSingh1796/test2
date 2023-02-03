@@ -1,0 +1,31 @@
+.centerElement {
+    .innerContent {
+        margin-top: 1rem;
+        .officialTable {
+            thead {
+                background-color: var(--f1-color);
+            }
+            tbody {
+                td {
+                    color: var(--main-color);
+                }
+                .remover {
+                    color: var(--danger-color);
+                }
+            }
+        }
+        .table > :not(caption) > * > * {
+            border: none;
+        }
+    }
+}
+.tabContainer {
+    ::ng-deep {
+        .p-dialog {
+            font-size: 90%;
+        }
+        .p-dialog .p-dialog-header .p-dialog-title {
+            color: var(--main-color);
+        }
+    }
+}

@@ -1,0 +1,75 @@
+<div id="main">
+  <div class="top-searchbar mt-3">
+    <div class="flex-vc">
+      <div class="innerBox-input">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input (keyup)="searchGroups()"
+          (keypress)="searchGroups()" (keydown)="searchGroups()" [(ngModel)]="_searchTeams" type="text" pInputText placeholder="Find Match" />
+        </span>
+      </div>
+      <div class="innerBox p-links">
+        <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+      </div>
+      <div class="innerBox p-links">
+        <i class="pi pi-align-right i-small p-secondary-dark"></i>
+      </div>
+    </div>
+  </div>
+  
+
+  <div  class="row">
+    <div class="row" *ngFor="let round of _matchDetailsList">
+      <h4>{{round.round}}</h4>
+      <div *ngFor="let player1 of round.matches" class="card my-3">
+       
+        <div class="live_text">
+          <div class="outer__circle"></div>
+          <div class="text">Live</div>
+        </div>
+        <div *ngFor="let player of player1.match_details" class="row oneBox mx-3">
+         <div class="card-flex-items">
+          <div class="date">
+            <p class="p-green p-small">
+              <!-- {{ player.date.getDate() + "th" }}
+              {{ _days[player.date.getDay()] }} -->
+            </p>
+          </div>
+          <div class="match__Type">
+            <p class="p-combine">
+              <!-- <b>{{player1.round_description}}</b> -->
+            </p>
+          </div>
+          <!-- <div class="match__Type">live</div> -->
+        </div>
+        <div class="player__section">
+          <div class="flex-player mt-2">
+            <p-avatar icon="pi pi-user" styleClass="mr-2 ms-2" shape="circle">
+            </p-avatar>
+            <div class="center__player__name">
+              <div class="playerName flexItem text-overflow d-flex mt-2">
+                <h6 class="text-overflow">{{ player.participant_name}}</h6>
+              </div>
+              <div class="setScore flexItem d-flex">
+                <ul>
+                  <li>
+                    {{ player.score }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+            <div class="Points">
+              <h5>
+                {{ player.set_won }}
+              </h5>
+            </div>
+          </div>
+        </div>
+
+        <hr class="hr-text" data-content="VS" />
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</div>

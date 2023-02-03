@@ -1,0 +1,105 @@
+<div class="ngtt__match-wrapper" #matchWrapper (mouseenter)="showScore(true)" (mouseleave)="showScore(false)">
+    <!-- <ng-container *ngFor="let team of match.match_details">
+        <div class="ngtt__team-wrapper">
+            <div class="ngtt__team-avatar"></div>
+            <h6 class="ngtt__team-title">{{team.participant_name}}</h6>
+            <div class="ngtt__team-score">{{team.score}}</div>
+        </div>
+    </ng-container> -->
+    <!-- <ng-container *ngFor="let team of match.match_details; let position = index" appDragDropSwap [elemPosition]="position"
+        [list]="match.match_details" class="note" (returnUpdatedList)="returnUpdatedList($event)">
+        <div class="ngtt__team-wrapper">
+            <div class="ngtt__team-avatar"></div>
+            <h6 class="ngtt__team-title">{{team.participant_name}}</h6>
+            <div class="ngtt__team-score">{{team.score}}</div>
+        </div>
+    </ng-container> -->
+    <div class="parentContainer">
+        <div *ngFor="let note of match.match_details; let position = index">
+            <!-- <div class="ngtt__team-wrapper" *ngIf="note.participant_name != 'BYE'"> -->
+            <div class="ngtt__team-wrapper">
+
+                <p-avatar *ngIf="note.participant_name!=='' && note.participant_name!==null" class="avatar-small"
+                    label={{getFirstLetters(note.participant_name)}} shape="circle"></p-avatar>
+                <span style="position: absolute; left: -15px; color: rgb(19, 15, 15);">{{getIndex(position)}}</span>
+                <h6 class="ngtt__team-title">{{note.participant_name}}</h6>
+                <div class="dropdownIcon me-2" *ngIf="false">
+                    <p-overlayPanel #menuPopup [showCloseIcon]="false" [style]="{height: '80px'}">
+                        <ng-template pTemplate>
+                            <div class="common-popup">
+                                <div class="innerContent">
+                                    <a class="p-links no-line" (click)="swapPlayer.show($event)">Swap player with
+                                        another</a>
+                                    <hr class="m-0">
+                                    <a class="p-links no-line">Remove</a>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-overlayPanel>
+                    <p-overlayPanel #swapPlayer [showCloseIcon]="false" [style]="{width:'300px'}">
+                        <ng-template pTemplate>
+                            <div class="common-popup">
+                                <div class="innerContent">
+                                    <div class="topBar flex-sb flex-vc">
+                                        <p class="p-green"><b>Swap With..</b></p>
+                                        <i class="pi pi-times-circle p-combine p-links" (click)="swapPlayer.hide()"></i>
+                                    </div>
+                                    <hr class="m-0">
+                                    <div class="rest-players">
+                                        <div class="player-list flex-vc" *ngFor="let item of _players">
+                                            <p-avatar class="avatar-small" label={{getFirstLetters(item.participant_name)}} shape="circle"></p-avatar>
+                                            <p class="p-secondary-dark ms-2">{{item.participant_name}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-overlayPanel>
+                    <div class="dropbtn">
+                        <div class="dropdownUnpublish">
+                            <button (click)="menuPopup.toggle($event)" pButton pRipple icon="pi pi-ellipsis-v"
+                                class="p-button-plain p-button-text p-button-rounded"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="ngtt__team-score" *ngIf="note.participant_name!=='' && note.participant_name!==null">
+                    {{note.set_won}}</div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<p-overlay [(visible)]="_showScorePanel" appendTo="body" [style]="{width:'15vw'}">
+    <div class="score-panel">
+        <div class="innerContent">
+            <div class="playerRow row flex-vc" *ngFor="let player of match.match_details">
+                <div class="col-2 flex-hc h-100">
+                    <div class="">
+                        <p-avatar shape="circle" label="PK" size="small"></p-avatar>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <p class="p-green"><b>{{player.participant_name}}</b></p>
+                    <div class="flex-vc mt-1  w-100 ">
+                        <div class="text-center me-2" *ngFor="let item of player.score">
+                            <p class="p-secondary "><b>{{item}}</b></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-2">
+                    <div class="flex-vc">
+                        <h3><b>{{player.set_won}}</b></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="divider flex-vc">
+                <p-divider class="w-100">
+                </p-divider>
+                <div class="vs">
+                    <p><b>vs</b></p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</p-overlay>

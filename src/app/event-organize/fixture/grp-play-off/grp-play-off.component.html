@@ -1,0 +1,51 @@
+<div class="container-xxl">
+    <div class="centerElement mt-4">
+        <div class="topBar flex-sb flex-vc">
+            <!-- <div class="flex-vc">
+                <p class="p-green">Total Players</p>
+                <p class="p-combine ms-2">{{totalPlayer}}</p>
+            </div> -->
+            <div class="flex-sb topflex">
+                <div class="steps" *ngIf="_groupPlayOffSteps.length == 2">
+                    <p-steps [(activeIndex)]="_activeIndex" (activeIndexChange)="getActive($event)"
+                        [model]="_groupPlayOffSteps" [readonly]="false">
+                    </p-steps>
+                </div>
+                <div class="steps unlined" *ngIf="_groupPlayOffSteps.length == 1">
+                    <p-steps [(activeIndex)]="_activeIndex" (activeIndexChange)="getActive($event)"
+                        [model]="_groupPlayOffSteps" [readonly]="false">
+                    </p-steps>
+                </div>
+                <div class="parentFlex">
+                    <div class="scheduleBut" *ngIf="_isMatchesCreated">
+                        <button [disabled]="!_schedule" class="c" class="btn btnSchedule flex-vc flex-hc"
+                            (click)="openDialog()">
+                            <img class="me-2" src="../../../../assets/icons/svg/Schedule-icon.svg" width="20" alt="">
+                            Schedule
+                        </button>
+                    </div>
+                </div>
+
+                <!-- <div class="scheduleBut" *ngIf="_isMatchesCreated">
+                    <button [disabled]="!_schedule" class="c" (click)="openDialog()">
+                        <img class="me-2" src="../../../../assets/icons/svg/Schedule-icon.svg" width="20" alt="">
+                        Schedule
+                    </button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+    <stupa-group-creation [_currentParticipantId]="_currentParticipantId" [_currentCategoryId]="_currentCategoryId"
+        (_schedule)="openSchedule($event)" *ngIf="_activeIndex == 0"
+        (isMatchesCreated)="isMatchesCreated($event)" [isRefreshData]="isRefreshData"></stupa-group-creation>
+    <stupa-main-draw *ngIf="_activeIndex == 1" [_fixtureScreen]="_fixtureScreen"
+        [_currentCategoryId]="_currentCategoryId"></stupa-main-draw>
+    <p-dialog [(visible)]="_openSchedule" [closable]="true" [showHeader]="true" [modal]="true" [draggable]="false"
+        [style]="{width: '98vw', height:'98vh'}" [baseZIndex]="10000" (onHide)="refreshAllData()">
+        <stupa-match-scheduler (getListWithCategoryId)="getListWithCategoryId($event)"
+            (getLeftMathesForSlots)="getGroupMatchDetails($event)" [_matchDetailsList]="_matchDetailsList"
+            [_matchDetailsListCopy]="_matchDetailsListCopy" [selectedParticipantId]="_currentParticipantId"
+            [selectedCategoryId]="_currentCategoryId" [isKnockout]="false"></stupa-match-scheduler>
+    </p-dialog>
+
+</div>

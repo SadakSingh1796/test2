@@ -1,0 +1,268 @@
+<form [formGroup]="_ruleSettingForm" action="" *ngIf="event!=null">
+    <div class="container">
+        <div class="first__DIV">
+            <div class="flex-header">
+                <div class="left-text">
+                    <h5>Rules settings</h5>
+                </div>
+                <!-- <div *ngIf="_eventFlag" class="right-text p-links">
+                    <p (click)="reset()">Reset</p>
+                     <img src="../../../../assets/icons/round-arrow.png" width="11" height="11" alt="">
+                </div>
+                <div *ngIf="!_eventFlag" class="right-text p-links">
+                    <p (click)="resetCategory()">Reset</p>
+                     <img src="../../../../assets/icons/round-arrow.png" width="11" height="11" alt="">
+                </div> -->
+                <div class="right-text p-links">
+                    <p (click)="reset()">Reset</p>
+                     <img src="../../../../assets/icons/round-arrow.png" width="11" height="11" alt="">
+                </div>
+
+            </div>
+            <div class="singleH my-2">
+                <p>You can update Rules Settings. Default settings are marked.</p>
+            </div>
+        </div>
+        <div class="singleP mt-3">
+            <p>Selection Type</p>
+        </div>
+
+        <div class="second__DIV my-2">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="left-heading">
+                        <p>Choose selection type for the <span class="light"> Event </span> or
+                            Specific<span class="light"> Category / Class </span> </p>
+                    </div>
+                </div>
+                <div class="col-lg-5 ">
+                    <div class="dropdown">
+                        <p-dropdown (onChange)="selectRuleType($event)" optionLabel="name" #dropdown [options]="_cities"
+                            placeholder="Event" optionLabel="name">
+                        </p-dropdown>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="singleP mb-0">
+            <p>Select rule form</p>
+        </div>
+
+        <div *ngIf="_eventFlag" class="third__DIV my-3">
+            <div class="row">
+                <div class="col-lg-7 g">
+                    <div class="left-text">
+                        <p>What kind of stream quality you need to run your event.
+                            High Latency streaming will have the delay of 8-15
+                            seconds. Whereas on the other hand low latency has the
+                            streaming delay of 3 to 5 seconds. </p>
+                            <!-- More removed from the upper paragraph -->
+                    </div>
+                </div>
+                <div class="col-lg-5 ">
+                    <div class="box">
+                        <input type="radio" id="option-8" [formControlName]="'pointSystem'" value="1">
+                        <input type="radio" id="option-2" [formControlName]="'pointSystem'" value="2">
+                        <label for="option-8" class="option-8 my-3 p-links">
+                            <div class="text p-links">
+                                Standard Point System
+                            </div>
+                            <div class="dot"></div>
+                        </label>
+                        <label for="option-2" class="option-2 my-3 p-links">
+                            <div class="text p-links">
+                                Golden Point System
+                            </div>
+                            <div class="dot"></div>
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="!_eventFlag" class="third__DIV my-3">
+            <div class="row">
+                <div class="g">
+                    <div class="singleP mb-0"></div>
+                    <p class="singleP mb-0">You can select rule specifically for each category or class</p>
+                </div>
+            </div>
+        </div>
+
+
+
+        <div *ngIf="_eventFlag" class="fourth__DIV">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="left">
+                        <p>Or Select from a pre defined choosen number</p>
+                    </div>
+                </div>
+                <div class="col-lg-5 f">
+                    <div class="right">
+                        <div class="items">
+                            <div *ngFor="let item of _ruleItems;let i=index">
+                                <input class="radioButton" type="radio">
+
+                                <button [ngClass]="item.isActive ?'itemFocus':''" class="item first p-links"
+                                    (click)="currentRule(item,i)">{{item.name}}
+                                    <br>
+                                </button>
+
+
+                            </div>
+
+                        </div>
+
+                        <div class="nothing"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!_eventFlag" class="fourth__DIV">
+            <p>Category</p>
+            <div class="bottomSection mt-5">
+                <owl-carousel-o [options]="_eventSlider">
+                    <ng-container *ngFor="let item of _categoriesObject;let i=index">
+                        <ng-template carouselSlide>
+                            <div class="relativeCard" data-aos="fade-left" data-aos-duration="1000">
+                                <div class="flex-sb" style="height:9rem">
+                                    <div class="text p-2">
+                                        <p class="p-secondary-dark"><b>{{item.category_description}}</b></p>
+                                        
+                                        <p class=" p-green mt-3">{{_participantValue +","+ _genderValue}}</p>
+                                    </div>
+
+                                    <div *ngIf="item.addCategoryList" class="rulesCard"
+                                        data-aos="fade-left" data-aos-duration="1000">
+
+                                        <!-- <div class="dropdown">
+                                            <button id="btn" (click)="closeCard(i)" class="container">
+                                                <img src="../../../../assets/icons/cancle.png" class="img-fluid" alt="">
+                                            </button>
+                                        </div> -->
+
+                                        <input type="radio" id="reassignPoint-1" [formControlName]="'reassignPoints'"
+                                            value="Standard Point">
+                                        <input type="radio" id="reassignPoint-2" [formControlName]="'reassignPoints'"
+                                            value="Golden Point">
+                                        <div class="top ">
+                                            <label for="reassignPoint-1">
+                                                <div class="text p-links">
+                                                    Standard Point System
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <!-- <hr> -->
+                                        <div class="hr">
+                                            <p-divider></p-divider>
+                                        </div>
+                                        <div class="middle .flex__center">
+                                            <label for="reassignPoint-2">
+                                                <div class="text p-links">
+                                                    Golden Point System
+                                                </div>
+                                            </label>
+                                        </div>
+
+                                        <div class="hr">
+                                            <p-divider></p-divider>
+                                        </div>
+                                        
+                                        <div class="col-lg-3">
+                                            <div class="bottom">
+                                                <div class="rulesCardItems">
+                                                    <div *ngFor="let item of _ruleItems;let i=index">
+                                                        <input class="radioButton" type="radio">
+                        
+                                                        <button [ngClass]="item.isActive ?'itemFocus':''" class="item first p-links"
+                                                            (click)="currentCategoryRule(item,i)">{{item.name}}
+                                                            <br>
+                                                            <!-- <div class="vertical"></div> -->
+                                                        </button>
+                        
+                        
+                                                    </div>
+                        
+                                                </div>
+                        
+                                                <div class="nothing"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div *ngIf="!_rulesCard && !item.addCategoryList">
+                                    </div> -->
+                                </div>
+
+                            </div>
+
+                            <div class="addRules">
+                                <div  class="addRules" class="flex-sb">
+                                    <button  *ngIf="!item.addCategoryList" class="reAssign">Standard Point, Set of
+                                        5
+                                        
+                                        <div class="vertical"></div>
+                                        <div class="">
+                                            <p  (click)="reassignCard(i)">Reassign</p>
+                                            
+
+
+                                        </div>
+                                    </button>
+                                    <button *ngIf="item.addCategoryList" class="reAssign">
+                                        {{_reAssignedValue}}, Set of
+                                        {{_reAssignedScore}}
+                                        <div class="vertical"></div>
+                                        <div class="">
+                                            <p (click)="updateCard(i,item)">Update</p>
+                                        </div>
+                                    </button>
+                                    <!-- <button *ngIf="item.addCategoryList && item._updatedCardValue" class="reAssign">
+                                        {{_reAssignedValue}}, Set of
+                                        {{_reAssignedScore}}
+                                        <div class="vertical"></div>
+                                        <div class="">
+                                            
+                                            <p (click)="reassignCard(i)">Reassign</p>
+                                        </div>
+                                    </button> -->
+
+                                </div>
+                                <!-- <div *ngIf="!item.addCategoryList" class="flex-sb">
+                                    <button class="reAssign">{{_reAssignedValue}}, Set of {{_reAssignedScore}}
+
+                                        <div class="vertical"></div>
+                                        <div *ngIf="!item.addCategoryList" class="">
+                                            <p (click)="reassignCard(i,item)">Reassign</p>
+                                        </div>
+                                        <div *ngIf="item.addCategoryList" class="">
+                                            <p (click)="reassignCard(i,item)">Update</p>
+                                        </div>
+                                    </button>
+
+                                </div> -->
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+        </div>
+
+        <div class="fifth__DIV">
+            <div class="flex-footer my-4">
+                <div class="left-text">
+                    <p *ngIf="_showSuccessMsg">Your details have been successfully updated.</p>
+                </div>
+                <div *ngIf="_eventFlag" class="right-button">
+                    <button (click)="updateRules()">Update</button>
+                </div>
+                <!-- <div class="right-button">
+                    <button (click)="updateCategory()">Update</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+</form>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>
+<stupa-common-svg-msg *ngIf="event===null" (eventClicked)="eventClicked()"></stupa-common-svg-msg>

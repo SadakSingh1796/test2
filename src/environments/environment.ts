@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  //this is url we will hit for get /set data 
+  tournament_api: 'https://stupa-event-api-dev.stupaanalytics.com/api/',
+  global_url: 'http://api.stupaevents.com:8005/'
 };
 
 /*

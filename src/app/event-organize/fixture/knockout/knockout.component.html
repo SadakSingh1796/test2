@@ -1,0 +1,143 @@
+<div *ngIf="!_showValues" class="container-xxl">
+    <div class="centerElement mt-4">
+        <div class="topBar flex-sb flex-vc">
+            <!-- <div class="flex-vc">
+                <p class="p-green">Total Players</p>
+                <p class="p-combine ms-2">{{totalPlayer}}</p>
+            </div> -->
+            <div class="flex-e topflex">
+                <!-- <div class="steps p-links">
+                    <p-steps [(activeIndex)]="_activeIndex" (activeIndexChange)="getActive($event)"
+                        [model]="_groupPlayOffSteps" [readonly]="false">
+                    </p-steps>
+                </div> -->
+
+            </div>
+        </div>
+    </div>
+    <stupa-knockout-creation *ngIf="!_showValues" [_currentParticipantId]="_currentParticipantId"
+        (isMatchesCreated)="isMatchesCreated($event)" [_currentCategoryId]="_currentCategoryId"
+        (_schedule)="openSchedule($event)">
+    </stupa-knockout-creation>
+
+
+
+</div>
+<div *ngIf="_showValues" class="container-xxl" style="z-index: 900;">
+
+    <div class="parentFlex">
+        <div class="scheduleBut">
+            <button [disabled]="!_schedule" class="btn btnSchedule flex-vc flex-hc" (click)="openDialog()">
+                <img class="me-2" src="../../../../assets/icons/svg/Schedule-icon.svg" width="20" alt="">
+                Schedule
+            </button>
+        </div>
+    </div>
+
+    <!-- <div class="scheduleBut">
+    <div class="scheduleBut flex-e">
+        <button [disabled]="!_schedule" class="btn btnSchedule flex-vc flex-hc" (click)="openDialog()">
+            <img class="me-2" src="../../../../assets/icons/svg/Schedule-icon.svg" width="20" alt="">
+            Schedule
+        </button>
+    </div> -->
+    <div class="topBar">
+        <div class="flex-e my-2">
+            <a class="p-green p-links" (click)="_showFull = true" *ngIf="!_showFull">Hide</a>
+            <a class="p-green p-links" (click)="_showFull = false" *ngIf="_showFull">Show Controller</a>
+        </div>
+        <div class="row" *ngIf="!_showFull">
+            <div class="col-lg-6">
+                <div class="greyBox">
+                    <div class="empty h-100">
+                        <div class="row flex-vc h-100">
+                            <div class="col-5">
+                                <img width="150" src="../../../../assets/icons/svg/empty.svg" alt="">
+                            </div>
+                            <div class="col-7">
+                                <p class="p-small p-secondary lineSpace">If you have any problem in creating
+                                    fixture you
+                                    can contact our support. Reach out to us at support@stupaanalytics.com
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="greyBox">
+                    <div class="header mb-2">
+                        <div class="flex-sb flex-vc">
+                            <div class="leftSection">
+                                <div class="flex-vc">
+                                    <p>Total Number of player in this category are </p>
+                                    <p class="p-combine ms-2">{{_topPlayers.length}}</p>
+                                </div>
+                            </div>
+                            <div class="right-eventHandler flex-vc" (click)="viewPlayer()">
+                                <div class="iconBox">
+                                    <i class="i-small p-green pi pi-eye"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr class="divider m-0">
+                    <div class="innerContent">
+                        <div class="detail-input mt-4">
+                            <!-- <p-dropdown appendTo="body" placeholder="Fixture of 8" [optionLabel]="'name'">
+                            </p-dropdown> -->
+                        </div>
+                        <div class="mt-4">
+
+                            <button (click)="deleteFixture()" class="btn btn-danger m-0 w-100">
+                                Delete
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <stupa-main-draw [_fixtureScreen]="_fixtureScreen" [_currentCategoryId]="_currentCategoryId"></stupa-main-draw>
+    <p-dialog [(visible)]="_openSchedule" [closable]="true" [showHeader]="true" [modal]="true" [draggable]="false"
+        [style]="{width: '98vw', height:'98vh'}" [baseZIndex]="10000" (onHide)="refreshAllData()">
+        <stupa-match-scheduler (getListWithCategoryId)="getListWithCategoryId($event)"
+            [_matchDetailsList]="_matchDetailsList" [_matchDetailsListCopy]="_matchDetailsListCopy"
+            [selectedParticipantId]="_currentParticipantId" [selectedCategoryId]="_currentCategoryId"
+            [isKnockout]="true"></stupa-match-scheduler>
+    </p-dialog>
+    <p-dialog #pDialog [(visible)]="_isViewPlayerGrid" [style]="_dialogStyle" [draggable]="false" [modal]="true">
+        <div class="innerContent">
+            <div class="row">
+                <div class="col-md-3">
+                    <input [(ngModel)]="_searchByPlayerNameView" type="text" pInputText (keydown)="searchPlayerInView()"
+                        [placeholder]="'Search Player'" />
+                </div>
+            </div>
+            <p-table class="common-table text-center" [value]="_topPlayers">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th>Name</th>
+                        <th>State</th>
+                        <th>Club</th>
+                        <th>Point</th>
+                        <th>Email</th>
+                        <!-- <th>Action</th> -->
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-player let-columns="columns">
+                    <tr>
+                        <td>{{ player.name }}</td>
+                        <td>{{ player.state }}</td>
+                        <td>{{ player.club }}</td>
+                        <td>{{ player.points }}</td>
+                        <td>{{ player.email }}</td>
+                        <td>
+                            <!-- <input type="checkbox" (click)="playerForMainDraw($event, player)" [ngModel]="player.isSelected" /> -->
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+    </p-dialog>
+</div>

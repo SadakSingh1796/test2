@@ -1,0 +1,53 @@
+<div class="admin-sidebar-container">
+    <div class="sidebar">
+        <!-- <div class="tmsSidebar"(click)="goBackAtFirstScreen()"> -->
+        <div class="tmsSidebar" routerLink="/home/organize">
+
+            <div class="backBtn flex-vc flex-hc p-links">
+
+                <div class="imgContainer">
+                    <img class="img-fluid" src="../../../assets/tms/arrowLeft-orange.png" width="" alt="">
+                </div>
+            </div>
+
+            <div class="sideBarHeading mt-3">
+                <h4>{{'tms.tournament'|translate}}</h4>
+                <h4>{{'tms.management'|translate}}</h4>
+                <h4>{{'tms.system'|translate}}</h4>
+            </div>
+            <div class="centerText">
+                <p class="p-small">{{'tms.VariouSettings'|translate}}<b class="fst-italic">{{'tms.event'|translate}}</b>
+                </p>
+            </div>
+<!-- <img src="../../../assets/icons/sidebarIcons/createICON.png" alt="">    -->
+            <!-- <app-event-org-sidebar></app-event-org-sidebar> -->
+        </div>
+        <div class="admin-tabs">
+            <div class="sideTimeline">
+                <p-timeline [value]="_events">
+                    <ng-template pTemplate="marker" let-event>
+                        <div class="circle p-links" (click)="selectedEvent(event)" [routerLink]="[event.path]">
+                            <span class="custom-marker markerStatic shadow-2">
+                                <!-- <i [ngClass]="event.icon"></i> -->
+                                <div class="imgContainer" [style.backgroundColor]="event.color">
+                                    <img [src]="event.icon" width="15" alt="">
+                                </div>
+                            </span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="content" let-event>
+                        <div (click)="selectedEvent(event)" [routerLink]="[event.path]">
+                            <label class="p-links eventHeading"
+                                [style.fontSize]="event.path == _showIndicatiorON ? '20px':''">
+                                {{event.status}}</label>
+                            <span class="eventIndicator " *ngIf="event.path == _showIndicatiorON"></span>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="opposite" let-event>
+                    </ng-template>
+                </p-timeline>
+            </div>
+        </div>
+    </div>
+
+</div>

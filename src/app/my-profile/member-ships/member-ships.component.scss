@@ -1,0 +1,66 @@
+$fadecolor: #c4c4c4;
+$border-radius: 7px;
+$main_color:#1B403A;
+
+@mixin flexing($justify) {
+  display: flex;
+  justify-content: $justify;
+  align-items: center;
+}
+@mixin margins($position, $value) {
+  margin-#{$position}: $value !important;
+}
+
+@mixin fontSizes($size, $weight) {
+  font-size: $size;
+  font-weight: $weight;
+}
+.personal-details-container {
+  .container {
+    padding: 2rem;
+    .FirstSection {
+        @include margins(bottom,1rem );
+        @include fontSizes(1.5rem,bold );
+    }
+    .lowersection { 
+      @include flexing(flex-start);
+      flex-wrap: wrap;
+      gap: 13rem;
+      .cards {
+        box-shadow: 2px 3px 5px $fadecolor;
+        border-radius: $border-radius;
+        padding: 1rem 2rem;
+        min-width: 40%;
+        border: 1px solid $fadecolor;
+        min-height: 30vh;
+        p:nth-child(1) {
+          @include fontSizes(1, light);
+          color: $fadecolor;
+        }
+        p:nth-child(2) {
+          margin-bottom: 1rem !important;
+          margin-top: 0.5rem;
+          @include fontSizes(1.4rem, bold);
+        }
+        .items {
+          @include margins(bottom, 0.4rem);
+        }
+      }
+
+      .right_section{
+        button{
+            width: 18vw;
+            min-height: 6vh;
+            border-radius: 20px;
+            border: 1px solid $main_color;
+            color:$main_color;
+            &:hover{
+                box-shadow: 1px 2px 5px $fadecolor;
+            }
+        }
+        
+      }
+     
+    }
+  }
+}

@@ -1,0 +1,149 @@
+<div *ngIf="event_id!=null" class="container-xxl">
+
+    <div class="topBar">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="innerContent me-4">
+                    <p class="heading"><b class="">Participant Type</b></p>
+                    <div class="radioBox mt-2">
+                        <div class="flex-vc gap-4">
+                            <div class="flex-vc field-radiobutton" *ngFor="let item of _participantTypesList">
+
+                                <p-radioButton name="participantType" [(ngModel)]="_selectedParticipantTypes"
+                                    (onClick)="currentParticipant($event)" [value]="item"
+                                    [inputId]="item.participant_type_id"></p-radioButton>
+                                <label for="city1">{{item.participant_description}}</label>
+
+                            </div>
+                            <!-- <div class="flex-vc field-radiobutton">
+                                <p-radioButton name="participantType" value="Teams" [(ngModel)]="_participantType"
+                                    inputId="city1"></p-radioButton>
+                                <label for="city1">Teams</label>
+                            </div>
+                            <div class="flex-vc field-radiobutton">
+                                <p-radioButton name="participantType" value="Doubles" [(ngModel)]="_participantType"
+                                    inputId="city1"></p-radioButton>
+                                <label for="city1">Doubles</label>
+                            </div>
+                            <div class="flex-vc field-radiobutton">
+                                <p-radioButton name="participantType" value="Mixed Doubles"
+                                    [(ngModel)]="_participantType" inputId="city1"></p-radioButton>
+                                <label for="city1">Mixed Doubles</label>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="innerContent ms-4">
+                    <p class="heading"><b class="">Fixture Format</b></p>
+                    <div class="radioBox mt-2">
+                        <div class="flex-vc gap-4">
+                            <div class="flex-vc field-radiobutton" *ngFor="let item of _fixtureFormat">
+                                <p-radioButton name="participantType" [(ngModel)]="_fixtureFormat[0]" [value]="item"
+                                    [inputId]="item.key"></p-radioButton>
+                                <label for="city1">{{ item.name }}</label>
+                            </div>
+                            <!-- <div class="flex-vc field-radiobutton">
+                                <p-radioButton name="participantType" value="Round-Robin" [(ngModel)]="_participantType"
+                                    inputId="city1"></p-radioButton>
+                                <label for="city1">Round-Robin</label>
+                            </div>
+                            <div class="flex-vc field-radiobutton">
+                                <p-radioButton name="participantType" value="Group-Playoff"
+                                    [(ngModel)]="_participantType" inputId="city1"></p-radioButton>
+                                <label for="city1">Group-Playoff</label>
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="tabContainer">
+        <div class="innerBox">
+            <div class="centerElement">
+                <div class="heading flex-sb flex-vc">
+                    <h4 class="p-green"><b>Rankings</b></h4>
+                    <div class="flex-vc generateRank p-links" (click)="creatRanking()">
+                        <p class="p-combine" disabled>Generate Rank</p>
+                        <svg class="ms-2" width="12" height="12" viewBox="0 0 11 11" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M4.66675 0.04918C2.71161 0.295627 1.03577 1.53334 0.274519 3.28038C-0.0924139 4.12925 -0.0924139 4.53452 0.279995 4.75906C0.614068 4.96169 1.10149 4.83026 1.23292 4.50166C1.26578 4.41403 1.35889 4.16759 1.44104 3.95948C1.86273 2.86415 2.83209 1.94956 4.00956 1.53882C4.41483 1.39642 4.50793 1.38547 5.29656 1.38547C6.06877 1.39095 6.18377 1.4019 6.57261 1.53334C7.06551 1.69764 7.6296 2.02076 7.9801 2.33292L8.22655 2.55199L7.91438 2.87511C7.73913 3.05036 7.59674 3.22561 7.59674 3.25847C7.59674 3.29133 7.91438 3.39539 8.32513 3.48849C8.71944 3.58159 9.37663 3.74041 9.77643 3.83351C10.2146 3.93757 10.5212 3.98686 10.5541 3.954C10.5815 3.92662 10.5377 3.6254 10.4446 3.22013C10.0229 1.38547 9.94072 1.0514 9.89143 1.00211C9.85857 0.969249 9.72714 1.06783 9.5245 1.26499C9.34925 1.43476 9.19043 1.57715 9.16852 1.57715C9.14662 1.57715 9.02613 1.48405 8.89469 1.36904C8.08416 0.635177 7.07646 0.197048 5.88256 0.0437036C5.37871 -0.0165391 5.20894 -0.0165391 4.66675 0.04918Z"
+                                fill="#FF783E" />
+                            <path
+                                d="M9.52254 6.20774C9.40753 6.30632 9.31443 6.4761 9.21585 6.76636C9.00774 7.38521 8.67914 7.90001 8.16982 8.40386C7.79741 8.77627 7.62763 8.89676 7.15117 9.13225C6.4885 9.46085 6.01751 9.57586 5.31103 9.57586C4.65384 9.57586 4.11165 9.46085 3.55304 9.19249C3.13682 8.99534 2.50701 8.56268 2.41391 8.42029C2.39748 8.38743 2.51796 8.21766 2.68774 8.04788C2.85751 7.87811 2.99443 7.70833 2.99443 7.67547C2.99443 7.59332 2.9999 7.5988 1.84434 7.33592C1.31859 7.21544 0.705206 7.07852 0.486142 7.02376C0.228742 6.96899 0.0644437 6.95256 0.031584 6.98542C-0.0177054 7.03471 0.0699203 7.44546 0.562815 9.53752C0.612104 9.74015 0.677823 9.92088 0.705206 9.93731C0.738066 9.95922 0.902364 9.83326 1.07214 9.66348C1.24191 9.49371 1.40621 9.35679 1.43907 9.35679C1.47193 9.35679 1.56503 9.43346 1.65814 9.52657C1.90458 9.78397 2.66035 10.2714 3.15325 10.485C4.4512 11.0436 6.08323 11.0545 7.40309 10.5014C8.8763 9.88802 10.1469 8.46958 10.5193 7.01828C10.6069 6.68968 10.6014 6.60206 10.4809 6.35561C10.3386 6.0544 9.80185 5.97225 9.52254 6.20774Z"
+                                fill="#FF783E" />
+                        </svg>
+                    </div>
+                </div>
+                <div class="common-tabView mt-3">
+                    <p-tabView (onChange)="tabSelection($event)">
+                        <p-tabPanel *ngFor="let item of _categoryList" [header]="item.category_description">
+                            <div class="innerContent mt-3">
+                                <div class="top-searchbar mt-3">
+                                    <div class="flex-vc">
+                                        <div class="innerBox-input">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input type="text" [(ngModel)]="_searchByPlayerName" pInputText
+                                                    (keydown)="searchPlayer()" (keypress)="searchPlayer()"
+                                                    (keyup)="searchPlayer()" placeholder=" Find Player" />
+                                            </span>
+                                        </div>
+                                        <!-- <div class="innerBox p-links">
+                                            <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+                                        </div>
+                                        <div class="innerBox p-links">
+                                            <i class="pi pi-align-right i-small p-secondary-dark"></i>
+                                        </div> -->
+                                    </div>
+                                </div>
+                                <div class="mt-3">
+                                    <p-table class="common-table text_left" [value]="_playerrank">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th></th>
+                                                <th>Name</th>
+                                                <th *ngIf="_currentParticipantId==1">Email</th>
+                                                <th>Previous Points</th>
+                                                <th>Event Points</th>
+                                                <th>Total Points</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-player>
+                                            <tr>
+                                                <td>
+                                                    <p-avatar class="avatar-small" label="PS" styleClass="mr-2 ms-2"
+                                                        shape="circle">
+                                                    </p-avatar>
+                                                </td>
+                                                <td>{{ player.participant_name }}</td>
+                                                <td *ngIf="_currentParticipantId==1">{{ player.email }}</td>
+                                                <td class="p-secondary">
+                                                    <b>{{ player.points==null?0:player.points }}</b>
+                                                </td>
+                                                <td>
+                                                    <b>{{ player.event_points==null?0: player.event_points}}</b>
+                                                </td>
+                                                <td class="p-combine">
+                                                    <b>{{ player.total_points }}</b>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </p-tabPanel>
+                    </p-tabView>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<stupa-common-svg-msg *ngIf="event_id===null" (eventClicked)="eventClicked()"></stupa-common-svg-msg>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>
+<p-toast position="bottom-center" key="bc"></p-toast>

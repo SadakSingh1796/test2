@@ -1,0 +1,104 @@
+<div class="requests">
+    <div class="tabContainer m-2">
+        <div class="innerBox">
+            <!-- < class="container-fluid"> -->
+<div class="back">
+                <button style="border:none" (click)="goBack()" class="backBtn"><img src="../../../assets/icons/backbtn/boldbackBTN.png" width="33"
+               > </button> Back
+            </div>
+            
+            <!-- <h4>{{'verificationRequests.veriReq' |translate}}</h4> -->
+            <div class="requests-tabView my-3">
+                <div class="tabContainer">
+                    <div class="top-searchbar mt-3 mb-3">
+                        <div class="flex-vc">
+                            <div class="innerBox-input">
+                                <span class="p-input-icon-left">
+                                    <i class="p-green pi pi-search"></i>
+                                    <input   [(ngModel)]="_searchByPlayerName" type="text"
+                                        pInputText (keyup)="searchPlayer()" (keypress)="searchPlayer()"
+                                        (keydown)="searchPlayer()" placeholder="Find User" />
+                                </span>
+                            </div>
+                            <!-- <div class="innerBox p-links">
+                                <i class="pi pi-filter-fill i-small p-green"></i>
+                            </div>
+                            <div class="innerBox p-links">
+                                <i class="pi pi-align-right i-small p-green"></i>
+                            </div> -->
+                        </div>
+                    </div>
+                    <p-table class="common-table text-center" #request [value]="_playersList"
+                        (sortFunction)="customSort($event)" [customSort]="true" [rows]="10"
+                        [showCurrentPageReport]="true" [paginator]="false" [globalFilterFields]="['name','email']">
+
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th pSortableColumn="name" style="width:20%">Name
+                                </th>
+                                <th pSortableColumn="email" style="width:20%">Email
+                                </th>
+
+                                <th pSortableColumn="state" style="width:20%">State
+                                </th>
+                                <th pSortableColumn="club" style="width:20%">Club
+                                </th>
+                                <th pSortableColumn="playerType" style="width:20%">Player Type
+                                </th>
+                                <th pSortableColumn="details" style="width:20%">Details
+                                </th>
+                                <!-- <th pSortableColumn="Action" style="width:20%">Action
+                                </th> -->
+                                <!--  <th pSortableColumn="role" style="width:20%">Roles
+                                    </th> -->
+
+                                <!-- <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+                                        {{col.header}}
+                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                    </th> -->
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-users>
+                            <tr>
+                                <!-- <td>{{ users.name }}</td> -->
+                                <td>{{ users.name }}</td>
+                                <td>{{ users.email }}</td>
+                                <td>{{users.state}}</td>
+                                <td>{{users.club}}</td>
+                                <td>Abled</td>
+                                <td class="p-links" (click)="_showDetails(users)">View</td>
+                                <!-- <td class="cross"> <i class="pi pi-times-circle text-danger p-links"
+                                        (click)="removePlayer()"></i></td> -->
+                                <!-- <td>{{ users.role }}</td> -->
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="emptymessage">
+                            <tr>
+                                <td colspan="8">No user found.</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                    <div class="table-paginator mt-3">
+                        <p-paginator [rows]="10" [totalRecords]="_totalPendingUser"
+                            (onPageChange)="paginate($event,'pending')"></p-paginator>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container"></div>
+<p-dialog [(visible)]="showDialog" [modal]="true" [header]="'Details'" [draggable]="false" [style]="{width: '70vw'}"
+        [baseZIndex]="10000" (onHide)="closePopUp()">
+        <stupa-player-details [data]="_fieldData"></stupa-player-details>
+    </p-dialog>
+<!-- <p-toast position="bottom-center" key="bc"></p-toast> -->
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

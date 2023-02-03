@@ -1,0 +1,89 @@
+.radioBox {
+    padding: 5px 0;
+    ::ng-deep {
+        p-radiobutton {
+            scale: 0.6;
+        }
+        .p-radiobutton .p-radiobutton-box.p-highlight {
+            background: var(--main-color);
+            border-color: var(--main-color);
+        }
+    }
+    .field-radiobutton {
+        label {
+            margin-left: 0.3rem;
+        }
+    }
+}
+
+.flexing {
+    gap: 30px;
+  }
+  
+  .p-tabview .p-tabview-panels {
+    padding: 0;
+  }
+  
+  .filter__image {
+    border: 1px solid var(--secondary-color);
+    padding: 8px 10px;
+    transition: background 1s, border-radius 1s;
+  }
+  .filter__image:hover {
+    background: var(--secondary-color);
+    color: white;
+    border-radius: 7px;
+  }
+ 
+  
+  video:hover {
+    transform: scale(1.2);
+  }
+  .container-xxl {
+    .heading {
+        font-size: 13px !important;
+        color: var(--secondary-color) !important;
+        margin: 1rem 0 !important;
+    }
+    .topBar {
+        font-size: 90% !important;
+        .radioBox {
+            padding: 5px 0;
+            ::ng-deep {
+                p-radiobutton {
+                    scale: 0.6;
+                }
+                .p-radiobutton .p-radiobutton-box.p-highlight {
+                    background: var(--main-color);
+                    border-color: var(--main-color);
+                }
+            }
+            .field-radiobutton {
+                label {
+                    margin-left: 0.3rem;
+                }
+            }
+        }
+    }
+   
+    .container {
+        h2 {
+          color: var(--main-color);
+        }
+        p {
+          font-size: 14px;
+          font-weight: 900;
+          color: var(--main-color-light);
+        }
+        video {
+          border-radius: 7px;
+          box-shadow: 0px 2px 10px 2px black;
+          transition: transform .8s;
+        }
+      
+        .row2 {
+          margin-top: 2px;
+        }
+      }
+  }
+  

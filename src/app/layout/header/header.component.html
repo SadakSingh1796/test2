@@ -1,0 +1,311 @@
+<nav class="navbar navbar-expand-lg">
+    <div class="container-fluid" #profile>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo03"
+            aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <a class="navbar-brand" href="#"><img src="../../../assets/icons/logo.png" width="120" alt=""></a>
+        <div class="d-flex flex-vc" *ngIf="innerWidth < 990">
+            <p-overlayPanel appendTo="body" [showCloseIcon]="false" [style]="{ width: '130px' }" #op2>
+                <ng-template pTemplate>
+                    <div class="common-popup">
+                        <div class="innerContent">
+                            <div class="overlay-item menuItem">
+                                <p (click)="UseLanguage('English',op2)">English</p>
+                            </div>
+                            <div class="overlay-item menuItem">
+                                <p (click)="UseLanguage('Portuguese',op2)">Postuguese</p>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-overlayPanel>
+
+            <button class="languagePanel" type="text" pButton label="Basic" (click)="op2.toggle($event)">
+                <img src="../../../assets/icons/green_globe.png" width="20" height="20" alt="">
+                <img [src]=__change_image width="10" height="10" alt="">
+            </button>
+            <!-- 
+  <img src="https://img.icons8.com/material-outlined/48/000000/user-male-circle.png"/>
+ -->
+            <!-- <p class="me-2">
+                Select Language:
+                <select (click)="selectLang($any($event.target).value)">
+                    <option *ngFor="let items of supportLanguages">{{items}}</option>
+                </select>
+            </p>
+            <a class="nav-link signIn" *ngIf="!isSigned" routerLink="/account/login">{{'login.signIn' |
+                translate}}</a> -->
+            <div *ngIf="isSigned" class="admin-layout">
+                <div class="d-flex overlayContainers">
+                    <div class="profile-header">
+                        <div class="side-icons">
+                            <div class="d-flex profile-panel">
+                                <p-overlayPanel [appendTo]="profile" #menuPopup [showCloseIcon]="false"
+                                    [style]="{width: '200px'}">
+                                    <ng-template pTemplate>
+                                        <div class="common-popup">
+                                            <div class="innerContent">
+                                                <div class="overlay-item menuItem " routerLink="/profile-menu/request">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class="imgSetting">
+                                                                <div class="imgBackground ">
+                                                                    <img src="../../../assets/icons/money_bag.png"
+                                                                        alt="">
+                                                                </div>
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p> {{'header.request' | translate}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="overlay-item menuItem " routerLink="/profile-menu">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class="imgBackground thirdImg">
+                                                                <img src="../../../assets/icons/logout_outline.png"
+                                                                    alt="">
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p>Dashboard </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="overlay-item menuItem "
+                                                    routerLink="/profile-menu/my-account">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class="imgBackground thirdImg">
+                                                                <img src="../../../assets/icons/logout_outline.png"
+                                                                    alt="">
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p>Account </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="overlay-item menuItem "
+                                                    routerLink="/profile-menu/order-history">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class="imgBackground thirdImg">
+                                                                <img src="../../../assets/icons/logout_outline.png"
+                                                                    alt="">
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p>Orders </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="overlay-item menuItem " (click)="logout()">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class="imgBackground thirdImg">
+                                                                <img src="../../../assets/icons/logout_outline.png"
+                                                                    alt="">
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p> {{'header.logout' | translate}} </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-overlayPanel>
+                                <div class="profile-imgContainer" (click)="menuPopup.toggle($event)">
+                                    <img src="../../../assets/icons/profile-icon.png" class="img-fluid" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+            <ul class="navbar-nav ms-4 me-auto mb-2 mb-lg-0">
+                <li class="nav-item" id="home" (click)="activeNav($event,'home')">
+                    <a class="nav-link" aria-current="page" routerLink="/home"
+                        [style.fontWeight]="_router.url === '/home' ?'700':'300'">Home</a>
+                    <span class="active-nav animate__animated animate__fadeIn" *ngIf="_router.url === '/home'"
+                        [style.width]="innerWidth < 990 ?'100px':'100%'"></span>
+                </li>
+                <li class="nav-item" id="liveMatches" (click)="activeNav($event,'liveMatches')">
+                    <a class="nav-link" routerLink="/live-matches"
+                        [style.fontWeight]="_router.url === '/live-matches' ?'700':'300'">{{'header.liveMatches' |
+                        translate}}</a>
+                    <span class="active-nav animate__animated animate__fadeIn" *ngIf="_router.url === '/live-matches'"
+                        [style.width]="innerWidth < 990 ?'100px':'100%'"></span>
+                </li>
+                <li *ngIf="isSigned" class="nav-item" (click)="activeNav($event,'open-reg')">
+                    <a class="nav-link" routerLink="/registration/open-reg/organize"
+                        [style.fontWeight]="_router.url === '/registration/open-reg'||_router.url === '/registration/register' ?'700':'300'">{{'header.regOpen'
+                        |
+                        translate}}</a>
+                    <span class="active-nav animate__animated animate__fadeIn"
+                        *ngIf="_router.url === '/registration/open-reg' ||_router.url === '/registration/register'"
+                        [style.width]="innerWidth < 990 ?'100px':'100%'"></span>
+                </li>
+                <li *ngIf="isSigned" class="nav-item" (click)="activeNav($event,'startOrg')">
+                    <div *ngIf="isSigned">
+                        <a class="nav-link" routerLink="/home/organize"
+                            [style.fontWeight]="_router.url === '/home/organize' ?'700':'300'">{{'header.startOrg' |
+                            translate}}</a>
+                        <span class="active-nav animate__animated animate__fadeIn"
+                            *ngIf="_router.url === '/home/organize'"
+                            [style.width]="innerWidth < 990 ?'100px':'100%'"></span>
+                    </div>
+                    <div *ngIf="!isSigned">
+                        <a class="nav-link" routerLink="/home/svg"
+                            [style.fontWeight]="_router.url === '/home/organize' ?'700':'300'">{{'header.startOrg' |
+                            translate}}</a>
+                        <span class="active-nav animate__animated animate__fadeIn" *ngIf="_router.url === '/home/svg'"
+                            [style.width]="innerWidth < 990 ?'100px':'100%'"></span>
+                        <!-- <stupa-common-svg-msg (eventClicked)="eventClicked()"></stupa-common-svg-msg> -->
+                    </div>
+                </li>
+
+
+            </ul>
+
+        </div>
+        <div class="d-flex flex-vc   " *ngIf="innerWidth > 990">
+            <!-- <p class="me-2 ">
+                 <select style="border: none;" (click)="selectLang($any($event.target).value)">
+                    <option *ngFor="let items of supportLanguages" >{{items}}</option>
+                </select>
+            </p> -->
+
+            <div>
+                <p-overlayPanel appendTo="body" [showCloseIcon]="false" [style]="{ width: '130px' }" #op>
+                    <ng-template pTemplate>
+                        <div class="global">
+                            <p class="mt-2 hover" #english (click)="UseLanguage('English', op)">
+                                English
+                            </p>
+                            <p class="mt-2 hover" #Portuguese (click)="UseLanguage('Portuguese',op)">
+                                Portuguese</p>
+                        </div>
+                    </ng-template>
+                </p-overlayPanel>
+            </div>
+            <button class="hoverButton" style="border: none; display: flex; justify-content:center;align-items:center;gap:.7rem;    padding: 0.4rem;
+            background: none;" type="text" pButton label="Basic" (click)="changeIcon($event)"
+                (click)="op.toggle($event)">
+                <img src="../../../assets/icons/green_globe.png" width="20" height="20" alt="">
+                <img [src]=__change_image width="10" height="10" alt="">
+            </button>
+
+            <a class="nav-link signIn" *ngIf="!isSigned" routerLink="/account/login">{{'login.signIn' |
+                translate}}</a>
+            <div *ngIf="isSigned" class="admin-layout">
+
+                <div class="d-flex overlayContainers">
+                    <div class="profile-header">
+                        <div class="side-icons">
+                            <div class="d-flex profile-panel">
+                                <p-overlayPanel [appendTo]="profile" #menuPopup [showCloseIcon]="false"
+                                    [style]="{width: '200px'}">
+                                    <ng-template pTemplate>
+                                        <div class="common-popup">
+                                            <div class="innerContent">
+                                                <div class="overlay-item menuItem " (click)="hide(menuPopup)"
+                                                    routerLink="/profile-menu/request">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <!-- style=" gap: 1rem;" -->
+                                                            <div class="imgSetting">
+                                                                <div class="imgBackground ">
+                                                                    <img src="../../../assets/icons/admin_dropdown_icons/new request.png"
+                                                                        width="20" height="20" alt="">
+                                                                    <!-- <img src="https://img.icons8.com/metro/52/null/voice-presentation.png"/> -->
+                                                                </div>
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p> {{'header.request' | translate}}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="overlay-item menuItem " (click)="hide(menuPopup)"
+                                                    routerLink="/profile-menu">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class="imgBackground thirdImg">
+                                                                <img src="../../../assets/icons/admin_dropdown_icons/dashboard new.png"
+                                                                width="22" height="22" alt="" style="border-radius:50%">
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p>Dashboard </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="overlay-item menuItem " (click)="hide(menuPopup)"
+                                                    routerLink="/account/my-details">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class="imgBackground thirdImg">
+                                                                <!-- <img src="../../../assets/icons/admin_dropdown_icons/myaccount_ICON.png"
+                                                                        alt=""> -->
+                                                                <img src="../../../assets/icons/admin_dropdown_icons/new-user.png "
+                                                                    width="22" height="22" alt="" style="border-radius:50%">
+
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p>Account </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="overlay-item menuItem " (click)="hide(menuPopup)"
+                                                    routerLink="/profile-menu/order-history">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class="imgBackground thirdImg">
+                                                                <img src="../../../assets/icons/admin_dropdown_icons/icons8-order-history-90.png"
+                                                                    width="20" height="20" alt="" >
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p>Orders </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="overlay-item menuItem " (click)="logout()">
+                                                    <div class="innerItems">
+                                                        <div class="subMenus flex-vc flex-s">
+                                                            <div class=" imgBackground thirdImg">
+                                                                <!-- imgBackground -->
+                                                                <img   src="../../../assets/icons/admin_dropdown_icons/newexit.png"
+                                                                     alt=""  width="25" height="25" alt="" style="border-radius:50%">
+                                                            </div>
+                                                            <div class="userText">
+                                                                <p> {{'header.logout' | translate}} </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-overlayPanel>
+                                <div class="profile-imgContainer" (click)="menuPopup.toggle($event)">
+                                    <img src="../../../assets/icons/admin_dropdown_icons/profile-user.png"
+                                        class="img-fluid" alt="">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</nav>

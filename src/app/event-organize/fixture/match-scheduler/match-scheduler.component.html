@@ -1,0 +1,325 @@
+<div class="container-xxl">
+    <div class="topBar">
+        <div class="row" *ngIf="false">
+            <div class="col-lg-6">
+                <div class="innerContent me-4">
+                    <p class="heading"><b class="">Participant Type</b></p>
+                    <div class="radioBox mt-2">
+                        <div class="flex-vc gap-4">
+                            <div class="flex-vc field-radiobutton" *ngFor="let item of _participantTypesList">
+                                <p-radioButton name="participantType" [(ngModel)]="_selectedParticipantTypes"
+                                    (onClick)="currentParticipant($event)" [value]="item"
+                                    [inputId]="item.participant_type_id"></p-radioButton>
+                                <label for="city1">{{item.participant_description}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="innerContent ms-4">
+                    <p class="heading"><b>Fixture Format</b></p>
+                    <div class="radioBox mt-2">
+                        <div class="flex-vc gap-4">
+                            <div class="flex-vc field-radiobutton" *ngFor="let item of _fixtureFormat">
+                                <p-radioButton name="participantType" [(ngModel)]="_fixtureFormat[0]" [value]="item"
+                                    [inputId]="item.key"></p-radioButton>
+                                <label for="city1">{{item.name}}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="centerElement mt-4">
+        <div class="category">
+            <p class="heading"><b class="">Category</b></p>
+            <div class="common-tabView mt-3">
+                <p-tabView [(activeIndex)]="_tabIndex" (onChange)="tabSelection($event)">
+                    <p-tabPanel *ngFor="let item of _categoryList; let i = index" [header]="item.category_description">
+                        <div class="innerContent mt-3">
+                            <div class="topBar">
+                                <div class="flex-sb flex-vc">
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="flexRow mt-2">
+        <div class="left cornerbox">
+            <div class="heading">
+                <p class="p-green"><b>Matches</b></p>
+            </div>
+            <div class="innerBox">
+                <div class="innerContent">
+                    <div class="top-searchbar mt-3 mb-3">
+                        <div class="flex-vc">
+                            <div class="innerBox-input">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input [(ngModel)]="_searchByPlayerName" type="text" pInputText
+                                        (keyup)="searchPlayer()" [ngModelOptions]="{standalone: true}"
+                                        (keypress)="searchPlayer()" (keydown)="searchPlayer()"
+                                        placeholder="Find Matches" />
+                                </span>
+                            </div>
+                            <!-- <div class="innerBox p-links">
+                            <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+                        </div>
+                        <div class="innerBox p-links">
+                            <i class="pi pi-align-right i-small p-secondary-dark"></i>
+                        </div> -->
+                        </div>
+                    </div>
+                    <div class="centerElement">
+                        <div class="draggable-card-row">
+                            <div class="draggable-card " igxDrag *ngFor="let item of _matchDetailsList; let i=index">
+                               
+                                <!-- <div class="parent">
+                                    <div class="fhalf">
+                                <div class="item items1">
+                                    <div class="radioElement">
+                                        <input type="checkbox" (click)="updateMatchSlot(item)"
+                                            [ngModel]="item.isSelected" />
+                                    </div>
+                                </div>
+                                <div class="item items2">
+                                    <p class="p-combine">
+                                        {{item.round_name}}
+                                    </p>
+                                </div>
+                                </div>
+                                <div class="shalf">
+                                <div class="item items3">
+                                    <p class="p-combine">
+                                            {{item.group_name=='KO'?'':item.group_name}}
+                                        </p>
+                                </div>
+                                <div class="item items4">
+                                    <p class="text-overflow">{{item.participantA_name}}</p>
+                                </div>
+                                <div class="item items5">
+                                    <p>VS</p>
+                                </div>
+                                <div class="item items6">
+                                    <p class="text-overflow">
+                                        {{item.participantB_name}}
+                                    </p>
+                                </div>
+                                </div>
+                               </div>  -->
+                                <div class="row">
+                                    <div class=" col-1">
+                                        <div class="radioElement">
+                                            <input type="checkbox" (click)="updateMatchSlot(item)"
+                                                [ngModel]="item.isSelected" />
+                                        </div>
+                                    </div>
+                                    <div class=" col-1">
+                                        <p class="p-combine">
+                                            {{item.round_name}}
+                                        </p>
+                                    </div>
+                                    <div class=" col-1">
+                                        <p class="p-combine">
+                                            {{item.group_name=='KO'?'':item.group_name}}
+                                        </p>
+                                    </div>
+                                    <div class=" col-4 gg">
+                                        <p class="text-overflow">{{item.participantA_name}}</p>
+                                    </div>
+                                    <div class=" col-1">
+                                        <p>VS</p>
+                                    </div>
+                                    <div class=" col-4 gg">
+                                        <p class="text-overflow">
+                                            {{item.participantB_name}}
+                                        </p>
+                                    </div>
+                                </div> 
+                            </div>
+                            <div *ngIf="_matchDetailsList.length==0">
+                                <p>Matches Not Found</p>
+                            </div>
+                        </div>
+                        <!-- <div class="draggable-card-row my-5 text-center" *ngIf="_matchDetailsList.length!=='undefined' || _matchDetailsList.length==0">
+                        <p class="p-secondary">No Group And Matches For This Category</p>
+
+                    </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="center ">
+            <div class="innerContent">
+                <div class="heading flex-sb">
+                    <p class="p-green"><b>Time Slots</b></p>
+                    <a class="p-small p-green p-links" (click)="goAtDayPlanner()">Day Planner</a>
+                </div>
+                <div class="innerBox">
+                    <div class="topbar">
+                        <!-- <p-dropdown [options]="_availableSlots" optionLabel="name" placeholder="Available Slots">
+                        </p-dropdown> -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <p-dropdown [options]="_daysList" optionLabel="dayDate" placeholder="Select Date"
+                                    [(ngModel)]="_currentDaySlots" (onChange)="getSelectedDateInterval($event)">
+                                </p-dropdown>
+                            </div>
+                            <div class="col-md-6">
+                                <p-dropdown [options]="_dateIntervalList" (onChange)="getSlotMatches($event)"
+                                    [(ngModel)]="_currentTimeSlot" optionLabel="dateInterval"
+                                    placeholder="Choose Timimg">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="centerElement">
+                        <div class="slot-row">
+                            <div class="slot" *ngFor="let item of _slots;let i=index">
+                                <div class="row">
+                                    <div class="col-6 border-r">
+                                        <div class="flex-hc flex-vc text-center" style="height: 100%;">
+                                            <div>
+                                                <h3>{{'T-'+ (1+ i)}}</h3>
+                                                <p class="p-small p-green text-center">{{'Umpire-' + item.umpire_name}}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="drag-field flex-hc flex-vc " *ngIf="false" igxDrop #dragRef>
+                                            <p class="p-small p-green">Drag here</p>
+                                        </div>
+                                        <div class="drag-field flex-vc _filled" igxDrop #dragRef>
+                                            <div class="innerContent w-100"
+                                                *ngIf="item.match_details[0]?.participant_name!==null">
+                                                <p class="p-green">{{item.match_details[0]?.participant_name}}</p>
+                                                <p class="p-small p-combine">VS</p>
+                                                <p class="p-green">{{item.match_details[1]?.participant_name}}</p>
+                                                <div class="enableLive w-100">
+                                                    <div class="flex-sb w-100">
+                                                        <div class="flex-vc">
+                                                            <input type="checkbox" [(ngModel)]="item.live_stream"
+                                                                class="me-1">
+                                                            <p>Enable live stream</p>
+                                                        </div>
+                                                        <div (click)="deleteMatchSlot(item)"
+                                                            class="delIcon p-links me-2">
+                                                            <svg width="9" height="12" viewBox="0 0 9 12" fill="none"
+                                                                xmlns="http://www.w3.org/2000/svg">
+                                                                <path
+                                                                    d="M1.16565 6.30964C1.07629 5.14805 1.99473 4.15625 3.15975 4.15625H6.2092C7.37422 4.15625 8.29266 5.14805 8.20331 6.30964L7.98465 9.15225C7.90449 10.1942 7.03561 10.9989 5.99054 10.9989H3.37841C2.33334 10.9989 1.46446 10.1942 1.38431 9.15224L1.16565 6.30964Z"
+                                                                    stroke="#CA0D0D" />
+                                                                <path d="M7.84359 2.58594H1.52734" stroke="#CA0D0D"
+                                                                    stroke-linecap="round" />
+                                                                <path
+                                                                    d="M3.63281 2C3.63281 1.44771 4.08053 1 4.63281 1H4.73823C5.29051 1 5.73823 1.44772 5.73823 2V2.57906H3.63281V2Z"
+                                                                    stroke="#CA0D0D" />
+                                                                <path d="M5.73828 6.25781V8.88958" stroke="#CA0D0D"
+                                                                    stroke-linecap="round" />
+                                                                <path d="M3.63281 6.25781V8.88958" stroke="#CA0D0D"
+                                                                    stroke-linecap="round" />
+                                                            </svg>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="innerContent w-100"
+                                                *ngIf="item.match_details[0]?.participant_name==null">
+                                                <p class="p-green">Selected Matches For Scheduling Will Appear Here </p>
+                                                <!-- <p class="p-small p-combine">VS</p>
+                                                <p class="p-green">{{item.match_details[1]?.participant_name}}</p> -->
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="right cornerbox">
+            <div class="heading">
+                <p class="p-green"><b>Update Score</b></p>
+            </div>
+            <div class="innerBox">
+                <div class="innerContent">
+                    <div class="top-searchbar mt-3 mb-3">
+                        <div class="flex-vc">
+                            <div class="innerBox-input">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+
+                                    <input [(ngModel)]="_searchByPlayerNameUpdateScore" type="text" pInputText
+                                        [ngModelOptions]="{standalone: true}" (keyup)="searchPlayerFromUpdateScore()"
+                                        (keypress)="searchPlayerFromUpdateScore()"
+                                        (keydown)="searchPlayerFromUpdateScore()" placeholder="Find Matches" />
+                                </span>
+                            </div>
+                            <!-- <div class="innerBox p-links">
+                            <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+                        </div>
+                        <div class="innerBox p-links">
+                            <i class="pi pi-align-right i-small p-secondary-dark"></i>
+                        </div> -->
+                        </div>
+                    </div>
+                    <div class="centerElement">
+                        <table class="table table-responsive">
+                            <tbody class="draggable-card-row">
+                                <tr class="draggable-card " igxDrag
+                                    *ngFor="let item of _matchListForScoreUpdate; let i=index">
+                                    <td>{{item.round_name}}</td>
+                                    <td>{{item.group_name}}</td>
+                                    <td>{{item.participantA_name}}</td>
+                                    <td>VS</td>
+                                    <td>{{item.participantB_name}}</td>
+                                    <td>
+                                        <div class="edit p-links" (click)="updateScore(item)">
+                                            <i class="pi pi-pencil i-small"></i>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <div *ngIf="_matchListForScoreUpdate.length==0">
+                                    <p>Matches Not Found</p>
+                                </div>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog [(visible)]="_editScore" [modal]="true" closeIcon="pi pi-times-circle p-secondary" [draggable]="false"
+    [style]="{width: '95%'}" [baseZIndex]="10000" (onHide)="refreshAll()">
+    <stupa-update-score [_matchFullDetails]="_matchFullDetails" [_teamAPlayers]="_teamAPlayers"
+        [_teamAPlayersCopy]="_teamAPlayersCopy" [_currentParticipantId]="selectedParticipantId"
+        [_teamBPlayers]="_teamBPlayers" [_teamBPlayersCopy]="_teamBPlayersCopy"
+        [_teamMatchFullDetails]="_teamMatchFullDetails" [_teamA_participant_id]="_teamA_participant_id"
+        [_teamB_participant_id]="_teamB_participant_id" [_parent_match_id]="_parent_match_id"
+        [_currentCategoryId]="this._categoryList[0]?.category_id" (teamMatchCreated)="teamMatchCreated($event)"
+        (isScoreUpadted)="isScoreUpadted($event)" [_groupId]="_groupId"></stupa-update-score>
+</p-dialog>
+
+<!-- <p-dialog [(visible)]="_editScore" *ngIf="false"  [modal]="true"
+    header="Update Match Score" closeIcon="pi pi-times-circle p-secondary" [draggable]="false" [style]="{width: '98vw'}"
+    [baseZIndex]="10000">
+    <stupa-arrange-dialog></stupa-arrange-dialog>
+</p-dialog> -->
+<!-- <div class="container-xxl">
+   
+</div> -->
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>
+<p-toast position="bottom-center" key="bc"></p-toast>

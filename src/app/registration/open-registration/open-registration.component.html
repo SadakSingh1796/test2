@@ -1,0 +1,145 @@
+<div class="container">
+    <div *ngIf="_homeFlag==='home'" class="mb-3">
+        <button style="border:none"  class="backBtn" routerLink="/" routerLinkActive="active">
+          <img src="../../../assets/icons/backbtn/boldbackBTN.png" width="33" alt="" />
+        </button>
+        Back
+      </div>
+      <div *ngIf="_homeFlag==='organize'" class="mb-3">
+        <button style="border:none" class="backBtn" routerLink="/home/organize" routerLinkActive="active">
+          <img src="../../../assets/icons/backbtn/boldbackBTN.png" width="33" alt="" />
+        </button>
+        Back
+      </div>
+    <div class="header" *ngIf=!_isRegister>
+        <div class="upcoming">
+            <h3 class="title">Registration Open Events</h3>
+        </div>
+
+    </div>
+    <div class="topBar flex-sb" *ngIf=!_isRegister>
+        <div class="upcoming flex-sb flex-vc w-100">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input  (keyup)="searchMatches()" (keypress)="searchMatches()"  type="text" pInputText placeholder="{{'home.findEvent'|translate}}"  [(ngModel)]="searchedString"/>
+            </span>
+        </div>
+        <!-- <button class="search btn btn_green flex-sb ms-2" (click)="searchMatches()">Search</button> -->
+    </div>
+    <div class="wrapper3" *ngIf=!_isRegister>
+        <div *ngIf="_homeFlag==='organize'" class="flexContainer">
+            <div (click)="navigateToRegisteration(content)" class="long-card p-links"
+                *ngFor="let content of _sellAllOngoing | paginate:{ itemsPerPage: 5, currentPage: p }">
+                <div class="bgImg h-100">
+                    <!-- <div class=""><img src={{content.image_url}}></div> -->
+                    <img class="allOngoing" src={{content.image_url}}>
+                    <div class="innerColor h-100" id="first">
+                        <div class="mx-4 position-relative h-100">
+                            <div class="uppercontent py-3">
+                                <div class="flex-vc flex-sb">
+                                    <div class="heading">
+                                        <h3><b>{{content.event_name}}</b></h3>
+                                    </div>
+                                    <div class="info">
+                                        <p class="p-success"><b>{{content.reg_start_time | date: 'dd/MM/YYYY'}} -
+                                                {{content.reg_end_time |
+                                                date: 'dd/MM/YYYY'}}</b></p>
+                                        <p class="p-combine text-end mt-2">Registration Open</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 ">
+                                    <div class="centerContent py-3">
+                                        <h5>{{content.address}}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottomSection">
+                                <div class="flex-sb flex-vc">
+                                    <div class="third-flex py-4">
+                                        <div class="system">
+                                            <p class="p-small">Tournament</p>
+                                        </div>
+                                        <!-- <div class="date">
+                                            <p>{{content.reg_end_time | date: 'dd/MM/YYYY'}}</p>
+                                        </div> -->
+                                        <!-- <div *ngIf="isSigned" (click)="updateEvent(content)" class="view p-links">{{'home.view'|translate}}
+                                        <img src="../../../assets/icons/white-right-arrow.png" alt="">
+                                    </div> -->
+                                    </div>
+                                    <div class="registerBut">
+                                        <button 
+                                            class="btn  w-auto text-white m-0">Register <i
+                                                class="pi pi-arrow-right i-small ms-2"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <h4>{{content.event_name}}</h4> -->
+            </div>
+
+
+        </div>
+        <div *ngIf="_homeFlag==='home'" class="flexContainer">
+            <div  class="long-card p-links"
+                *ngFor="let content of _sellAllOngoing | paginate:{ itemsPerPage: 5, currentPage: p }">
+                <div class="bgImg h-100">
+                    <!-- <div class=""><img src={{content.image_url}}></div> -->
+                    <img class="allOngoing" src={{content.image_url}}>
+                    <div class="innerColor h-100" id="first">
+                        <div class="mx-4 position-relative h-100">
+                            <div class="uppercontent py-3">
+                                <div class="flex-vc flex-sb">
+                                    <div class="heading">
+                                        <h3><b>{{content.event_name}}</b></h3>
+                                    </div>
+                                    <div class="info">
+                                        <p class="p-success"><b>{{content.reg_start_time | date: 'dd/MM/YYYY'}} -
+                                                {{content.reg_end_time |
+                                                date: 'dd/MM/YYYY'}}</b></p>
+                                        <p class="p-combine text-end mt-2">Registration Open</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-5 ">
+                                    <div class="centerContent py-3">
+                                        <h5>{{content.address}}
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bottomSection">
+                                <div class="flex-sb flex-vc">
+                                    <div class="third-flex py-4">
+                                        <div class="system">
+                                            <p class="p-small">Tournament</p>
+                                        </div>
+                                        <!-- <div class="date">
+                                            <p>{{content.reg_end_time | date: 'dd/MM/YYYY'}}</p>
+                                        </div> -->
+                                        <!-- <div *ngIf="isSigned" (click)="updateEvent(content)" class="view p-links">{{'home.view'|translate}}
+                                        <img src="../../../assets/icons/white-right-arrow.png" alt="">
+                                    </div> -->
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <h4>{{content.event_name}}</h4> -->
+            </div>
+
+
+        </div>
+        <pagination-controls (pageChange)="p=$event" class="float-right"></pagination-controls>
+    </div>
+    <stupa-register *ngIf="_isRegister" [_eventId]="event_id"></stupa-register>
+</div>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>
+<p-toast position="bottom-center" key="bc"></p-toast>

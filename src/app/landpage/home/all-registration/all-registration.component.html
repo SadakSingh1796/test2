@@ -1,0 +1,65 @@
+<!-- //This Compoment Is Not In Use. Kindy USE OpenRegistrationComponent -->
+<div class="container" >
+    <div class="header" *ngIf="!_isRegister">
+        <div class="upcoming flex-sb flex-vc w-100">
+            <h3 class="title">Registration Open Events</h3>
+            <p *ngIf="!isSigned" class="p-links title" routerLink="/" routerLinkActive="active">Back</p>
+            <p *ngIf="isSigned" class="p-links title" routerLink="/home/organize" routerLinkActive="active">Back</p>
+        </div>
+
+    </div>
+    <div class="topBar flex-sb">
+        <div class="upcoming flex-sb flex-vc w-100">
+            <span class="p-input-icon-left">
+                <i class="pi pi-search"></i>
+                <input type="text" (keydown)="searchMatches()" pInputText placeholder="{{'home.findEvent'|translate}}"  [(ngModel)]="searchedString"/>
+            </span>
+        </div>
+        <!-- <button class="search btn btn_green flex-sb ms-2" (click)="searchMatches()">Search</button> -->
+    </div>
+    <div class="wrapper3" *ngIf="!_isRegister">
+        <div class="flexContainer">
+            <div class="row" *ngFor="let content of _sellAllOngoing | paginate:{ itemsPerPage: 5, currentPage: p }">
+                <div class="col">
+                    <div class="bgImg">
+                        <!-- <div class=""><img src={{content.image_url}}></div> -->
+                        <img class="allOngoing" src={{content.image_url}}>
+                        <div class="innerColor px-4" id="first">
+                            <div class="uppercontent py-3">
+                                <h4>{{content.event_name}}</h4>
+                            </div>
+                            <div class="centercontent py-3">
+                                <h6>{{content.reg_start_time | date: 'dd/MM/YYYY'}}
+                                </h6>
+                            </div>
+                            <div class="flex-sb flex-vc">
+                                <div class="third-flex py-4 ">
+                                    <div class="date">
+                                        <p>{{content.reg_end_time | date: 'dd/MM/YYYY'}}</p>
+                                    </div>
+                                    <div *ngIf="isSigned" (click)="updateEvent(content)" class="view p-links">{{'home.view'|translate}}
+                                        <img src="../../../assets/icons/white-right-arrow.png" alt="">
+                                    </div>
+                                </div>
+                                <div class="registerBut">
+                                    <button  (click)="navigateToRegisteration(content)" class="btn btn_green w-auto m-0">Register</button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- <h4>{{content.event_name}}</h4> -->
+                </div>
+
+            </div>
+        </div>
+        <pagination-controls (pageChange)="p=$event" class="float-right"></pagination-controls>
+    </div>
+    <stupa-register *ngIf="_isRegister" [_eventId]="event_id"></stupa-register>
+</div>
+
+
+
+
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

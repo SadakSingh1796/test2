@@ -1,0 +1,77 @@
+<div class="" *ngIf="event_id!=null">
+    <div class="flex-sb" (click)="reset()">
+        <h4 class="p-green"><b>Registration</b></h4>
+        <!-- <div class="right-text flex-sb flex-vc">
+                <p class="p-links"><b>{{'liveStream.reset' |translate}} </b></p>
+                <img class="p-links ms-2" src="../../../../assets/tms/content/resetIcon.png" width="10" alt="">
+            </div> -->
+        <div class="right-text p-links">
+            <p (click)="reset()">Reset</p>
+            <img src="../../../../assets/icons/round-arrow.png" width="11" height="11" alt="">
+        </div>
+    </div>
+    <div class="flex-sb mt-3">
+        <p class="p-green"><b>Update category prices for the registration and Disabled category will not be
+                visible on the Registration Open Page.
+            </b></p>
+
+    </div>
+    <br>
+    <div class="col-lg-6 innerContent">
+        <p class="heading"><b>Participant Type</b></p>
+        <div class="radioBox mt-2">
+            <div class="flex-vc flex-sb">
+                <div class="flex-vc field-radiobutton" *ngFor="let item of _selectedFixtureFormat">
+                    <p-radioButton [value]="item.participant_description" name="participantType"
+                        (click)="showRegistrations(item.participant_description)"
+                        [(ngModel)]="_selectedParticipantTypes[0]">
+                    </p-radioButton>
+                    <label [for]="item.participant_description">{{item.participant_description}}</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+</div>
+<div *ngIf="event_id!=null">
+    <div *ngFor="let item of _display; let i=index" class="showParticipants">
+        <div class="row">
+            <div class="col-lg-7">
+                <span>{{item.category_description}}</span>
+
+            </div>
+            <div class="col-lg-3">
+                <div class="flex-vc">
+                    <p *ngIf="!item.published">Disabled</p>
+                    <p *ngIf="item.published">Enabled</p>
+                    <div class="switch ms-2">
+                        <p-inputSwitch *ngIf="!item.published" (onChange)="enableRegistration($event)"
+                            [(ngModel)]="item.published"></p-inputSwitch>
+                    </div>
+                    <div class="switch ms-2">
+                        <p-inputSwitch *ngIf="item.published" (onChange)="enableRegistration($event)"
+                            [(ngModel)]="item.published"></p-inputSwitch>
+                    </div>
+                </div>
+            </div>
+            <!-- <div *ngIf="!item._enable" class="col-lg-2">
+            <input type="text" class="p-inputtext-sm" placeholder="$0" pInputText readonly/>
+        </div> -->
+            <div class="col-lg-2">
+                <p-inputNumber [inputStyle]="{color: '#ff783e'}" class="p-inputtext-sm p-tabview-nav-link"
+                    [(ngModel)]="item.price" (onChange)="priceChange(item)" prefix="$">
+                </p-inputNumber>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+<div class="flex-e mt-2" *ngIf="event_id!=null">
+    <button class="btn btn_green" (click)="updateRegistrationFee(_display)">Update</button>
+</div>
+
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-common-svg-msg *ngIf="event_id===null" (eventClicked)="eventClicked()"></stupa-common-svg-msg>

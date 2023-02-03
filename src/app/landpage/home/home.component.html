@@ -1,0 +1,567 @@
+<!-- <p>home works!</p> -->
+
+<div class="topSlider">
+    <section class="section-top-image-slider">
+        <div class="common-carousel carousel_withDots">
+            <div class="topImageSlider">
+                <owl-carousel-o [options]="headerImageSlider">
+
+                    <ng-container *ngFor="let slide of _imagePublished">
+                        <ng-template carouselSlide>
+                            <div class="imgContainer">
+                                <img [src]="slide" id="bannerImage">
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+                <!-- <p-carousel [value]="images" [circular]="true" [showNavigators]="false"
+                    contentClass="carouselTheme">
+                    <ng-template let-image pTemplate="item">
+                        <img [src]="image" alt="">
+                    </ng-template>
+                </p-carousel> -->
+            </div>
+        </div>
+    </section>
+</div>
+
+<div class="container-xxl px-4">
+    <div class="ongoingFlex header">
+        <h3 class=" mb-4 title"><b>{{'header.OngoingE' | translate}}</b></h3>
+        <div *ngIf="onGoingAllCheck>4" class="seeAll">
+            <a class="see p-links"  (click)="OngoingseeALL()">{{'header.seeAll' | translate}}</a>
+        </div>
+
+    </div>
+    <div class="wrapper2">
+
+
+        <div *ngIf="onGoingAllCheck==1" class="row">
+            <div *ngFor="let content of _ongoingArray" class="col-lg-12">
+                <div class="eventCard">
+                    <img class="bg-img" src={{content.image_url}}>
+                    <div class="innerColor">
+                        <div class="content">
+                            <div class="col-8">
+                                <div class="eventinfo">
+                                    <h4 class="eventName">{{content.event_name}}</h4>
+                                    <h6 class="location mt-4">{{onGoingAddress}}
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="bottomRow row">
+                                <div class="col-6">
+                                    <p class="venue">{{content.reg_start_time| date: 'dd/MM/YYYY'}} -
+                                        {{content.reg_end_time| date: 'dd/MM/YYYY'}}</p>
+                                </div>
+                                <div class="col-6">
+                                    <div class="view flex-e flex-ve">
+                                        <!-- <div *ngIf="isSigned" class="flex-vc">
+                                            <p (click)="updateEvent(true)">{{'home.view'|translate}}</p>
+                                            <img src="../../../assets/icons/white-right-arrow.png"
+                                                class="img-fluid ms-2 " alt="">
+                                        </div>
+                                        <div *ngIf="!isSigned" class="class"></div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div *ngIf="onGoingAllCheck==2" class="wrapper3">
+            <div class="flexContainer">
+                <div class="row" *ngFor="let content of _ongoingEvents">
+                    <div class="col-lg-4">
+                        <div class="bgImg">
+                            <img class="allOngoing" src={{content.image_url}}>
+                            <div class="innerColor px-4" id="first">
+                                <div class="uppercontent py-3">
+                                    <h4>{{content.event_name}}</h4>
+                                </div>
+                                <div class="centercontent py-3">
+                                    <h6>{{content.reg_start_time}}
+                                    </h6>
+                                </div>
+                                <div class="third-flex py-4">
+                                    <div class="date">
+                                        <p>{{content.reg_end_time}}</p>
+                                    </div>
+                                    <!-- <div *ngIf="isSigned" (click)="updateEvent(content)" class="view p-links">{{'home.view'|translate}} <img
+                                            src="../../../assets/icons/white-right-arrow.png" alt="">
+                                    </div> -->
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="onGoingAllCheck>2" class="row">
+            <div class="col-lg-6">
+                <div class="eventCard">
+                    <img class="bg-img" src={{ongoingImage}}>
+                    <div class="innerColor">
+                        <div class="content">
+                            <div class="col-8">
+                                <div class="eventinfo">
+                                    <h4 class="eventName">{{onGoingHeading}}</h4>
+                                    <h6 class="location mt-4">{{onGoingAddress}}
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="bottomRow row">
+                                <div class="col-6">
+                                    <p class="venue">{{onGoingStartDate| date: 'dd/MM/YYYY'}} - {{onGoingStartDate|
+                                        date: 'dd/MM/YYYY'}}</p>
+                                </div>
+                                <div class="col-6">
+                                    <div class="view flex-e flex-ve">
+                                        <!-- <div *ngIf="isSigned" class="flex-vc">
+                                            <p (click)="updateEvent(true)">{{'home.view'|translate}}</p>
+                                            <img src="../../../assets/icons/white-right-arrow.png"
+                                                class="img-fluid ms-2 " alt="">
+                                        </div>
+                                        <div *ngIf="!isSigned" class="class"></div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6 thin-scrollbar">
+                <div class="parent">
+                    <div class="upper-right-slider">
+                        <div class="box2 mb-3 p-links" *ngFor="let item of  _ongoingEvents">
+                            <div class="flexItems2">
+                                <div class="left-content">
+                                    <h6><b>{{item.event_name}}</b></h6>
+                                </div>
+                                <div class="right-content">
+                                    <p>{{item.event_start_time| date: 'dd/MM/YYYY'}} - {{item.event_end_time| date:
+                                        'dd/MM/YYYY'}}</p>
+                                </div>
+                            </div>
+                            <div class="flexItems2">
+                                <div class="downContent2 my-2">
+                                    <p>{{item.address}}</p>
+                                </div>
+                                <!-- <div  (click)="updateEvent(item)" class="arrow-icon mx-3 p-links">
+                                    <img  src="../../../assets/icons/right-arrow.png" alt="">
+                                </div> -->
+                                <!-- <div *ngIf="!isSigned" class="class"></div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- left down slider -->
+
+    </div>
+
+
+    <div class="liveMatches  mt-5">
+        <div class="live-container">
+            <div class="row">
+                <div class="col-lg-7">
+                    <div class="sideColumn">
+                        <div class="infoContainer">
+                            <div class="flex-vc flexHeading">
+                                <img style="filter: contrast(30);" src="../../../assets/icons/youtube-icon.png"
+                                    width="15" alt="">
+                                <p class="ms-2" style="font-size: 1rem;
+                                font-weight: bold;">{{'header.liveMatches'| translate}}</p>
+                            </div>
+                            <div class="mt-3">
+                                <h4 style="font-size: .8rem;" class="p-green"><b>Header For the live video which is
+                                        being shown Dummytext</b>
+                                    DummyTextDummyT
+                                    DummyTextDummyText</h4>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="videoSlider">
+                            <div class="common-carousel">
+                                <owl-carousel-o [options]="_videoSlider">
+                                    <ng-container *ngFor="let video of _videoArray">
+                                        <ng-template carouselSlide>
+                                            <div class="videoContainer">
+                                                <iframe class="fullFrame"
+                                                    src="https://www.youtube-nocookie.com/embed/S4ad8Cpu11Q"
+                                                    title="YouTube video player" frameborder="0"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    allowfullscreen></iframe>
+                                                <!-- <video width="100%" controls>
+                                                    <source [src]="video.src" type="video/mp4">
+                                                </video> -->
+                                            </div>
+                                        </ng-template>
+                                    </ng-container>
+                                </owl-carousel-o>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <iframe class="fullFrame" src="https://www.youtube-nocookie.com/embed/S4ad8Cpu11Q"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen></iframe>
+                    <!-- <video width="100%" controls>
+                        <source src="https://www.youtube.com/watch?v=S4ad8Cpu11Q" type="video/mp4">
+                    </video> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- UPcoming events html starts  -->
+    <div class="header">
+        <div class="upcoming">
+            <h3 class="title"><b>{{'header.UpcomingEvent' | translate}}</b></h3>
+        </div>
+        <div *ngIf="upComingCheck>3" class="seeall">
+            <a class="see p-links" (click)="upcomingSeeALL()">{{'header.seeAll' | translate}}</a>
+        </div>
+    </div>
+
+    <div class="wrapper3">
+        <div *ngIf="upComingCheck==1" class="flexContainer ">
+            <div class="row">
+                <div *ngFor="let item of this._upComingEvent" class="col">
+                    <div class="bgImg">
+                        <img class="upcomingBgImg" src={{item.image_url}}>
+                        <div class="innerColor px-4" id="first">
+                            <div class="uppercontent py-3">
+                                <h4><b>{{item.event_name}}</b></h4>
+                            </div>
+                            <div class="centercontent py-3">
+                                <h6>{{item.address}}
+                                </h6>
+                            </div>
+                            <div class="third-flex py-4">
+                                <div class="date">
+                                    <p>{{item.event_start_time| date: 'dd/MM/YYYY'}} - {{item.event_end_time| date:
+                                        'dd/MM/YYYY'}}</p>
+                                </div>
+                                <!-- <div *ngIf="isSigned" (click)="updateEvent(item)" class="view p-links">{{'home.view'|translate}} <img
+                                        src="../../../assets/icons/white-right-arrow.png" alt="">
+                                </div>
+                                <div *ngIf="!isSigned" class="class"></div> -->
+                            </div>
+                            <button class="bt mb-3">Tournament</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="upComingCheck==2" class="flexContainer ">
+            <div class="row">
+                <div *ngFor="let item of this._upComingEvent" class="col-lg-6">
+                    <div class="bgImg">
+                        <img class="upcomingBgImg" src={{item.image_url}}>
+                        <div class="innerColor px-4" id="first">
+                            <div class="uppercontent py-3">
+                                <h4><b>{{item.event_name}}</b></h4>
+                            </div>
+                            <div class="centercontent py-3">
+                                <h6>{{item.address}}
+                                </h6>
+                            </div>
+                            <div class="third-flex py-4">
+                                <div class="date">
+                                    <p>{{item.event_start_time| date: 'dd/MM/YYYY'}} - {{item.event_end_time| date:
+                                        'dd/MM/YYYY'}}</p>
+                                </div>
+                                <!-- <div *ngIf="isSigned" (click)="updateEvent(item)" class="view p-links">{{'home.view'|translate}} <img
+                                        src="../../../assets/icons/white-right-arrow.png" alt="">
+                                </div>
+                                <div *ngIf="!isSigned" class="class"></div> -->
+                            </div>
+                            <div class="broadCastBut">
+                                <button class="bt mb-3">Tournament</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="upComingCheck>2" class="flexContainer ">
+            <div class="row">
+                <div *ngFor="let item of this._upComingEvent" class="col-lg-4 ">
+                    <div class="bgImg">
+                        <img class="upcomingBgImg" src={{item.image_url}}>
+                        <div class="innerColor px-4" id="first">
+                            <div class="uppercontent py-3">
+                                <h4><b>{{item.event_name}}</b></h4>
+                            </div>
+                            <div class="centercontent py-3">
+                                <h6>{{item.address}}
+                                </h6>
+                            </div>
+                            <div class="third-flex py-4">
+                                <div class="date">
+                                    <p>{{item.event_start_time| date: 'dd/MM/YYYY'}} - {{item.event_end_time| date:
+                                        'dd/MM/YYYY'}}</p>
+                                </div>
+                                <!-- <div *ngIf="isSigned" (click)="updateEvent(item)" class="view p-links">{{'home.view'|translate}} <img
+                                        src="../../../assets/icons/white-right-arrow.png" alt="">
+                                </div>
+                                <div *ngIf="!isSigned" class="class"></div> -->
+                            </div>
+                            <div class="broadCastBut">
+                                <button class="bt mb-3">Tournament</button>
+                            </div>
+                        </div>
+                    </div>x
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+
+    <!-- //finished upcoming -->
+
+    <!-- //Recent starts -->
+
+    <div class="header ">
+        <div class="upcoming">
+            <p class="title" style="font-size: 1.8rem;
+            margin-bottom: -2.2rem !important;">{{'header.RecentEvent' | translate}}</p>
+        </div>
+        <div *ngIf="recentCheck>4" class="seeall">
+            <a routerLink="/home/all-recent">{{'header.seeAll' | translate}}</a>
+        </div>
+    </div>
+
+    <div class="wrapper4 mt-5">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="innerContent">
+                    <div class="topBar flex-vc">
+                        <div class="searchBar flexElement">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input type="text" pInputText placeholder="{{'home.findEvent'|translate}}" />
+                            </span>
+                        </div>
+                        <div class="filterBut flexElement">
+                            <div class="imgContainer flex-vc flex-hc">
+                                <img width="15" src="../../../assets/icons/center-icon.png" alt="">
+                            </div>
+                        </div>
+                        <div class="filterBut flexElement">
+                            <div class="imgContainer flex-vc flex-hc">
+                                <img width="15" src="../../../assets/icons/last-icon-search.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="recentEvent-slider mt-4">
+                        <div class="common-carousel">
+                            <owl-carousel-o [options]="_recentEventsSlider">
+                                <ng-container *ngFor="let item of _ongoingEvents">
+                                    <ng-template carouselSlide>
+                                        <div class="eventCard">
+                                            <div class="imgCover">
+                                                <img src="../../../assets/icons/badminton1.png" class="img-fluid"
+                                                    alt="">
+                                            </div>
+                                            <div class="innerColor">
+                                                <div class="info">
+                                                    <div class="flex-sb">
+                                                        <h5 class="heading">{{item.event_name}}-DUMMY</h5>
+                                                        <p class="p-combine">{{item.event_start_time| date:
+                                                            'dd/MM/YYYY'}} -
+                                                            {{item.event_end_time| date:'dd/MM/YYYY'}}-DUMMY</p>
+                                                    </div>
+                                                    <p class="my-5">{{item.address}}-DUMMY</p>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </ng-container>
+                            </owl-carousel-o>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-5">
+                <div class="right-content-slider">
+                    <div class="right-navbar mx-3 my-2">
+                        <div class="nav-icon ">
+                            <img width="18" src="../../../assets/icons/calendar.png" alt="">
+                            <div class="text">
+                                <p>{{'home.result'|translate}}</p>
+                            </div>
+                        </div>
+                        <div class="flex-right">
+
+                            <div class="result-right-icon"><img width="15"
+                                    src="../../../assets/icons/result-right-icon.png" alt="">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="eventContent">
+                        <div class="eventContent my-3">
+                            <h6 class="mx-3 color">Men’s Singles Quaterfinals</h6>
+                            <div class="flex-players  mx-4 my-3">
+                                <div class="first color2 ">
+                                    <p>WANG Chuqin</p>
+                                </div>
+                                <div class="score colorscore">3</div>
+                            </div>
+                            <div class="flex-players mx-4 mb-3">
+                                <div class="first color2 ">
+                                    <p>Truis MOREGARD</p>
+                                </div>
+                                <div class="score ">0</div>
+                            </div>
+                        </div>
+                        <p-divider align="center" width="100%" type="solid"> </p-divider>
+                        <div class="eventContent my-3 ">
+                            <h6 class="mx-3 color ">Men’s Singles Quaterfinals</h6>
+                            <div class="flex-players  mx-4 my-3">
+                                <div class="first color2">
+                                    <p>WANG Chuqin</p>
+                                </div>
+                                <div class="score colorscore ">3</div>
+                            </div>
+                            <div class="flex-players  mx-4 mb-3">
+                                <div class="first color2">
+                                    <p>Truis MOREGARD</p>
+                                </div>
+                                <div class="score ">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- // RECENT ENDS -->
+
+    <!-- registration starts -->
+    <div class="header">
+        <div class="upcoming">
+            <h3 class="title">{{'header.reg' | translate}} </h3>
+        </div>
+        <div *ngIf="registerCheck>3" class="seeall">
+            <a class="see p-links" (click)="registerOpen()">{{'header.seeAll' | translate}}</a>
+        </div>
+    </div>
+
+    <div class="wrapper5  mt-3 mb-5">
+        <div *ngIf="registerCheck ==1" class="row">
+            <div *ngFor="let item of this._registerEvent" class="col-lg-12">
+                <div class=" card2 " id="first">
+                    <img class="registerBgImg" src={{item.image_url}}>
+                    <div class="innerColor py-3 px-4">
+                        <div class="date colorscore my-3">
+                            <p>{{item.event_start_time| date: 'dd/MM/YYYY'}} - {{item.event_end_time| date:
+                                'dd/MM/YYYY'}}</p>
+                        </div>
+                        <div class="uppercontent py-3">
+                            <h5 class="h4">{{item.event_name}}</h5>
+                        </div>
+                        <div class="centercontent py-3">
+                            <p>{{item.address}}
+                            </p>
+                        </div>
+
+                        <div class=" pt-4">
+
+                            <!-- <div *ngIf="isSigned" (click)="updateEvent(item)" class="view mb-4 center p-links">{{'home.view'|translate}} <img
+                                            src="../../../assets/icons/white-right-arrow.png" alt=""></div>
+                                </div>
+                                <div *ngIf="!isSigned" class="class"></div> -->
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div *ngIf="registerCheck==2" class="row">
+            <div *ngFor="let item of this._registerEvent" class="col-lg-6 wrap5Columns">
+                <div class=" card2 " id="first">
+                    <img class="registerBgImg" src={{item.image_url}}>
+                    <div class="innerColor py-3 px-4">
+                        <div class="date colorscore my-3">
+                            <p>{{item.event_start_time| date: 'dd/MM/YYYY'}} - {{item.event_end_time| date:
+                                'dd/MM/YYYY'}}</p>
+                        </div>
+                        <div class="uppercontent py-3">
+                            <h5 class="h4">{{item.event_name}}</h5>
+                        </div>
+                        <div class="centercontent py-3">
+                            <p>{{item.address}}
+                            </p>
+                        </div>
+
+                        <div class=" pt-4">
+
+                            <!-- <div *ngIf="isSigned" (click)="updateEvent(item)" class="view mb-4 center p-links">{{'home.view'|translate}} <img
+                                        src="../../../assets/icons/white-right-arrow.png" alt=""></div>
+                            </div>
+                            <div *ngIf="!isSigned" class="class"></div> -->
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div *ngIf="registerCheck>2" class="row">
+            <div *ngFor="let item of this._registerEvent" class="col-lg-4 wrap5Columns">
+                <div class=" card2 " id="first">
+                    <img class="registerBgImg" src={{item.image_url}}>
+                    <div class="innerColor py-3 px-4">
+                        <div class="date colorscore my-3">
+                            <p>{{item.event_start_time| date: 'dd/MM/YYYY'}} - {{item.event_end_time| date:
+                                'dd/MM/YYYY'}}</p>
+                        </div>
+                        <div class="uppercontent py-3">
+                            <h5 class="h4">{{item.event_name}}</h5>
+                        </div>
+                        <div class="centercontent py-3">
+                            <p>{{item.address}}
+                            </p>
+                        </div>
+
+                        <div class=" pt-4">
+
+                            <!-- <div *ngIf="isSigned" (click)="updateEvent(item)" class="view mb-4 center p-links">{{'home.view'|translate}} <img
+                                    src="../../../assets/icons/white-right-arrow.png" alt=""></div>
+                        </div>
+                        <div *ngIf="!isSigned" class="class"></div> -->
+                        </div>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+    <stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

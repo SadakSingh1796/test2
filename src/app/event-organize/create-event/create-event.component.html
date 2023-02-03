@@ -1,0 +1,92 @@
+<div class="container-xxl">
+    <div class="footer-management">
+        <div class="footer-tabView my-3">
+            <div class="common-tabView">
+                <p-tabView [scrollable]="innerWidth < 1100" [activeIndex]="_tabIndex" (onChange)="getTabIndex($event)">
+                    <p-tabPanel header="{{'tms.eventDetails'|translate}}">
+                        <div class="tabContainer">
+                            <div class="arrowTop" *ngIf="_window > 400" (click)="srollTop()">
+                                <div class="scrollTop">
+                                    <div class="box">
+                                        <div class="flexTop">
+                                            <i class="pi pi-arrow-up"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div  class="innerBox" >
+                                <app-event-details (tabToIndex)="getTabIndex($event)"></app-event-details>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Add Official">
+                        <div class="tabContainer">
+                            <div class="">
+                            <div *ngIf="_tabIndex == 1" class="innerBox">
+                                <app-add-official (tabIndex)="eventClicked()"></app-add-official>
+                            </div>
+                        </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Allot-Rank-Pointers">
+                        <div class="tabContainer">
+                            <div class="innerBox">
+                                <stupa-allot-rank-pointers (tabIndex)="eventClicked()"></stupa-allot-rank-pointers>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="{{'tms.payment'|translate}}">
+                        <div class="tabContainer">
+                            <div class="innerBox">
+                                <app-payment-method (tabIndex)="eventClicked()"></app-payment-method>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="{{'tms.registrationForm'|translate}}">
+                        <div class="tabContainer">
+                            <div class="innerBox">
+                                <app-registration-form (tabIndex)="eventClicked()"></app-registration-form>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="{{'tms.rulesSettings'|translate}}">
+                        <div class="tabContainer">
+                            <div class="innerBox">
+                                <app-rule-setting (tabIndex)="eventClicked()"></app-rule-setting>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="{{'tms.liveStream'|translate}}">
+                        <div class="tabContainer">
+                            <div class="innerBox">
+                                <app-live-stream (tabIndex)="eventClicked()"></app-live-stream>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel  header="Day Planner">
+                        <div class="tabContainer">
+                            <div class="innerBox" *ngIf="_tabIndex == 7|| _tabIndex > 0" >
+                                <stupa-day-planner (tabIndex)="eventClicked()"></stupa-day-planner>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="{{'tms.prospectusGuidelines'|translate}}">
+                        <div class="tabContainer">
+                            <div class="innerBox">
+                                <app-pros-guidelines (tabIndex)="eventClicked()"></app-pros-guidelines>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <!-- <p-tabPanel header="{{'sidebar.dashboard'|translate}}">
+                        <div class="tabContainer">
+                            <div class="innerBox">
+                                <app-dashboard></app-dashboard>
+                            </div>
+                        </div>
+                    </p-tabPanel> -->
+
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>

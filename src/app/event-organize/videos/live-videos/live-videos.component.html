@@ -1,0 +1,28 @@
+<div *ngIf="event_id!=null" class="class">
+    <div class="container">
+        <p class="my-3">Live Videos</p>
+        <div class="flex-vc flexing">
+            <span class="p-input-icon-left">
+                <i class="p-green pi pi-search"></i>
+                <input id="headerInput" pInputText type="text" placeholder="Find User" />
+            </span>
+        </div>
+        <div class="row my-3">
+            <div class="col-sm-3 my-2 flex-vc flexing" *ngFor="let item of _liveMatchesList">
+                <img class="border-round" [src]="item.thumbnail" alt="" (click)="viewVideo(item)">
+                <!-- <mux-player stream-type="live" attr.playback-id="{{item.playback_id}}" metadata-video-title="Test VOD"
+                    metadata-viewer-user-id="user-24601"></mux-player> -->
+            </div>
+        </div>
+        <div class="row" *ngIf="_liveMatchesList.length==0">
+            <p>No Record</p>
+        </div>
+    </div>
+</div>
+<stupa-common-svg-msg *ngIf="event_id===null" (eventClicked)="eventClicked()"></stupa-common-svg-msg>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>
+<p-dialog [(visible)]="_showVideoOnFullScreen" [closable]="true" [showHeader]="true" [modal]="true" [draggable]="false"
+    [style]="{width: '100vw', height:'100vh'}" [baseZIndex]="10000">
+    <mux-player stream-type="live" attr.playback-id="{{_currentPlayBackId}}" metadata-video-title="Test VOD"
+        metadata-viewer-user-id="user-24601"></mux-player>
+</p-dialog>

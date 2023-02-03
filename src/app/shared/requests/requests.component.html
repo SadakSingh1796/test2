@@ -1,0 +1,428 @@
+<div class="requests">
+    <div class="tabContainer m-2">
+        <div class="innerBox">
+            <div class="mb-3">
+                <button (click)="goBack()" class="" style="border:none"><img src="../../../assets/icons/backbtn/boldbackBTN.png" width="33"
+                        alt=""></button>
+            </div>
+            <h4 class="p-secondary-dark"><b>{{'verificationRequests.veriReq' |translate}}</b></h4>
+            <div class="requests-tabView my-3">
+                <p-tabView (onChange)="currentTab($event)">
+                    <p-tabPanel header="{{'verificationRequests.pending' |translate}}">
+                        <div *ngIf="false" class="tabContainer">
+                            <div class="rejected">
+                                <img src="../../../assets/icons/Layer 1.png" width="230" height="180" />
+                                <h4>Empty!</h4>
+                                <p>{{'verificationRequests.noPending' |translate}}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="true">
+                            <br>
+                            <div class="tabContainer">
+                                <!-- (sortFunction)="customSort($event)" [customSort]="true" -->
+                                <div class="top-searchbar mt-3 mb-3">
+                                    <div class="flex-vc">
+                                        <div class="innerBox-input">
+                                            <span class="p-input-icon-left">
+                                                <i class="p-green pi pi-search"></i>
+                                                <input pInputText type="text" [(ngModel)]="_pending"
+                                                    (change)="getRequestsWithSearch('pending',_pending)"
+                                                    placeholder="Find User" />
+                                            </span>
+                                        </div>
+                                        <div class="innerBox p-links">
+                                            <i class="pi pi-filter-fill i-small p-green"></i>
+                                        </div>
+                                        <div class="innerBox p-links">
+                                            <i class="pi pi-align-right i-small p-green"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p-table class="common-table text-center" #request [value]="_getPendingUserList"
+                                    (sortFunction)="customSort($event)" [customSort]="true" [rows]="10"
+                                    [showCurrentPageReport]="true" [paginator]="false"
+                                    [globalFilterFields]="['name','email','country']">
+
+                                    <!-- <ng-template pTemplate="caption">
+
+                                        <div id="main">
+                                            <div class="flex-vc">
+                                                <span class="p-input-icon-left">
+                                                    <i class="p-green pi pi-search"></i>
+                                                    <input pInputText type="text" [(ngModel)]="_pending"
+                                                        (change)="getRequestsWithSearch('pending',_pending)"
+                                                        placeholder="Find User" />
+                                                </span>
+                                                <div class="btnFilter ms-3">
+                                                    <button class="btn btn-light"><i
+                                                            class="pi pi-filter i-small p-green"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template> -->
+
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th pSortableColumn="name" style="width:20%">Name
+                                            </th>
+                                            <th pSortableColumn="email" style="width:20%">Email
+                                            </th>
+
+                                            <th pSortableColumn="country" style="width:20%">Country
+                                            </th>
+                                            <th pSortableColumn="role" style="width:20%">Roles
+                                            </th>
+                                            <th pSortableColumn="detail" style="width:20%">Detail
+                                            </th>
+                                            <th class="text-center" pSortableColumn="action" style="width:20%">Action
+                                            </th>
+                                            <!-- <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+                                        {{col.header}}
+                                        <p-sortIcon [field]="col.field"></p-sortIcon>
+                                    </th> -->
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-users>
+                                        <tr>
+                                            <!-- <td>{{ users.name }}</td> -->
+                                            <td>{{ users.name }}</td>
+                                            <td>{{ users.email }}</td>
+                                            <td>{{ users.country }}</td>
+                                            <td>{{ users.role }}</td>
+                                            <td>
+                                                <div>
+                                                    <!-- [header]="_currentRole" -->
+                                                    <a class="viewDialog p-green"
+                                                        (click)="openDialog(users.details)">View</a>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="flex-vc">
+                                                    <button (click)="acceptRequest(users)" class="btn tickAction">
+                                                        <i class="p-green i-small pi pi-check"></i>
+                                                    </button>
+                                                    <button (click)="rejectRequest(users)" class="btn crossAction ms-2">
+                                                        <i class="p-green i-small pi pi-times"></i>
+                                                    </button>
+                                                    <p-dialog [(visible)]="showRejectionDialog" [modal]="true"
+                                                        [header]="'Alert!'" [draggable]="false"
+                                                        [style]="{width: '50vw'}" [baseZIndex]="10000"
+                                                        (onHide)="closeRejectionPopUp()">
+                                                        <div class="innerContent">
+                                                            <textarea rows="6" cols="80" pInputTextarea
+                                                                [autoResize]="true" [(ngModel)]="_rejectionMsg"
+                                                                placeholder="Type here the valid reason for not accepting the registration...."></textarea>
+                                                            <div class="alertOptions flex-e">
+                                                                <button (click)="closeRejectionPopUp()"
+                                                                    class="no me-2 btn">No</button>
+                                                                <button (click)="sendRejectionMail()"
+                                                                    class="ms-3 send btn btn_green w-auto ms-2 m-0"
+                                                                    (click)="rejectRequestByMessage()">Send</button>
+                                                            </div>
+                                                        </div>
+                                                    </p-dialog>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="8">No user found.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <div class="table-paginator mt-3">
+                                    <p-paginator [rows]="10" [totalRecords]="_totalPendingUser"
+                                        (onPageChange)="paginate($event,'pending')"></p-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="{{'verificationRequests.accepted' |translate}}">
+                        <div *ngIf="false" class="tabContainer">
+                            <div class="accepted">
+                                <img src="../../../assets/icons/Layer 1.png" width="230" height="180" />
+                                <h4>Empty!</h4>
+                                <p>{{'verificationRequests.noAccepted' |translate}}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="true">
+                            <br>
+                            <div class="tabContainer">
+                                <!-- (sortFunction)="customSort($event)" [customSort]="true" -->
+                                <div class="top-searchbar mt-3 mb-3">
+                                    <div class="flex-vc">
+                                        <div class="innerBox-input">
+                                            <span class="p-input-icon-left">
+                                                <i class="p-green pi pi-search"></i>
+                                                <input pInputText type="text" [(ngModel)]="_accepted"
+                                                    (change)="getRequestsWithSearch('accepted',_accepted)"
+                                                    placeholder="{{'verificationRequests.findUser' |translate}}" />
+                                            </span>
+                                        </div>
+                                        <div class="innerBox p-links">
+                                            <i class="pi pi-filter-fill i-small p-green"></i>
+                                        </div>
+                                        <div class="innerBox p-links">
+                                            <i class="pi pi-align-right i-small p-green"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p-table class="common-table text-center" #request [value]="_getAcceptedUserList"
+                                    (sortFunction)="customSort($event)" [customSort]="true" [rows]="10"
+                                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="false"
+                                    [globalFilterFields]="['name','email','country']">
+                                    <!-- <ng-template pTemplate="caption">
+                                        <div id="main">
+                                            <div class="flex-vc">
+                                                <span class="p-input-icon-left">
+                                                    <i class="p-green pi pi-search"></i>
+                                                    <input pInputText type="text" [(ngModel)]="_accepted"
+                                                        (change)="getRequestsWithSearch('accepted',_accepted)"
+                                                        placeholder="{{'verificationRequests.findUser' |translate}}" />
+                                                </span>
+                                                <div class="btnFilter ms-3">
+                                                    <button class="btn btn-light"><i
+                                                            class="pi pi-filter i-small p-green"></i></button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </ng-template> -->
+
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+                                                {{col.header}}
+                                                <!-- <p-sortIcon [field]="col.field"></p-sortIcon> -->
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-users>
+                                        <tr>
+                                            <!-- <td>{{ users.name }}</td> -->
+                                            <td>{{ users.name }}</td>
+                                            <td>{{ users.email }}</td>
+                                            <!-- <td>{{ users.country }}</td> -->
+                                            <td>{{ users.country }}</td>
+                                            <td>{{ users.role }}</td>
+                                            <td>
+                                                <div>
+                                                    <!-- [header]="_currentRole" -->
+                                                    <a class="viewDialog p-green"
+                                                        (click)="openDialog(users.details)">View</a>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p-overlayPanel appendTo="body" #menuPopup1 [showCloseIcon]="false"
+                                                    [style]="{width: '200px'}">
+                                                    <ng-template pTemplate>
+                                                        <div class="common-popup">
+                                                            <div class="innerContent">
+                                                                <div class="overlay-item menuItem ">
+                                                                    <p class="p-links">Add</p>
+                                                                </div>
+                                                                <div class="overlay-item menuItem ">
+                                                                    <p class="p-links">Remove</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                </p-overlayPanel>
+
+                                                <div class="dropbtn">
+                                                    <div class="dropdownUnpublish">
+                                                        <button pButton pRipple (click)="menuPopup1.toggle($event)"
+                                                            type="button" icon="pi pi-ellipsis-v"
+                                                            class="p-button-plain p-button-text p-button-rounded"></button>
+                                                    </div>
+                                                </div>
+                                                <!-- <div> -->
+                                                <!-- <button (click)="acceptRequest(users)" class="tickAction"><img
+                                                    src="../../../assets/icons/Vector 76.png" class="img-fluid" alt="">
+
+                                            </button>
+                                            <button (click)="rejectRequest()" class="crossAction"><img
+                                                    src="../../../assets/icons/Group 587.png" class="img-fluid" alt="">
+                                                <p-dialog [(visible)]="showRejectionDialog" [modal]="true"
+                                                    [header]="'Alert!'" [draggable]="false" [style]="{width: '50vw'}"
+                                                    [baseZIndex]="10000" (onHide)="closeRejectionPopUp()">
+                                                    <div class="alertBox">
+                                                        <textarea class="textBox" pInputTextarea></textarea>
+                                                        <div class="alertOptions">
+                                                            <button (click)="closeRejectionPopUp()"
+                                                                class="no">No</button>
+                                                            <button (click)="sendRejectionMail()"
+                                                                class="send">Send</button>
+                                                        </div>
+                                                    </div>
+                                                </p-dialog>
+                                            </button> -->
+                                                <!-- </div> -->
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="8">No user found.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <div class="table-paginator mt-3">
+                                    <p-paginator [rows]="10" [totalRecords]="_totalAcceptedUser"
+                                        (onPageChange)="paginate($event,'accepted')"></p-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="{{'verificationRequests.rejected' |translate}}">
+                        <div *ngIf="false" class="tabContainer">
+                            <div class="rejected">
+                                <img src="../../../assets/icons/Layer 1.png" width="230" height="180" />
+                                <h4>Empty!</h4>
+                                <p>{{'verificationRequests.noRejected' |translate}}</p>
+                            </div>
+                        </div>
+                        <div *ngIf="true">
+                            <br>
+                            <div class="tabContainer">
+                                <!-- (sortFunction)="customSort($event)" [customSort]="true" -->
+                                <div class="top-searchbar mt-3 mb-3">
+                                    <div class="flex-vc">
+                                        <div class="innerBox-input">
+                                            <span class="p-input-icon-left">
+                                                <i class="p-green pi pi-search"></i>
+                                                <input pInputText type="text" [(ngModel)]="_rejected"
+                                                    (change)="getRequestsWithSearch('rejected',_rejected)"
+                                                    placeholder="{{'verificationRequests.findUser' |translate}}" />
+                                            </span>
+                                        </div>
+                                        <div class="innerBox p-links">
+                                            <i class="pi pi-filter-fill i-small p-green"></i>
+                                        </div>
+                                        <div class="innerBox p-links">
+                                            <i class="pi pi-align-right i-small p-green"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p-table class="common-table text-center" #request [value]="_getRejectedUserList"
+                                    (sortFunction)="customSort($event)" [customSort]="true" [rows]="10"
+                                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50]" [paginator]="false"
+                                    [globalFilterFields]="['name','email','country']">
+                                    <!-- <ng-template pTemplate="caption">
+                                        <div id="main">
+                                            <div class="flex-vc">
+                                                <span class="p-input-icon-left">
+                                                    <i class="p-green pi pi-search"></i>
+                                                    <input pInputText type="text" [(ngModel)]="_rejected"
+                                                        (change)="getRequestsWithSearch('rejected',_rejected)"
+                                                        placeholder="{{'verificationRequests.findUser' |translate}}" />
+                                                </span>
+                                                <div class="btnFilter ms-3">
+                                                    <button class="btn btn-light"><i
+                                                            class="pi pi-filter i-small p-green"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template> -->
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+                                                {{col.header}}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-users>
+                                        <tr>
+                                            <!-- <td>{{ users.name }}</td> -->
+                                            <td>{{ users.name }}</td>
+                                            <td>{{ users.email }}</td>
+                                            <td>{{ users.country }}</td>
+                                            <td>{{ users.role }}</td>
+                                            <td>
+                                                <div>
+                                                    <!-- [header]="_currentRole" -->
+                                                    <a class="viewDialog p-green"
+                                                        (click)="openDialog(users.details)">View</a>
+
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <p-overlayPanel appendTo="body" #menuPopup2 [showCloseIcon]="false"
+                                                    [style]="{width: '200px'}">
+                                                    <ng-template pTemplate>
+                                                        <div class="common-popup">
+                                                            <div class="innerContent">
+                                                                <div class="overlay-item menuItem ">
+                                                                    <p class="p-links">Add</p>
+                                                                </div>
+                                                                <div class="overlay-item menuItem ">
+                                                                    <p class="p-links">Remove</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </ng-template>
+                                                </p-overlayPanel>
+
+                                                <div class="dropbtn">
+                                                    <div class="dropdownUnpublish">
+                                                        <button pButton pRipple (click)="menuPopup2.toggle($event)"
+                                                            type="button" icon="pi pi-ellipsis-v"
+                                                            class="p-button-plain p-button-text p-button-rounded"></button>
+                                                    </div>
+                                                </div>
+                                                <!-- <div> -->
+                                                <!-- <button (click)="acceptRequest(users)" class="tickAction"><img
+                                                    src="../../../assets/icons/Vector 76.png" class="img-fluid" alt="">
+
+                                            </button>
+                                            <button (click)="rejectRequest()" class="crossAction"><img
+                                                    src="../../../assets/icons/Group 587.png" class="img-fluid" alt="">
+                                                <p-dialog [(visible)]="showRejectionDialog" [modal]="true"
+                                                    [header]="'Alert!'" [draggable]="false" [style]="{width: '50vw'}"
+                                                    [baseZIndex]="10000" (onHide)="closeRejectionPopUp()">
+                                                    <div class="alertBox">
+                                                        <textarea rows="10" cols="50" class="textBox"  ></textarea>
+                                                        <div class="alertOptions">
+                                                            <button (click)="closeRejectionPopUp()"
+                                                                class="no">No</button>
+                                                            <button (click)="sendRejectionMail()"
+                                                                class="send">Send</button>
+                                                        </div>
+                                                    </div>
+                                                </p-dialog>
+                                            </button> -->
+                                                <!-- </div> -->
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="emptymessage">
+                                        <tr>
+                                            <td colspan="8">No user found.</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                                <div class="table-paginator mt-3">
+                                    <p-paginator [rows]="10" [totalRecords]="_totalRejectedUser"
+                                        (onPageChange)="paginate($event,'rejected')"></p-paginator>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+    <p-dialog [(visible)]="showDialog" [modal]="true" [header]="'Details'" [draggable]="false" [style]="{width: '70vw'}"
+        [baseZIndex]="10000" (onHide)="closePopUp()">
+        <app-user-details [data]="_fieldData"></app-user-details>
+    </p-dialog>
+</div>
+<router-outlet></router-outlet>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

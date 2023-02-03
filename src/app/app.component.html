@@ -1,16 +1,8 @@
-<div *ngFor="let item of dataList">
-  <mux-player stream-type="on-demand" attr.playback-id="{{item.id}}" metadata-video-title="Test VOD"
-  metadata-viewer-user-id="user-id-007"></mux-player>
-</div>
-
-<!-- <video 
-  id="my-player" 
-  class="video-js vjs-16-9" 
-  controls 
-  preload="auto" 
-  width="100%"
-  data-setup='{}'
->
-  <source [src]="{PLAYBACK_ID}" type="video/mux" />
-</video>  -->
-<!-- <app-custom-video-editor></app-custom-video-editor> -->
+<!-- <p>
+    Select Language:
+    <select (click)="selectLang($any($event.target).value)">
+        <option *ngFor="let items of supportLanguages">{{items}}</option>
+    </select>
+</p> -->
+<router-outlet></router-outlet>
+<!-- <p (click)="changeIcon()">click</p> -->

@@ -1,0 +1,115 @@
+.card-row {
+    .flex-card {
+        width: 260px;
+        border: 1px solid var(--main-color);
+        margin: 20px 20px 0 0;
+
+        border-radius: var(--common-border-radius);
+        flex-wrap: wrap;
+        .card-heading {
+            background-color: var(--main-color);
+            border-radius: 7px 7px 0px 0px;
+            filter: opacity(0.8);
+            .card-input {
+                input {
+                    border-radius: 0;
+                    background-color: transparent;
+                    border: none;
+                    color: var(--primary-color);
+                    max-height: 30px;
+                }
+                input::placeholder {
+                    font-style: italic;
+                    font-weight: 100;
+                    color: var(--primary-color);
+                }
+            }
+        }
+        .card-body {
+            ::ng-deep {
+                p-dropdown {
+                    width: auto !important;
+                }
+                .p-dropdown {
+                    background: none;
+                    border: none;
+                    border-bottom: 1px solid var(--main-color);
+                    max-height: 30px !important;
+                    border-radius: 0;
+                    margin: 0 !important;
+                    width: 175px !important;
+                    .p-dropdown-label.p-placeholder {
+                        color: var(--main-color);
+                    }
+                }
+            }
+            .detail-input {
+                #cardInput.p-inputtext {
+                    background: none;
+                    border: none;
+                    border-bottom: 1px solid var(--main-color);
+                    max-height: 30px !important;
+                    border-radius: 0;
+                    width: 175px !important;
+                }
+                .p-inputtext::placeholder {
+                    color: var(--main-color);
+                }
+            }
+        }
+    }
+}
+.rightSection {
+    .centerTable {
+        ::ng-deep {
+            .p-datatable .p-datatable-tbody > tr > td {
+                border: none;
+                padding: 1rem;
+            }
+            .p-datatable .p-datatable-tbody > tr {
+                background: none !important;
+            }
+        }
+    }
+}
+.nextScreen {
+    .registration-common-row {
+        .top-searchbar {
+            .text-wrap {
+                white-space: nowrap !important;
+            }
+            .innerBox.input {
+                width: 100% !important;
+            }
+        }
+        .common-list {
+            .avatar {
+                ::ng-deep {
+                    .p-avatar {
+                        width: 1.5rem;
+                        height: 1.5rem;
+                        font-size: 0.75rem;
+                    }
+                }
+            }
+            .avatar:not(:last-child) {
+                margin-right: 0.5rem;
+            }
+            .playerInfo {
+                max-width: 150px;
+            }
+            .checkbox-chain {
+                width: 100%;
+                .flexBase {
+                    width: 100% !important;
+                    .field-checkbox {
+                        width: 100px;
+                    }
+                }
+            }
+        }
+        .paynow {
+            margin: 30px 160px;
+        }
+    }
+}

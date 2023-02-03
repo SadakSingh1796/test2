@@ -1,0 +1,95 @@
+<div class="term-condition-container">
+    <div class="term-condition-content">
+        <div class="privacyPolicy" *ngFor="let item of _setLinksArray;let i=index">
+            <div class="flex-vc">
+                <div class="header">
+                    <!-- <h6 *ngIf="false">Privacy Policy</h6> -->
+                    <div class="p-inputgroup" (focusout)="privacyFocusOut(item,i)">
+                        <!-- <div class="flex-icon">
+                            <img src="../../../../assets/admin/footerManagement/Union.png" click width="15" alt="">
+                        </div> -->
+                        <input #focusInput [ngClass]="item.disabled == false?'newInput':'disabledInput text-overflow'"
+                            type="text" [(ngModel)]="item.title" pInputText placeholder={{item.title}}
+                            [readonly]="item.disabled">
+                        <span class="p-inputgroup-addon"
+                            [style.borderBottom]="item.disabled == false ? '1px solid var(--secondary-color)':'none'">
+                            <img class="img-fluid p-links" src="../../../../assets/admin/footerManagement/add.png"
+                                (click)="setEditable(item ,i)" width="15" alt=""></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="privacyInput pt-2">
+                <input [(ngModel)]="item.url" type="text" pInputText
+                    placeholder='Enter link address for privacy policy'>
+            </div>
+            <hr class="divider">
+        </div>
+        <div class="termService" *ngIf="false">
+            <div class="flex-vc">
+                <div class="header">
+                    <!-- <h6 *ngIf="false">Privacy Policy</h6> -->
+                    <div class="p-inputgroup">
+                        <!-- <div class="flex-icon">
+                            <img src="../../../../assets/admin/footerManagement/Union.png" click width="15" alt="">
+                        </div> -->
+                        <input #focusInput2 (focusout)="_disableEdit2 = true"
+                            [ngClass]="_disableEdit2 == false?'newInput':'disabledInput text-overflow'" type="text"
+                            pInputText placeholder='Term of Services' [readonly]="_disableEdit2">
+                        <span class="p-inputgroup-addon"
+                            [style.borderBottom]="_disableEdit2 == false ? '1px solid var(--secondary-color)':'none'">
+                            <img class="img-fluid p-links" src="../../../../assets/admin/footerManagement/add.png"
+                                (click)="setEditable2(focusInput2)" width="15" alt=""></span>
+                    </div>
+                </div>
+
+            </div>
+            <div class="privacyInput pt-2">
+                <input type="text" pInputText placeholder='Enter link address for term of service'
+                    (focusout)="TermsClick($event)">
+            </div>
+            <hr class="divider">
+        </div>
+        <div *ngIf="_showFields">
+            <div class="newAdded" *ngFor="let item of _addMoreField">
+                <div class="flex-vc">
+                    <div class="header">
+                        <!-- <h6></h6> -->
+                        <span class="p-input-icon-right">
+                            <div class="flex-icon">
+                                <img src="../../../../assets/admin/footerManagement/Union.png" width="15" alt="" pl>
+                            </div>
+                            <input [(ngModel)]="item.title"  class="newInput" type="text" pInputText placeholder='Enter name'>
+                        </span>
+
+                    </div>
+                    <!-- <div class="flex-icon">
+                    <img src="../../../../assets/admin/footerManagement/add.png" width="15" alt="">
+                </div> -->
+                </div>
+                <div class="privacyInput pt-2">
+                    <input type="text" [(ngModel)]="item.url"  pInputText placeholder='Enter link'>
+                </div>
+                <hr class="divider">
+            </div>
+        </div>
+        <div class="addNewBut mt-4" >   
+            <div class="flex-vc ">
+                <div class="flex-vc p-links" (click)="addMoreField()">
+                    <div class="header">
+                        <h6>{{'home.addField'|translate}}</h6>
+                    </div>
+                    <div class="flex-icon ms-2">
+                        <img src="../../../../assets/admin/footerManagement/Union.png" width="15" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="flex-e">
+            <button class="btn btn_green w-auto" (click)="updateFooter()">{{'footer.update' | translate}}</button>
+
+        </div>
+    </div>
+</div>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

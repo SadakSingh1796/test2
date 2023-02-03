@@ -1,0 +1,55 @@
+<!-- <p>my-profile-sidebar works!</p> -->
+
+<div class="profile_container">
+    <div class="sidebar">
+        <div class="sidebar_top_container">
+            <div class="logo">
+                <img src="../../../assets/icons/logo.png" width="70" height="70" class="img-fluid" alt="">
+            </div>
+            <div class="col-12 md:col-4 flex">
+                <div class="card">
+                    <p-avatar icon="pi pi-user" styleClass="mr-2" size="xlarge" shape="circle"></p-avatar>
+                </div>
+                <div class="right_content">
+                    <div class="tbold name">Govind Singh</div>
+                    <div class="tbold gmail">asdf@gmail.com</div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar_lower_container">
+            <div class="buttons" *ngFor="let url of link">
+                <!-- <button *ngFor="let item of __buttonsdata"  >
+                    <p>{{item.name}}</p>
+                    <img [src]='item.url' alt="">
+                </button> -->
+                <button routerLink="my-details/personal-info" >
+                    <p>Personal Detail</p>
+                    <img [src]="url.url" alt="">
+                </button>
+                <button routerLink="my-details/role">
+                <p>Role Management</p>
+                    <img [src]="url.url" alt="">
+                </button>
+                <button routerLink="my-details/membership">
+                    <p>Membership</p>
+                    <img [src]="url.url" alt="">
+                </button>
+                <button routerLink="my-details/my-event">
+                    <p>My Event</p>
+                    <img [src]="url.url" alt="">
+                </button>
+                <button routerLink="my-details/delete-account">
+                    <p>Delete Account</p>
+                    <img [src]="url.url" alt="">
+                </button>
+                <!-- 
+                <button routerLink="my-details/membership" >
+                    <p>qwer</p>
+                    <img [src]='item.url' alt="">
+                </button>
+                routerLink="admin/videos" -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->

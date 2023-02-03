@@ -1,0 +1,62 @@
+<div class="buy-membership">
+    <div class="section-top flex-hc">
+        <div class="content">
+            <div class="imgContainer">
+                <img class="img-fluid" src="../../../assets/icons/logo.png" alt="">
+            </div>
+            <div class="switchContainer">
+                <div class="flex-vc">
+                    <p>Monthly</p>
+                    <div class="switch setButton mx-1">
+                        <p-inputSwitch [(ngModel)]="_isNotMonthly" class="flex-vc flex-hc">
+                        </p-inputSwitch>
+                    </div>
+                    <p>Yearly</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="section-bottom">
+        <div class="cardsContainer">
+            <div class="cards flex-hc" *ngIf="!_isNotMonthly">
+                <div class="membership-card" *ngFor="let item of _monthlyList">
+                    <p class="heading-card mt-3">{{item.title}}</p>
+                    <h2 class="mb-3 mt-2">&#36;{{item.data.base_amount}}</h2>
+                    <div class="buyButton flex-hc">
+                        <button class="btn btn_green mb-4 w-auto" (click)="buyMemberShip(item)">Buy Now</button>
+                    </div>
+                    <div class="features" *ngIf="true">
+                        <div class="row m-2" *ngFor="let Item of item.features">
+                            <div class="col-2 checkIcon">
+                                <i class="pi pi-check"></i>
+                            </div>
+                            <div class="col-10 flex-hc">
+                                <p>{{Item}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="cards flex-hc" *ngIf="_isNotMonthly">
+                <div class="membership-card" *ngFor="let item of _yearlyList">
+                    <p class="heading-card mt-3">{{item.title}}</p>
+                    <h2 class="mb-3 mt-2">&#36;{{item.data.base_amount}}</h2>
+                    <div class="buyButton flex-hc">
+                        <button class="btn btn_green mb-4 w-auto" (click)="buyMemberShip(item)">Buy Now</button>
+                    </div>
+                    <div class="features" *ngIf="true">
+                        <div class="row m-2" *ngFor="let Item of item.features">
+                            <div class="col-2 checkIcon">
+                                <i class="pi pi-check"></i>
+                            </div>
+                            <div class="col-10 flex-hc">
+                                <p>{{Item}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

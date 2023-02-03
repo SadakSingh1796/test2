@@ -1,0 +1,709 @@
+<div class="container-xxl mt-3">
+  <div class="flex-e my-2">
+    <a class="p-green p-links" (click)="_showFull = true" *ngIf="!_showFull">Hide</a>
+    <a class="p-green p-links" (click)="_showFull = false" *ngIf="_showFull">Show Controller</a>
+  </div>
+  <section class="bottom" data-aos="fade-down" data-aos-duration="1000" class="top" *ngIf="!_showFull">
+    <div class="topBar">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="greyBox">
+            <div class="header mb-2">
+              <div class="flex-sb flex-vc">
+                <div class="leftSection">
+                  <div class="flex-vc">
+                    <p>Number of players sent to Main Draw</p>
+                    <p class="ms-2">{{ _selectedPlayerForMainDraw.length }}</p>
+                  </div>
+                </div>
+                <div class="right-eventHandler flex-vc">
+                  <div class="p-links iconBox" (click)="viewFullGridData()">
+                    <!-- <i class="i-small p-green pi pi-eye"></i> -->
+                    <img width="15" height="15"
+                      src="https://img.icons8.com/material-outlined/48/000000/visible--v2.png" />
+                  </div>
+                  <div class="p-links iconBox" (click)="addPlayer()">
+                    <!-- <i class="i-small p-green pi pi-user-plus"></i> -->
+                    <img width="17" height="17" src="../../../../assets/icons/user_plus.png" alt="">
+
+                  </div>
+                  <div class="p-links iconBox" (click)="deleteAllPlayerFromMainDraw()">
+                    <img width="17" height="17" src="../../../../assets/icons/trash.png" alt="">
+
+                    <!-- <svg width="8" hight="8" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        d="M1.16565 6.30964C1.07629 5.14805 1.99473 4.15625 3.15975 4.15625H6.2092C7.37422 4.15625 8.29266 5.14805 8.20331 6.30964L7.98465 9.15225C7.90449 10.1942 7.03561 10.9989 5.99054 10.9989H3.37841C2.33334 10.9989 1.46446 10.1942 1.38431 9.15224L1.16565 6.30964Z"
+                        stroke="#CA0D0D" />
+                      <path d="M7.84262 2.58594H1.52637" stroke="#CA0D0D" stroke-linecap="round" />
+                      <path
+                        d="M3.63184 2C3.63184 1.44771 4.07955 1 4.63184 1H4.73725C5.28954 1 5.73725 1.44772 5.73725 2V2.57906H3.63184V2Z"
+                        stroke="#CA0D0D" />
+                      <path d="M5.7373 6.25781V8.88958" stroke="#CA0D0D" stroke-linecap="round" />
+                      <path d="M3.63184 6.25781V8.88958" stroke="#CA0D0D" stroke-linecap="round" />
+                    </svg> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="divider m-0" />
+            <div class="noPlayer" *ngIf="_selectedPlayerForMainDraw.length == 0">
+              <p class="p-small">No Player found</p>
+            </div>
+            <div class="innerContent">
+              <p-table class="common-table text-center" [value]="_selectedPlayerForMainDraw">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Name</th>
+                    <th>State</th>
+                    <th>Club</th>
+                    <th>Point</th>
+                    <th>Email</th>
+                    <th></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-player>
+                  <tr>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.state }}</td>
+                    <td>{{ player.club }}</td>
+                    <td>{{ player.points ==null?0: player.points}}</td>
+                    <td>{{ player.email }}</td>
+                    <td></td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <div class="greyBox">
+            <div class="header mb-2">
+              <div class="flex-sb flex-vc">
+                <div class="leftSection">
+                  <div class="flex-vc">
+                    <p *ngIf="_currentParticipantId==1">Total Number of player in this category are</p>
+                    <p *ngIf="_currentParticipantId==2">Total Number of player in this category are</p>
+                    <p *ngIf="_currentParticipantId==3">Total Number of pair in this category are</p>
+                    <p *ngIf="_currentParticipantId==4">Total Number of pair in this category are</p>
+                    <p class="p-combine ms-2">{{ _topPlayers.length }}</p>
+                  </div>
+                </div>
+                <div class="right-eventHandler flex-vc" (click)="viewPlayer()">
+                  <div class="iconBox">
+                    <!-- <i class="i-small p-green pi pi-eye"></i> -->
+                    <img width="15" height="15"
+                      src="https://img.icons8.com/material-outlined/48/000000/visible--v2.png" />
+
+                  </div>
+                </div>
+              </div>
+            </div>
+            <hr class="divider m-0" *ngIf="_category" />
+            <div class="innerContent">
+              <div class="detail-input mt-4">
+                <p-dropdown appendTo="body" [options]="_winningPlayer" [optionLabel]="'caption'"
+                  [(ngModel)]="_winnerCount" placeholder="Number of Winners">
+                </p-dropdown>
+              </div>
+              <!-- <div class="mt-4" *ngIf="!_isLocked">
+                <button class="btn btn_green m-0" (click)="generateFixtures()">
+                  Create
+                </button>
+              </div> -->
+              <!-- <div class="mt-4" *ngIf="_isLocked">
+                <button class="btn btn-danger w-100" (click)="deleteFixtures()">
+                  Delete
+                </button>
+              </div> -->
+              <div class="mt-4" *ngIf="_groupList.length== 0">
+                <button class="btn btn_green m-0" (click)="generateFixtures()">
+                  Create
+                </button>
+              </div>
+              <div class="mt-4" *ngIf="_groupList.length > 0">
+                <button class="btn btn-danger w-100" (click)="deleteFixtures()">
+                  Delete
+                </button>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- <hr class="m-0"> -->
+  <div *ngIf="_isGroupCreated">
+    <div class="flex-e mt-2">
+      <div class="fullViewBut" pRipple (click)="showFullScreen()">
+        <i class="pi pi-window-maximize text-light"></i>
+      </div>
+    </div>
+    <section class="bottom">
+      <div class="bottomBar">
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="heading mb-2">Created Groups</p>
+            <div class="greyBox">
+              <div class="top-actions mb-3 mt-2" *ngIf="!_isLocked">
+                <div class="battans">
+                  <button class="btn btn_green-bordered bordered-hover flex-vc flex-hc" (click)="addGroup()"
+                    [disabled]="_topPlayersList.length == 0">
+                    Add Group
+                  </button>
+                  <button class="btn btn_green m-0 flex-vc flex-hc" (click)="justSave()">
+                    Just Save
+                  </button>
+                  <button class="btn btn_green m-0 flex-vc flex-hc" [disabled]="_topPlayersList.length > 0"
+                    (click)="createCustomGroup()">
+                    Generate System Matches
+                  </button>
+                </div>
+                <!-- <div class="row">
+                  <div class="col-4">
+                    <button class="btn btn_green-bordered bordered-hover flex-vc flex-hc" (click)="addGroup()">
+                      Add Group
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button class="btn btn_green m-0 flex-vc flex-hc" (click)="justSave()">
+                      Just Save
+                    </button>
+                  </div>
+                  <div class="col-4">
+                    <button class="btn btn_green m-0 flex-vc flex-hc" [disabled]="_topPlayersList.length > 0"
+                      (click)="createCustomGroup()">
+                      Generate System Matches
+                    </button>
+                  </div>
+                </div> -->
+              </div>
+              <div class="accordion groups" *ngFor="let item of _groupList; let i = index">
+                <p-accordion (onOpen)="openAccordion(i)" (onClose)="closeAccordion(i)">
+                  <p-accordionTab>
+                    <ng-template pTemplate="header">
+                      <div class="flex-sb flex-vc accordianHeader">
+                        <!-- <h6>{{ item.label }}</h6> -->
+                        <h6>{{'Group'+ (i+1) }}</h6>
+                        <p class="p-small" *ngIf="!item.showButton">
+                          {{ item.group_details.length + " Players Added" }}
+                        </p>
+                        <div class="flex-vc" *ngIf="!_isLocked && item.showButton">
+                          <button class="btn btn_green m-0 w-auto header-add" (click)="addDrp($event, i)">
+                            <i class="pi pi-plus i-small text-light"></i>
+                          </button>
+                          <div (click)="deleteGroup($event, i)" class="ms-2 iconBox delBut">
+                            <svg width="8" hight="8" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M1.16565 6.30964C1.07629 5.14805 1.99473 4.15625 3.15975 4.15625H6.2092C7.37422 4.15625 8.29266 5.14805 8.20331 6.30964L7.98465 9.15225C7.90449 10.1942 7.03561 10.9989 5.99054 10.9989H3.37841C2.33334 10.9989 1.46446 10.1942 1.38431 9.15224L1.16565 6.30964Z"
+                                stroke="#CA0D0D" />
+                              <path d="M7.84262 2.58594H1.52637" stroke="#CA0D0D" stroke-linecap="round" />
+                              <path
+                                d="M3.63184 2C3.63184 1.44771 4.07955 1 4.63184 1H4.73725C5.28954 1 5.73725 1.44772 5.73725 2V2.57906H3.63184V2Z"
+                                stroke="#CA0D0D" />
+                              <path d="M5.7373 6.25781V8.88958" stroke="#CA0D0D" stroke-linecap="round" />
+                              <path d="M3.63184 6.25781V8.88958" stroke="#CA0D0D" stroke-linecap="round" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="content">
+                      <div class="accordianContent">
+                        <div *ngFor="let data of item.group_details; let j = index">
+                          <div class="tableFlex">
+                            <!-- flex-vc -->{{j+1}}
+                            <div class="gFlex">
+                              <div class="items items1">
+                                <p>{{ data.participant_name }}</p>
+                              </div>
+                              <div class="items items2">
+                                <p>{{ data.club }}</p>
+                              </div>
+                              <div class="items items3">
+                                <p>{{ data.state }}</p>
+                              </div>
+                              <div class="items items4">
+                                <p>{{ data.ponts==null?0:data.ponts }}</p>
+                              </div>
+                            </div>
+                            <div class="gFlex2" *ngIf="!_isLocked">
+                              <div class="iconBox" (click)="swapPlayerWithGroup(data, item)">
+                                <svg class="merge" width="100%" viewBox="0 0 29 18" fill="none"
+                                  xmlns="http://www.w3.org/2000/svg">
+                                  <path
+                                    d="M0 2.22381V4.4559L2.7413 4.47683C5.76858 4.51171 5.82438 4.51868 6.82883 4.993C7.61006 5.36269 8.16111 5.78121 9.34691 6.93911C9.93981 7.51806 10.6583 8.20164 10.9443 8.45973L11.4535 8.92708L10.9443 9.39442C10.6583 9.65251 9.93981 10.3361 9.34691 10.915C8.16111 12.0729 7.61006 12.4915 6.82883 12.8611C5.82438 13.3355 5.76858 13.3424 2.7413 13.3773L0 13.3982V15.6303V17.8555H2.51111C3.8992 17.8555 5.32914 17.8206 5.7058 17.7857C7.12179 17.6323 8.46802 17.1928 9.59105 16.5023C10.456 15.9791 11.1744 15.3792 12.6951 13.9005C14.1669 12.4775 14.69 12.066 15.4922 11.6893C16.4617 11.2289 16.6152 11.208 19.0426 11.1801L21.2398 11.1522L19.9564 12.4426C18.8194 13.5796 18.6729 13.754 18.6729 13.9563C18.6729 14.1167 18.7287 14.2283 18.8612 14.3469L19.0565 14.5143L20.9189 14.4934C22.7116 14.4724 22.7883 14.4655 23.0952 14.305C23.3185 14.1934 24.1555 13.4052 25.7598 11.7939C28.0407 9.50603 28.1035 9.44325 28.1454 9.12238C28.2291 8.55041 28.1035 8.38998 25.6831 5.97652C23.7928 4.10016 23.4022 3.73745 23.0464 3.57702C22.6349 3.38171 22.6279 3.38171 20.8492 3.36078L19.0635 3.33288L18.8682 3.50029C18.7287 3.62584 18.6729 3.73745 18.6729 3.89788C18.6729 4.10016 18.8194 4.27455 19.9564 5.41152L21.2398 6.70195L19.0426 6.67405C16.6152 6.64615 16.4617 6.62522 15.4922 6.16485C14.69 5.78819 14.1669 5.37664 12.6951 3.95368C11.1744 2.47492 10.456 1.87504 9.59105 1.35189C8.46802 0.661337 7.12179 0.221892 5.7058 0.0684356C5.32914 0.033559 3.8992 -0.0013175 2.51111 -0.0013175H0V2.22381Z"
+                                    fill="#555555" />
+                                </svg>
+                              </div>
+                              <div class="iconBox" (click)="removePlayer(i, j, data)">
+                                <i class="pi pi-minus i-small text-danger"></i>
+                              </div>
+                            </div>
+
+                            <!-- <input type="text" pInputText readonly [placeholder]="data.participant_name" />
+                            <input type="text" pInputText readonly [placeholder]="data.club" />
+                            <input type="text" pInputText readonly [placeholder]="data.state" />
+                            <input type="text" pInputText readonly [placeholder]="item.points=='undefined'?0:0" /> -->
+                            <!-- <div class="row">
+                              <div class="col col-lg-5 ">{{data.participant_name}}</div>
+                              <div class="col col-lg-3 ">{{data.club}}</div>
+                              <div class="col col-lg-2 ">{{data.state}}</div>
+                              <div class="col col-lg-1 ">{{item.points=='undefined'?0:0}}</div>
+                            </div> -->
+                            <!-- <div class="ms-3  iconBox" (click)="swapPlayerWithGroup(data, item)">
+                              <svg class="merge" width="100%" viewBox="0 0 29 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  d="M0 2.22381V4.4559L2.7413 4.47683C5.76858 4.51171 5.82438 4.51868 6.82883 4.993C7.61006 5.36269 8.16111 5.78121 9.34691 6.93911C9.93981 7.51806 10.6583 8.20164 10.9443 8.45973L11.4535 8.92708L10.9443 9.39442C10.6583 9.65251 9.93981 10.3361 9.34691 10.915C8.16111 12.0729 7.61006 12.4915 6.82883 12.8611C5.82438 13.3355 5.76858 13.3424 2.7413 13.3773L0 13.3982V15.6303V17.8555H2.51111C3.8992 17.8555 5.32914 17.8206 5.7058 17.7857C7.12179 17.6323 8.46802 17.1928 9.59105 16.5023C10.456 15.9791 11.1744 15.3792 12.6951 13.9005C14.1669 12.4775 14.69 12.066 15.4922 11.6893C16.4617 11.2289 16.6152 11.208 19.0426 11.1801L21.2398 11.1522L19.9564 12.4426C18.8194 13.5796 18.6729 13.754 18.6729 13.9563C18.6729 14.1167 18.7287 14.2283 18.8612 14.3469L19.0565 14.5143L20.9189 14.4934C22.7116 14.4724 22.7883 14.4655 23.0952 14.305C23.3185 14.1934 24.1555 13.4052 25.7598 11.7939C28.0407 9.50603 28.1035 9.44325 28.1454 9.12238C28.2291 8.55041 28.1035 8.38998 25.6831 5.97652C23.7928 4.10016 23.4022 3.73745 23.0464 3.57702C22.6349 3.38171 22.6279 3.38171 20.8492 3.36078L19.0635 3.33288L18.8682 3.50029C18.7287 3.62584 18.6729 3.73745 18.6729 3.89788C18.6729 4.10016 18.8194 4.27455 19.9564 5.41152L21.2398 6.70195L19.0426 6.67405C16.6152 6.64615 16.4617 6.62522 15.4922 6.16485C14.69 5.78819 14.1669 5.37664 12.6951 3.95368C11.1744 2.47492 10.456 1.87504 9.59105 1.35189C8.46802 0.661337 7.12179 0.221892 5.7058 0.0684356C5.32914 0.033559 3.8992 -0.0013175 2.51111 -0.0013175H0V2.22381Z"
+                                  fill="#555555" />
+                              </svg>
+                            </div>
+                            <div class="ms-2 iconBox" (click)="removePlayer(i, j, data)">
+                              <i class="pi pi-minus i-small text-danger"></i>
+                            </div> -->
+                          </div>
+                        </div>
+                        <div class="flex-vc" *ngIf="item.showDropDown">
+                          <p-dropdown appendTo="body" [options]="_topPlayersList" [optionLabel]="'participant_name'"
+                            placeholder="Select Player" (onChange)="selectedPlayer($event, i)"
+                            [(ngModel)]="_selectedPlayer">
+                          </p-dropdown>
+                          <!-- <div class="ms-2 iconBox" (click)="showPlayerSwap()"> -->
+                          <div class="ms-2 iconBox">
+                            <svg class="merge" width="100%" viewBox="0 0 29 18" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M0 2.22381V4.4559L2.7413 4.47683C5.76858 4.51171 5.82438 4.51868 6.82883 4.993C7.61006 5.36269 8.16111 5.78121 9.34691 6.93911C9.93981 7.51806 10.6583 8.20164 10.9443 8.45973L11.4535 8.92708L10.9443 9.39442C10.6583 9.65251 9.93981 10.3361 9.34691 10.915C8.16111 12.0729 7.61006 12.4915 6.82883 12.8611C5.82438 13.3355 5.76858 13.3424 2.7413 13.3773L0 13.3982V15.6303V17.8555H2.51111C3.8992 17.8555 5.32914 17.8206 5.7058 17.7857C7.12179 17.6323 8.46802 17.1928 9.59105 16.5023C10.456 15.9791 11.1744 15.3792 12.6951 13.9005C14.1669 12.4775 14.69 12.066 15.4922 11.6893C16.4617 11.2289 16.6152 11.208 19.0426 11.1801L21.2398 11.1522L19.9564 12.4426C18.8194 13.5796 18.6729 13.754 18.6729 13.9563C18.6729 14.1167 18.7287 14.2283 18.8612 14.3469L19.0565 14.5143L20.9189 14.4934C22.7116 14.4724 22.7883 14.4655 23.0952 14.305C23.3185 14.1934 24.1555 13.4052 25.7598 11.7939C28.0407 9.50603 28.1035 9.44325 28.1454 9.12238C28.2291 8.55041 28.1035 8.38998 25.6831 5.97652C23.7928 4.10016 23.4022 3.73745 23.0464 3.57702C22.6349 3.38171 22.6279 3.38171 20.8492 3.36078L19.0635 3.33288L18.8682 3.50029C18.7287 3.62584 18.6729 3.73745 18.6729 3.89788C18.6729 4.10016 18.8194 4.27455 19.9564 5.41152L21.2398 6.70195L19.0426 6.67405C16.6152 6.64615 16.4617 6.62522 15.4922 6.16485C14.69 5.78819 14.1669 5.37664 12.6951 3.95368C11.1744 2.47492 10.456 1.87504 9.59105 1.35189C8.46802 0.661337 7.12179 0.221892 5.7058 0.0684356C5.32914 0.033559 3.8992 -0.0013175 2.51111 -0.0013175H0V2.22381Z"
+                                fill="#555555" />
+                            </svg>
+                          </div>
+                          <div class="ms-2 iconBox" (click)="removeDrpDown($event, i)">
+                            <i class="pi pi-minus i-small text-danger"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-accordionTab>
+                </p-accordion>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div class="groupBox" *ngIf="!_isLocked">
+              <p class="heading mb-2">Players</p>
+              <div class="greyBox">
+                <div>
+                  <p-table class="common-table text-center" [value]="_topPlayersList">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>Name</th>
+                        <th>State</th>
+                        <th>Club</th>
+                        <th>Point</th>
+                        <th>Email</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-player>
+                      <tr>
+                        <td>{{ player.participant_name }}</td>
+                        <td>{{player.state}}</td>
+                        <td>{{player.club}}</td>
+                        <td>{{player.points ==null?0: player.points}}</td>
+                        <td>{{player.email}}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </div>
+            <div class="groupBox" *ngIf="_isLocked">
+              <p class="heading mb-2 p-green"><b>Group Matches</b></p>
+              <div class="greyBox" [style]="{}">
+                <div class="accordion groups" *ngFor="let item of _matchDetailsList; let i = index">
+                  <p-accordion>
+                    <p-accordionTab>
+                      <ng-template pTemplate="header">
+                        <div class="flex-sb flex-vc w-100">
+                          <p>Group {{ i + 1 }}</p>
+                          <p class="p-small">
+                            {{ item.matches.length }} Matches
+                          </p>
+                        </div>
+                      </ng-template>
+                      <ng-template pTemplate="content">
+                        <div class="accordianContent">
+                          <div class="matchRow text-center flex-sb flex-vc row" *ngFor="let matches of item.matches">
+                            <div class="col-1">
+                              <p class="p-combine">{{'R'+ matches.round }}</p>
+                            </div>
+                            <div class="col-4">
+                              <p class="p-green text-overflow">
+                                {{ matches.match_details[0].participant_name }}
+                              </p>
+                            </div>
+                            <div class="col-1">
+                              <p class="p-green">VS</p>
+                            </div>
+                            <div class="col-4">
+                              <p class="p-green text-overflow">
+                                {{ matches.match_details[1].participant_name }}
+                              </p>
+                            </div>
+                            <!-- <p class="p-green">
+                                                        {{matches.match_details[0].score==null?'0':matches.match_details[0].score
+                                                        + '-' +
+                                                        matches.match_details[1].score==null?'0':matches.match_details[1].score}}
+                                                    </p> -->
+                            <!-- <div class="col-2">
+                              <p class="p-green">
+                                {{ 0 + "-" + 0 }}
+                              </p>
+                            </div> -->
+                            <div class="col-2">
+                              <p class="p-green">
+                                {{matches.match_details[0].set_won
+                                + '-' +
+                                matches.match_details[1].set_won}}
+                              </p>
+                            </div>
+
+                          </div>
+                          <div class="qualifiers">
+                            <!-- <div class="d-flex p-small">
+                              <p class="">Qualifiers-</p>
+                              <p class="ms-2">{{ item.winners}}</p>
+                            </div> -->
+                            <div class="d-flex p-small" *ngFor="let data of item.winners;let i=index">
+                              <p class="">Qualifiers-{{i+1}}</p>
+                              <p class="ms-2">{{data}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-accordionTab>
+                  </p-accordion>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <p-dialog #pDialog [(visible)]="_fullScreenView" [style]="_dialogStyle" [draggable]="false" [modal]="true"
+    (onHide)="closeFullView()">
+    <div class="dialog">
+      <div class="bottomBar">
+        <div class="row">
+          <div class="col-lg-6">
+            <p class="heading mb-2">Created Groups</p>
+            <div class="greyBox" [style]="{ height: '64vh !important' }">
+              <div class="accordion groups" *ngFor="let item of _groupList; let i = index">
+                <p-accordion (onOpen)="openAccordion(i)" (onClose)="closeAccordion(i)">
+                  <p-accordionTab>
+                    <ng-template pTemplate="header">
+                      <div class="flex-sb flex-vc accordianHeader">
+                        <!-- <h6>{{ item.label }}</h6> -->
+                        <h6>{{'Group'+ (i+1) }}</h6>
+
+                        <p class="p-small" *ngIf="!item.showButton">
+                          {{ item.group_details.length + " Players Added" }}
+                        </p>
+                        <div class="flex-vc" *ngIf="!_isLocked && item.showButton">
+                          <button class="btn btn_green m-0 w-auto header-add" (click)="addDrp($event, i)">
+                            <i class="pi pi-plus i-small text-light"></i>
+                          </button>
+                          <div (click)="deleteGroup($event, i)" class="ms-2 iconBox delBut">
+                            <svg width="8" hight="8" viewBox="0 0 9 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M1.16565 6.30964C1.07629 5.14805 1.99473 4.15625 3.15975 4.15625H6.2092C7.37422 4.15625 8.29266 5.14805 8.20331 6.30964L7.98465 9.15225C7.90449 10.1942 7.03561 10.9989 5.99054 10.9989H3.37841C2.33334 10.9989 1.46446 10.1942 1.38431 9.15224L1.16565 6.30964Z"
+                                stroke="#CA0D0D" />
+                              <path d="M7.84262 2.58594H1.52637" stroke="#CA0D0D" stroke-linecap="round" />
+                              <path
+                                d="M3.63184 2C3.63184 1.44771 4.07955 1 4.63184 1H4.73725C5.28954 1 5.73725 1.44772 5.73725 2V2.57906H3.63184V2Z"
+                                stroke="#CA0D0D" />
+                              <path d="M5.7373 6.25781V8.88958" stroke="#CA0D0D" stroke-linecap="round" />
+                              <path d="M3.63184 6.25781V8.88958" stroke="#CA0D0D" stroke-linecap="round" />
+                            </svg>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+
+                    <ng-template pTemplate="content">
+                      <div class="accordianContent">
+                        <div *ngFor="let item of item.group_details">
+                          <div class="flex-vc">
+                            <input type="text" pInputText readonly [placeholder]="item.participant_name" />
+                            <div class="ms-2 iconBox">
+                              <svg class="merge" width="100%" viewBox="0 0 29 18" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                  d="M0 2.22381V4.4559L2.7413 4.47683C5.76858 4.51171 5.82438 4.51868 6.82883 4.993C7.61006 5.36269 8.16111 5.78121 9.34691 6.93911C9.93981 7.51806 10.6583 8.20164 10.9443 8.45973L11.4535 8.92708L10.9443 9.39442C10.6583 9.65251 9.93981 10.3361 9.34691 10.915C8.16111 12.0729 7.61006 12.4915 6.82883 12.8611C5.82438 13.3355 5.76858 13.3424 2.7413 13.3773L0 13.3982V15.6303V17.8555H2.51111C3.8992 17.8555 5.32914 17.8206 5.7058 17.7857C7.12179 17.6323 8.46802 17.1928 9.59105 16.5023C10.456 15.9791 11.1744 15.3792 12.6951 13.9005C14.1669 12.4775 14.69 12.066 15.4922 11.6893C16.4617 11.2289 16.6152 11.208 19.0426 11.1801L21.2398 11.1522L19.9564 12.4426C18.8194 13.5796 18.6729 13.754 18.6729 13.9563C18.6729 14.1167 18.7287 14.2283 18.8612 14.3469L19.0565 14.5143L20.9189 14.4934C22.7116 14.4724 22.7883 14.4655 23.0952 14.305C23.3185 14.1934 24.1555 13.4052 25.7598 11.7939C28.0407 9.50603 28.1035 9.44325 28.1454 9.12238C28.2291 8.55041 28.1035 8.38998 25.6831 5.97652C23.7928 4.10016 23.4022 3.73745 23.0464 3.57702C22.6349 3.38171 22.6279 3.38171 20.8492 3.36078L19.0635 3.33288L18.8682 3.50029C18.7287 3.62584 18.6729 3.73745 18.6729 3.89788C18.6729 4.10016 18.8194 4.27455 19.9564 5.41152L21.2398 6.70195L19.0426 6.67405C16.6152 6.64615 16.4617 6.62522 15.4922 6.16485C14.69 5.78819 14.1669 5.37664 12.6951 3.95368C11.1744 2.47492 10.456 1.87504 9.59105 1.35189C8.46802 0.661337 7.12179 0.221892 5.7058 0.0684356C5.32914 0.033559 3.8992 -0.0013175 2.51111 -0.0013175H0V2.22381Z"
+                                  fill="#555555" />
+                              </svg>
+                            </div>
+                            <div class="ms-2 iconBox">
+                              <i class="pi pi-minus i-small text-danger"></i>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex-vc" *ngIf="item.showDropDown">
+                          <p-dropdown appendTo="body" [options]="_topPlayers" [optionLabel]="'name'"
+                            placeholder="Select Player" (onChange)="selectedPlayer($event, i)"
+                            [(ngModel)]="_selectedPlayer">
+                          </p-dropdown>
+                          <div class="ms-2 iconBox">
+                            <svg class="merge" width="100%" viewBox="0 0 29 18" fill="none"
+                              xmlns="http://www.w3.org/2000/svg">
+                              <path
+                                d="M0 2.22381V4.4559L2.7413 4.47683C5.76858 4.51171 5.82438 4.51868 6.82883 4.993C7.61006 5.36269 8.16111 5.78121 9.34691 6.93911C9.93981 7.51806 10.6583 8.20164 10.9443 8.45973L11.4535 8.92708L10.9443 9.39442C10.6583 9.65251 9.93981 10.3361 9.34691 10.915C8.16111 12.0729 7.61006 12.4915 6.82883 12.8611C5.82438 13.3355 5.76858 13.3424 2.7413 13.3773L0 13.3982V15.6303V17.8555H2.51111C3.8992 17.8555 5.32914 17.8206 5.7058 17.7857C7.12179 17.6323 8.46802 17.1928 9.59105 16.5023C10.456 15.9791 11.1744 15.3792 12.6951 13.9005C14.1669 12.4775 14.69 12.066 15.4922 11.6893C16.4617 11.2289 16.6152 11.208 19.0426 11.1801L21.2398 11.1522L19.9564 12.4426C18.8194 13.5796 18.6729 13.754 18.6729 13.9563C18.6729 14.1167 18.7287 14.2283 18.8612 14.3469L19.0565 14.5143L20.9189 14.4934C22.7116 14.4724 22.7883 14.4655 23.0952 14.305C23.3185 14.1934 24.1555 13.4052 25.7598 11.7939C28.0407 9.50603 28.1035 9.44325 28.1454 9.12238C28.2291 8.55041 28.1035 8.38998 25.6831 5.97652C23.7928 4.10016 23.4022 3.73745 23.0464 3.57702C22.6349 3.38171 22.6279 3.38171 20.8492 3.36078L19.0635 3.33288L18.8682 3.50029C18.7287 3.62584 18.6729 3.73745 18.6729 3.89788C18.6729 4.10016 18.8194 4.27455 19.9564 5.41152L21.2398 6.70195L19.0426 6.67405C16.6152 6.64615 16.4617 6.62522 15.4922 6.16485C14.69 5.78819 14.1669 5.37664 12.6951 3.95368C11.1744 2.47492 10.456 1.87504 9.59105 1.35189C8.46802 0.661337 7.12179 0.221892 5.7058 0.0684356C5.32914 0.033559 3.8992 -0.0013175 2.51111 -0.0013175H0V2.22381Z"
+                                fill="#555555" />
+                            </svg>
+                          </div>
+                          <div class="ms-2 iconBox" (click)="removeDrpDown($event, i)">
+                            <i class="pi pi-minus i-small text-danger"></i>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-template>
+                  </p-accordionTab>
+                </p-accordion>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="col-lg-6">
+            <p class="heading mb-2">Players</p>
+            <div class="greyBox" [style]="{ height: '64vh !important' }">
+              <p-table class="common-table text-center" [value]="_topPlayers">
+                <ng-template pTemplate="header">
+                  <tr>
+                    <th>Name</th>
+                    <th>State</th>
+                    <th>Club</th>
+                    <th>Point</th>
+                    <th>Email</th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-player>
+                  <tr>
+                    <td>{{ player.name }}</td>
+                    <td>{{ player.state }}</td>
+                    <td>{{ player.club }}</td>
+                    <td>{{ player.points ==null?0: player.points}}</td>
+                    <td>{{ player.email }}</td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </div>
+          </div> -->
+          <div class="col-lg-6">
+            <div class="groupBox" *ngIf="!_isLocked">
+              <p class="heading mb-2">Players</p>
+              <div class="greyBox">
+                <div>
+                  <p-table class="common-table text-center" [value]="_topPlayersList">
+                    <ng-template pTemplate="header">
+                      <tr>
+                        <th>Name</th>
+                        <th>State</th>
+                        <th>Club</th>
+                        <th>Point</th>
+                        <th>Email</th>
+                      </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-player>
+                      <tr>
+                        <td>{{ player.participant_name }}</td>
+                        <td>{{player.state}}</td>
+                        <td>{{player.club}}</td>
+                        <td>{{player.points ==null?0: player.points}}</td>
+                        <td>{{player.email}}</td>
+                      </tr>
+                    </ng-template>
+                  </p-table>
+                </div>
+              </div>
+            </div>
+            <div class="groupBox" *ngIf="_isLocked">
+              <p class="heading mb-2 p-green"><b>Players Order</b></p>
+              <div class="greyBox">
+                <div class="accordion groups" *ngFor="let item of _matchDetailsList; let i = index">
+                  <p-accordion>
+                    <p-accordionTab>
+                      <ng-template pTemplate="header">
+                        <div class="flex-sb flex-vc w-100">
+                          <p>Group {{ i + 1 }}</p>
+                          <p class="p-small">
+                            {{ item.matches.length }} Matches
+                          </p>
+                        </div>
+                      </ng-template>
+                      <ng-template pTemplate="content">
+                        <div class="accordianContent">
+                          <div class="matchRow text-center flex-sb flex-vc row" *ngFor="let matches of item.matches">
+                            <div class="col-1">
+                              <p class="p-combine">{{ 'R'+matches.round }}</p>
+                            </div>
+                            <div class="col-4">
+                              <p class="p-green text-overflow">
+                                {{ matches.match_details[0].participant_name }}
+                              </p>
+                            </div>
+                            <div class="col-1">
+                              <p class="p-green">VS</p>
+                            </div>
+                            <div class="col-4">
+                              <p class="p-green text-overflow">
+                                {{ matches.match_details[1].participant_name }}
+                              </p>
+                            </div>
+                            <!-- <p class="p-green">
+                                                        {{matches.match_details[0].score==null?'0':matches.match_details[0].score
+                                                        + '-' +
+                                                        matches.match_details[1].score==null?'0':matches.match_details[1].score}}
+                                                    </p> -->
+                            <!-- <div class="col-2">
+                              <p class="p-green">
+                                {{ 0 + "-" + 0 }}
+                              </p>
+                            </div> -->
+                            <div class="col-2">
+                              <p class="p-green">
+                                {{matches.match_details[0].set_won
+                                + '-' +
+                                matches.match_details[1].set_won}}
+                              </p>
+                            </div>
+
+                          </div>
+                          <div class="qualifiers">
+                            <div class="d-flex p-small" *ngFor="let data of item.winners;let i=index">
+                              <p class="">Qualifiers-{{i+1}}</p>
+                              <p class="ms-2">{{data}}</p>
+                            </div>
+                          </div>
+                        </div>
+                      </ng-template>
+                    </p-accordionTab>
+                  </p-accordion>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-dialog>
+  <p-dialog #pDialog [(visible)]="_isFullViewGrid" [style]="_dialogStyle" [draggable]="false" [modal]="true">
+    <div class="innerContent">
+      <p-table class="common-table text-center" [value]="_selectedPlayerForMainDraw">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Name</th>
+            <th>State</th>
+            <th>Club</th>
+            <th>Point</th>
+            <th>Email</th>
+            <th *ngIf="this._groupList.length == 0">Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-player>
+          <tr>
+            <td>{{ player.name }}</td>
+            <td>{{ player.state }}</td>
+            <td>{{ player.club }}</td>
+            <td>{{ player.points==null?0: player.points }}</td>
+            <td>{{ player.email }}</td>
+            <td *ngIf="this._groupList.length == 0" (click)="removeFromMainDraw(player)" class="gridRemove">
+              {{ "Remove" }}
+            </td>
+
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-dialog>
+  <p-dialog #pDialog [(visible)]="_isAddPlayerGrid" [style]="_dialogStyle" [draggable]="false" [modal]="true"
+    (onHide)="ClosePopUp()">
+    <div class="innerContent">
+      <div class="row">
+        <div class="col-md-3">
+          <input [(ngModel)]="_searchByPlayerName" type="text" pInputText (keydown)="searchPlayer()"
+            [placeholder]="'Search Player'" />
+        </div>
+      </div>
+      <p-table class="common-table text-center" [value]="_topPlayers">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>Name</th>
+            <th>State</th>
+            <th>Club</th>
+            <th>Point</th>
+            <th>Email</th>
+            <th>Action</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-player let-columns="columns">
+          <tr>
+            <td>{{ player.name }}</td>
+            <td>{{ player.state }}</td>
+            <td>{{ player.club }}</td>
+            <td>{{ player.points==null?0: player.points }}</td>
+            <td>{{ player.email }}</td>
+            <td>
+              <input type="checkbox" (click)="playerForMainDraw($event, player)" [ngModel]="player.isSelected" />
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-dialog>
+  <p-dialog #pDialog [(visible)]="_isViewPlayerGrid" [style]="_dialogStyle" [draggable]="false" [modal]="true"
+    (onHide)="ClosePopUp()">
+    <div class="innerContent">
+      <div class="row">
+        <div class="col-md-3">
+          <input [(ngModel)]="_searchByPlayerNameView" type="text" pInputText (keydown)="searchPlayerInView()"
+            [placeholder]="'Search Player'" />
+        </div>
+      </div>
+      <p-table class="common-table text-center" [value]="_topPlayers">
+        <ng-template pTemplate="header" let-columns>
+          <tr>
+            <th>Name</th>
+            <th>State</th>
+            <th>Club</th>
+            <th>Point</th>
+            <th>Email</th>
+            <!-- <th>Action</th> -->
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-player let-columns="columns">
+          <tr>
+            <td>{{ player.name }}</td>
+            <td>{{ player.state }}</td>
+            <td>{{ player.club }}</td>
+            <td>{{ player.points ==null?0: player.points}}</td>
+            <td>{{ player.email }}</td>
+            <td>
+              <!-- <input type="checkbox" (click)="playerForMainDraw($event, player)" [ngModel]="player.isSelected" /> -->
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+  </p-dialog>
+  <p-dialog [(visible)]="_grpSwapPlayer" [style]="{ width: '800px' }" header="Group Playoff Player Swap"
+    closeIcon="pi pi-times-circle p-combine " [draggable]="false" [modal]="true" class="dialogHeader">
+    <stupa-grp-player-swap [_playerListWithGroupNameCopy]="_playerListWithGroupNameCopy"
+      [_currentGroupName]="_currentGroupName" [_playerSwapDataList]="_playerSwapDataList"
+      [_playerListWithGroupName]="_playerListWithGroupName" [_groupList]="_groupList"
+      (swapGroupPlayer)="swapGroupPlayer($event)" [_searchByPlayerNameSwap]="_searchByPlayerNameSwap"
+      [_currentParticipantId]="_currentParticipantId"></stupa-grp-player-swap>
+  </p-dialog>
+</div>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

@@ -1,0 +1,16 @@
+$commonHeight: 350px;
+
+.fullHeight {
+    height: 100%;
+}
+.common-svg-msg {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 0 4rem;
+    .container-xxl {
+        box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+        padding: 1rem;
+    }
+}

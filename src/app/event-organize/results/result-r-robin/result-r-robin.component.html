@@ -1,0 +1,356 @@
+<p-dialog  [(visible)]="_showTeam" [header]="'Team Score Card'" [modal]="true" [draggable]="false" [style]="{width: '90vw'}" [baseZIndex]="10000"
+  (onHide)="closePopUp()">
+  <div style="height: 100%; width: 100%;" class="teamScreen">
+    <!-- <div class="cross" (click)="RemoveTeamScreen()">
+      <img src="../../../../assets/icons/cancle_circle.png" alt="" />
+    </div> -->
+
+    <!-- upper section starts -->
+    <div class="upper">
+      <div class="left_section">{{_team1}}</div>
+      <div class="center">
+        <div class="leftScore">1</div>
+        <div class="vs">vs</div>
+        <div class="rightScore">1</div>
+      </div>
+      <div class="right_section">{{_team2}}</div>
+    </div>
+    <!-- upper section end -->
+
+    <!-- lower section starts  -->
+    <div class="container" *ngFor="let item of _matchesArray">
+      <div class="lower" style="margin-top: 3rem">
+        <div class="left_section">
+          <div class="row  mt-3">
+
+            <div class="col-lg-5  inner_left_section">
+              <div class="row">
+
+                <div class="col-lg-5 col-md-5 col-sm-5 use_flex">
+                  <ul>
+                    <li class="list_items">
+                      {{ item.participant_id_A.score }}
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-5  col-md-5 col-sm-5" style="
+                    font-size: 0.9rem;
+                    letter-spacing: 1px;
+                    padding: 0;
+                    color: var(--primary-color);
+                    text-align: end;
+                    align-self: center;
+                  ">
+                  {{item.participant_id_A.participant_name}}
+                </div>
+                <div class="col-lg-2 col-md-1 col-sm-2">
+                  <p-avatar icon="pi pi-user" styleClass="mr-2 ms-2" shape="square">
+                  </p-avatar>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-2  score">
+              <div class="left_section_score">{{item.participant_id_A.set_won}}</div>
+              <div class="vs">vs</div>
+              <div class="right_section_score">{{item.participant_id_A.set_lost}}</div>
+            </div>
+
+            <div class="col-lg-5 right_section">
+              <div class="row">
+                <div class="col-lg-2 col-md-2 col-sm-2">
+                  <p-avatar icon="pi pi-user" styleClass="mr-2 " shape="square">
+                  </p-avatar>
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5" style="
+                    font-size: 0.9rem;
+                    letter-spacing: 1px;
+                    padding: 0;
+                    color: var(--primary-color);
+                    text-align: left;
+                    align-self: center;
+                  ">
+                  {{item.participant_id_B.participant_name}}
+                </div>
+                <div class="col-lg-5 col-md-5 col-sm-5 use_flex flex-e">
+                  <ul>
+                    <li class="list_items">
+                      {{ item.participant_id_B.score}}
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- lower section end -->
+  </div>
+</p-dialog>
+
+
+
+
+<div id="main">
+  <!-- leagueSystemDraw  code below  -->
+  <!-- <div class="top-searchbar mt-3">
+    <div class="flex-vc">
+      <div class="innerBox-input">
+        <span class="p-input-icon-left">
+          <i class="pi pi-search"></i>
+          <input [(ngModel)]="_searchTeams" type="text" pInputText placeholder="Find" (keyup)="searchGroups()"
+            (keypress)="searchGroups()" (keydown)="searchGroups()" />
+        </span>
+      </div>
+      <div class="innerBox p-links">
+        <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+      </div>
+      <div class="innerBox p-links">
+        <i class="pi pi-align-right i-small p-secondary-dark"></i>
+      </div>
+    </div>
+  </div> -->
+
+
+  <!-- <div *ngFor="let match of _matchDetailsList; let i =index" class="container">
+    <p class="group_name"></p>
+    <div class="cards ">
+      <div *ngFor="let col of match" class="containerc">
+        <div class="row">
+          <div class="col-lg-2 one" style="min-width: 12vw;">
+            <div class="card-avatar">
+              <p-avatar icon="pi pi-user" styleClass="mr-2" shape="circle" size="small"></p-avatar>
+            </div>
+            <div class="names">
+              <div class="groupName">{{col.participant_name}}</div>
+              <div class="playerName"></div>
+            </div>
+          </div>
+          <div *ngFor="let row of col.data; let j =index" class="row col-lg-2 three p-links f"
+            (mouseenter)="toggle($event,row,j,col)" style="min-width: 9vw;">
+            <div class="col-lg-2 two">
+              <div *ngIf="row.position==0" class="x" style="font-weight:bold;color:black;">X</div>
+            </div>
+            <div class="lowerContent">
+              <div class="matchScore">
+                <div *ngIf="row.position!==0" class="lowerContent1">
+                  <div class="uppersection">1 - 2 Player</div>
+                  <div class="matchScore1">
+                    <div class="highNumber" style="color:var(--success-color)">{{row.set_won}}</div>
+                    <div class="highFun">-</div>
+                    <div class="lowNumber">{{row.set_lost}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+          <div class="parent">
+            <p-overlay [(visible)]="_showPlayerData" #op [style]="{width:'15vw'}">
+              <div class="score-panel">
+                <div class="innerContent">
+                  <div class="playerRow row flex-vc">
+                    <div class="col-2 flex-hc h-100">
+                      <div class="">
+                        <p-avatar shape="circle" label="PK" size="small"></p-avatar>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="p-green"><b>{{_showName}}</b></p>
+                      <div class="flex-vc mt-1  w-100 ">
+                        <div class="text-center me-2">
+                          <p class="p-secondary "><b>{{_showPlayer.score}}</b></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="flex-vc">
+                        <h3><b>{{_showPlayer.set_won}}</b></h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="playerRow row flex-vc">
+                    <div class="col-2 flex-hc h-100">
+                      <div class="">
+                        <p-avatar shape="circle" label="PK" size="small"></p-avatar>
+                      </div>
+                    </div>
+                    <div class="col-8">
+                      <p class="p-green"><b>{{_showPlayer.opponent_name}}</b></p>
+                      <div class="flex-vc mt-1  w-100 ">
+                        <div class="text-center me-2">
+                          <p class="p-secondary "><b>{{_showPlayer.opponent_score}}</b></p>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-2">
+                      <div class="flex-vc">
+                        <h3><b>{{_showPlayer.set_lost}}</b></h3>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="divider flex-vc">
+                    <p-divider class="w-100">
+                    </p-divider>
+                    <div class="vs">
+                      <p><b>vs</b></p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-overlay>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+
+  <div class="relativeContainer" #score>
+    <div class="show_cards" *ngFor="let match of _matchDetailsList; let i =index">
+      <!-- <p *ngIf="_searchTeams==''"><b>Group {{i+1}}</b></p>
+      <p *ngIf="_searchTeams>0"><b>Group {{_searchTeams}}</b></p> -->
+
+      <br>
+      <div class="row" *ngFor="let col of match; let p =index" >
+        <div class="col-lg-3 gg">
+          <div class="flex-vc">
+            <p-avatar icon="pi pi-user" styleClass="mr-2" shape="circle" size="small"></p-avatar>
+              <div class=" ms-2 groupName"></div>
+              <p class=" ms-2 text-overflow w-100">{{col.participant_name}}</p>
+          </div>
+        </div>
+        <!-- <p class="ms-2 text-overflow w-100">{{col.participant_name}}</p> -->
+        <div class="col-lg-2 ggdown"  *ngFor="let row of col.data; let j =index"
+          (click)="toggle(true,row,j,col,match)">
+          <div *ngIf="row.position==0" class="x">X</div>
+          <div *ngIf="row.position!==0">
+            <div class="uppersection">{{p+1}}-{{j+1}} Player</div>
+            <div class="lowerScore">
+              <div class="highNumber">{{row.set_won}}</div>
+              <div class="highFun">-</div>
+              <div class="lowNumber">{{row.set_lost}}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+   
+  </div>
+
+  <!-- <p-overlay [(visible)]="_showPlayerData" appendTo="body" [style]="{width:'15vw'}">
+
+  <div class="score-panel">
+    <div class="innerContent">
+      <div class="playerRow row flex-vc">
+        <div class="col-2 flex-hc h-100">
+          <div class="">
+            <p-avatar shape="circle" label="PK" size="small"></p-avatar>
+          </div>
+        </div>
+        <div class="col-8">
+          <p class="p-green"><b>{{_showName}}</b></p>
+          <div class="flex-vc mt-1  w-100 ">
+            <div class="text-center me-2">
+              <p class="p-secondary "><b>{{_showPlayer.score}}</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="flex-vc">
+            <h3><b>{{_showPlayer.set_won}}</b></h3>
+          </div>
+        </div>
+      </div>
+      <div class="playerRow row flex-vc">
+        <div class="col-2 flex-hc h-100">
+          <div class="">
+            <p-avatar shape="circle" label="PK" size="small"></p-avatar>
+          </div>
+        </div>
+        <div class="col-8">
+          <p class="p-green"><b>{{_showPlayer.opponent_name}}</b></p>
+          <div class="flex-vc mt-1  w-100 ">
+            <div class="text-center me-2">
+              <p class="p-secondary "><b>{{_showPlayer.opponent_score}}</b></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-2">
+          <div class="flex-vc">
+            <h3><b>{{_showPlayer.set_lost}}</b></h3>
+          </div>
+        </div>
+      </div>
+    
+      <div class="divider flex-vc">
+        <p-divider class="w-100">
+        </p-divider>
+        <div class="vs">
+          <p><b>vs</b></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</p-overlay> -->
+
+
+<p-dialog [(visible)]="_showPlayerData" [header]="'Score Card'" [modal]="true" [draggable]="false" [style]="{width: '20vw',minHeight:'50px'}" [baseZIndex]="10000"
+(onMouseLeave)="closePopUp()" position="top">
+  <div class="parent">
+      <!-- [style]="{width:'15vw'}"  appendTo="body"-->
+      <div class="score-panel">
+        <div class="innerContent">
+          <div class="playerRow row flex-vc">
+            <div class="col-2 flex-hc h-100">
+              <div class="">
+                <p-avatar shape="circle" label="PK" size="small"></p-avatar>
+              </div>
+            </div>
+            <div class="col-8">
+              <p class="p-green"><b>{{_showName}}</b></p>
+              <div class="flex-vc mt-1  w-100 ">
+                <div class="text-center me-2">
+                  <p class="p-secondary "><b>{{_showPlayer.score}}</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="flex-vc">
+                <h3><b>{{_showPlayer.set_won}}</b></h3>
+              </div>
+            </div>
+          </div>
+          <div class="playerRow row flex-vc">
+            <div class="col-2 flex-hc h-100">
+              <div class="">
+                <p-avatar shape="circle" label="PK" size="small"></p-avatar>
+              </div>
+            </div>
+            <div class="col-8">
+              <p class="p-green"><b>{{_showPlayer.opponent_name}}</b></p>
+              <div class="flex-vc mt-1  w-100 ">
+                <div class="text-center me-2">
+                  <p class="p-secondary "><b>{{_showPlayer.opponent_score}}</b></p>
+                </div>
+              </div>
+            </div>
+            <div class="col-2">
+              <div class="flex-vc">
+                <h3><b>{{_showPlayer.set_lost}}</b></h3>
+              </div>
+            </div>
+          </div>
+          <div class="divider flex-vc">
+            <p-divider class="w-100">
+            </p-divider>
+            <div class="vs">
+              <p><b>vs</b></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    <!-- </div> -->
+  </div>
+</p-dialog>

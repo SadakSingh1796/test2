@@ -1,0 +1,148 @@
+<div class="registration-common-row my-2">
+    <div class="row mt-3">
+        <div class="col-lg-9">
+            <div class="top-searchbar">
+                <div class="flex-vc">
+                    <div class="innerBox-input">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input type="text" [(ngModel)]="_searchTeams" (keyup)="findTeams()" (keypress)="findTeams()"
+                                (keydown)="findTeams()" pInputText placeholder="Find Player" />
+                        </span>
+                    </div>
+                    <div class="innerBox p-links">
+                        <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+                    </div>
+                    <div class="innerBox p-links">
+                        <i class="pi pi-align-right i-small p-secondary-dark"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!--  <div class="main" *ngFor="let item of _playerInfo">
+
+                <div class="common-list mt-4">
+                    <div class="flex-sb flex-vc">
+                        <div class="flex-vc">
+                            <p-avatar label="PS" styleClass="mr-2" shape="circle"></p-avatar>
+                            <div class="playerInfo ms-3">
+                                <p class="p-green text-overflow"><b>SAmple name12</b></p>
+                                <p class="p-green text-overflow">xyzsample@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="checkbox-chain mx-3">
+                            <div class="flex-vc flex-hc ">
+                                <div class="flex-sb flexBase flex-wrap">
+                                    <div class="flex-vc flex-wrap field-checkbox " *ngFor="let item of item.events">
+                                        <input id="checkInput" (click)="currentEvent($event)" type="checkbox"
+                                            class="htmlCheckbox me-2" [checked]="item.checked">
+                                        <label for="checkInput" class="text-overflow">{{item.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="end amount">
+
+                            <p class="p-green"><b>$12</b></p>
+                        </div>
+                    </div>
+                </div>
+                <p-divider></p-divider>
+            </div> -->
+            <!-- <div class="main">
+                <div class="common-list mt-4">
+                    <div class="flex-sb flex-vc">
+                        <div class="flex-vc">
+                            <p-avatar label="P" styleClass="mr-2" shape="circle"></p-avatar>
+                            <div class="playerInfo ms-3">
+                                <p class="p-green text-overflow"><b>SAmple name12</b></p>
+                                <p class="p-green text-overflow">xyzsample@gmail.com</p>
+                            </div>
+                        </div>
+                        <div class="checkbox-chain mx-3">
+                            <div class="flex-vc flex-hc">
+                                <div class="flex-sb flexBase ">
+                                    <div class="flex-vc field-checkbox " *ngFor="let item of _events">
+                                        <input id="checkInput" (click)="currentEvent($event)" type="checkbox"
+                                            class="htmlCheckbox me-2" [checked]="item.checked">
+                                        <label for="checkInput" class="text-overflow">{{item.name}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="end amount">
+                            <p class="p-green"><b>$12</b></p>
+                        </div>
+                    </div>
+                </div>
+                <p-divider></p-divider>
+            </div> -->
+            <div class="main" *ngFor="let item of _players;let i = index">
+                <div class="common-list mt-4">
+
+                    <!-- <div class="flex-sb flex-vc"> -->
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <div class="flex-vc">
+                                <p-avatar label="P" styleClass="mr-2" shape="circle"></p-avatar>
+                                <div class="playerInfo ms-3">
+                                    <p class="p-green text-overflow"><b>{{item.player_name}}</b></p>
+                                    <p class="p-green text-overflow">{{item.email}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 flex-vc flex-hc">
+                            <div class="checkbox-chain mx-3 "
+                                *ngFor="let category of item.categories_list;let catIndex = index">
+                                <div class="flex-vc flex-hc">
+                                    <div class="flex-sb flexBase ">
+                                        <div class="flex-vc field-checkbox ">
+                                            <input id="checkInput" (click)="currentEvent($event,i,catIndex)"
+                                                type="checkbox" class="htmlCheckbox me-2"
+                                                [checked]="category.isSelected">
+                                            <label for="checkInput"
+                                                class="text-overflow">{{category.categoryName}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="end amount">
+                                <p class="p-green"><b>${{category.Amount}}</b></p>
+                            </div> -->
+                            </div>
+                        </div>
+                        <div class="col-lg-1 flex-hc flex-vc">
+                            <p class="p-green"><b>${{item.eventAmount}}</b></p>
+                        </div>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+            <p-divider></p-divider>
+          
+            <!-- //ends -->
+
+        </div>
+
+        <div class="col-lg-3">
+            <div class="flex-h-sb">
+                <div class="topHeading flex-h">
+                    <h4 class="p-secondary">Total Payment</h4>
+                </div>
+                <div class="totalBill">
+                    <p-divider></p-divider>
+                    <div class="flex-sb">
+                        <h6 class="p-green">Total Bill</h6>
+                        <h6 class="p-combine">${{_totalAmount}}</h6>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="paynow">
+        <div class="flex-e">
+            <h4 class="p-combine p-links" (click)="payNow()"><b>Pay Now</b></h4>
+        </div>
+    </div>
+</div>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

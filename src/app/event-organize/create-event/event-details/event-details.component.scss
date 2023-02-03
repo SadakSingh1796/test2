@@ -1,0 +1,390 @@
+$mediaQueries: (
+  mobile: 750px,
+  tab: 991px,
+);
+
+@mixin query($screen) {
+  @each $key, $value in $mediaQueries {
+    @if ($screen ==$key) {
+      @media only screen and (max-width: $value) {
+        @content;
+      }
+    }
+  }
+}
+
+.topHeading {
+  .reset {
+    p {
+      color: var(--combinating-color);
+    }
+  }
+
+  .bannerUnpublish {
+    position: relative;
+
+    .dropdownUnpublish {
+      position: absolute;
+      top: 50%;
+      right: -15px;
+      transform: translate(-50%, -50%);
+      padding: 6px;
+      background: white;
+    }
+  }
+}
+
+.centerElement {
+  ::ng-deep {
+    .p-multiselect {
+      margin: 0 !important;
+    }
+  }
+  .dateSection {
+    margin-top: 3rem;
+
+    ::ng-deep {
+      .p-calendar input {
+        color: var(--main-color);
+        font-weight: 800;
+        cursor: pointer;
+      }
+
+      .p-calendar input::placeholder {
+        font-size: 20px;
+        font-weight: 300 !important;
+      }
+    }
+
+    .dateFlex {
+      border-bottom: 1px solid var(--secondary-color);
+      .endDate {
+        ::ng-deep {
+          .p-calendar {
+            input {
+              text-align: end;
+              padding-right: 0 !important;
+            }
+          }
+        }
+      }
+
+      .flex1 {
+        flex-basis: 100%;
+
+        label {
+          color: var(--secondary-color);
+        }
+
+        .statDate-flexLine {
+          .text {
+            flex-basis: 10vw;
+          }
+
+          span.divider {
+            position: relative;
+            flex-basis: 100%;
+            height: 1px;
+            background-color: var(--secondary-color);
+          }
+        }
+      }
+
+      .flex-line {
+        flex-basis: 75px;
+        position: relative;
+        display: flex;
+        justify-content: center;
+
+        .divider {
+          display: block;
+          width: 0.01em;
+          background: var(--secondary-color);
+          height: 190px;
+        }
+      }
+    }
+  }
+
+  .detail-input {
+    label {
+      color: var(--secondary-color);
+    }
+
+    input {
+      border-bottom: 1px solid var(--secondary-color) !important;
+      border: none;
+      border-radius: 0 !important;
+      background-color: transparent;
+      margin: 0 !important;
+    }
+
+    ::ng-deep {
+      .p-calendar .p-inputtext {
+        border-bottom: 0.01em solid #ced4da !important;
+        border-radius: 0;
+      }
+      .p-multiselect {
+        border: none;
+        border-bottom: 1px solid #5555;
+        border-radius: 0;
+        margin: 0 !important;
+      }
+      .p-dropdown {
+        border: none;
+        border-bottom: 1px solid #5555;
+        border-radius: 0;
+        margin: 0 !important;
+      }
+    }
+  }
+
+  .bannerSection {
+    .bannerFlex {
+      height: 180px;
+    }
+
+    .flexBox1 {
+      flex-basis: 100%;
+      height: 100%;
+
+      .choose {
+        margin: 5vh 0;
+      }
+    }
+
+    .flex-line {
+      flex-basis: 75px;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      margin-top: 47px;
+
+      .divider {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 0.01em;
+        transform: translate(-50%, -50%);
+        background: var(--secondary-color);
+        height: 67%;
+      }
+    }
+
+    .bannerBox {
+      height: 100%;
+      border-radius: var(--common-border-radius);
+      position: relative;
+      .fileUploader {
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 1;
+        position: relative;
+      }
+      .overlap {
+        position: absolute;
+        top: 0;
+        padding: 1rem;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      .relativeBody {
+        position: relative;
+        color: white;
+        height: 180px;
+        input[type="image"] {
+            border-radius: 7px;
+          position: absolute;
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+        }
+        .innerColor {
+            border-radius: 7px;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          left: 0;
+          right: 0;
+          padding: 1.5rem;
+          background-color: rgba(75, 75, 75, 0.555);
+          .reuploadBoxie {
+            input[type="file"] {
+              display: none;
+            }
+            label {
+              display: flex;
+              align-items: center;
+              gap: 0.6rem;
+              padding: 0.2rem 0.6rem;
+              background: var(--secondary-color);
+              width: max-content;
+              border-radius: 7px;
+              position: absolute;
+              bottom: 2vh;
+              right: 2vw;
+              cursor: pointer;
+              img {
+                align-self: flex-start;
+              }
+            }
+            
+          }
+  
+
+    .uploadbtn{
+      letter-spacing: 1px;
+      font-weight: bold;
+    }
+          // .reupload {
+          //     position: absolute;
+          //     right: 1vw;
+          //     bottom: 2vh;
+          //     z-index: 2;
+          //     .reuploadBox {
+          //         padding: 5px 8px;
+          //         background: #ffffff9a;
+          //         color: var(--primary-color);
+          //         border-radius: var(--common-border-radius);
+          //         width: 28%;
+          //         i {
+          //             font-size: 10px;
+          //         }
+          //         input {
+          //             opacity: 0;
+          //         }
+          //         label {
+          //             color: var(--main-color-light);
+          //             margin-top: 0px;
+          //             margin-left: -66px;
+          //             z-index: 2;
+          //             position: absolute;
+          //         }
+          //     }
+          // }
+        }
+      }
+
+      .setCheck {
+        position: relative;
+
+        .checkImage {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+        }
+      }
+
+      .imgContainer {
+        width: 80px;
+      }
+    }
+
+    ._dashed {
+      border: 1px dashed var(--secondary-color) !important;
+      padding: 1rem;
+    }
+
+    ._solid {
+      padding: 1rem;
+      border: 1px solid var(--secondary-color) !important;
+    }
+    @include query(tab) {
+      .bannerFlex {
+        width: 100% !important;
+        height: auto !important;
+        flex-direction: column;
+        .flexBox1 {
+          width: 100%;
+          .bannerBox {
+            height: 180px;
+          }
+        }
+      }
+      .flex-line {
+        width: 100%;
+        height: 100%;
+        margin-top: 0;
+        .divider {
+          width: 100% !important;
+          height: 1px !important;
+        }
+      }
+    }
+  }
+}
+
+.bottomSection {
+  .relativeCard {
+    border-radius: var(--common-border-radius);
+    // border: 1px solid var(--main-color);
+    max-width: 350px;
+    border: 1px solid #82d7c9;
+
+    .clickEvents {
+      border-radius: var(--common-border-radius);
+      border: 1px solid var(--main-color);
+      padding: 10px 15px;
+
+      .imgContainer {
+        max-width: 12px;
+      }
+    }
+  }
+
+  ::ng-deep {
+    .owl-theme .owl-nav [class^="owl-"] {
+      position: absolute;
+      top: 50%;
+      transform: translate(0, -50%);
+      background-color: transparent;
+
+      i {
+        color: var(--combinating-color);
+      }
+    }
+
+    .owl-prev {
+      position: absolute;
+      left: -35px;
+    }
+
+    .owl-next {
+      position: absolute;
+      right: -35px;
+    }
+  }
+}
+.review_portal {
+  padding: 1rem;
+  .continue {
+    i {
+      color: var(--combinating-color);
+      font-size: 12px;
+    }
+  }
+  .flexContainer {
+    display: flex;
+    .info {
+      flex-basis: 100%;
+    }
+    .image_portal {
+      flex-basis: 40%;
+    }
+  }
+}
+
+// new success msg created starts 
+.newbottom{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+// new success msg created ends 

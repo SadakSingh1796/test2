@@ -1,0 +1,103 @@
+<div class="container-xxl">
+    <div class="topBar">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="innerContent me-4">
+                    <p class="heading mb-0"><b class="">Participant Type</b></p>
+                    <p-dropdown class="m-0" [options]="_participantTypesList" [(ngModel)]="_selectedParticipantTypes"
+                        optionLabel="participant_description" appendTo="body" (onChange)="setType($event)"
+                        placeholder="Type">
+                    </p-dropdown>
+                </div>
+            </div>
+            <div *ngIf="_showFixtureFormat" class="col-lg-6">
+                <div class="innerContent ms-4">
+                    <p class="heading mb-0"><b>Category</b></p>
+                    <p-dropdown class="m-0" [options]="_categoryList" [(ngModel)]="_categoryList.category_description"
+                        optionLabel="category_description" [autoDisplayFirst]="true" appendTo="body"
+                        placeholder="Category" (onChange)="tabSelection($event)">
+                    </p-dropdown>
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="centerElement">
+        <div class="category">
+            <div class="radioBox mt-2">
+                <div class="flex-vc gap-4">
+                    <div class="flex-vc field-radiobutton" *ngFor="let item of _fixtureFormat">
+                        <p-radioButton name="participantType" [value]="item" [(ngModel)]="_fixtureFormat[0]"
+                            [inputId]="item.key"></p-radioButton>
+                        <label for="city1">{{item.name}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tabContainer">
+        <div class="innerBox">
+            <div class="centerElement">
+                <div class="heading flex-sb flex-vc">
+                    <h4 class="p-green"><b>Rankings</b></h4>
+                </div>
+                <div class="common-tabView mt-3">
+                    <div class="innerContent mt-3">
+                        <div class="top-searchbar mt-3">
+                            <div class="flex-vc">
+                                <div class="innerBox-input">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input type="text" [(ngModel)]="_searchByPlayerName" pInputText
+                                            (keydown)="searchPlayer()" (keypress)="searchPlayer()"
+                                            (keyup)="searchPlayer()" placeholder=" Find Player" />
+                                    </span>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <p-table class="common-table text_left" [value]="_playerrank">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th></th>
+                                        <th>Name</th>
+                                        <th *ngIf="_currentParticipantId==1">Email</th>
+                                        <th>Previous Points</th>
+                                        <th>Event Points</th>
+                                        <th>Total Points</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-player>
+                                    <tr>
+                                        <td>
+                                            <p-avatar class="avatar-small" label="PS" styleClass="mr-2 ms-2"
+                                                shape="circle">
+                                            </p-avatar>
+                                        </td>
+                                        <td>{{ player.participant_name }}</td>
+                                        <td *ngIf="_currentParticipantId==1">{{ player.email }}</td>
+                                        <td class="p-secondary">
+                                            <b>{{ player.points==null?0:player.points }}</b>
+                                        </td>
+                                        <td>
+                                            <b>{{ player.event_points==null?0: player.event_points}}</b>
+                                        </td>
+                                        <td class="p-combine">
+                                            <b>{{ player.total_points }}</b>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+

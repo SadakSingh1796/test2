@@ -1,0 +1,72 @@
+.container {
+  ::ng-deep {
+    .p-selectbutton.p-buttonset {
+      background: #eaeaea;
+      border-radius: var(--common-border-radius);
+    }
+
+    .p-buttonset {
+      .p-button {
+        padding: 0.5rem 3rem !important;
+        font-size: 12px;
+        border: none;
+        border-radius: var(--common-border-radius) !important;
+      }
+
+      .p-button:focus {
+        box-shadow: none;
+      }
+    }
+
+    .p-selectbutton .p-button.p-highlight {
+      background-color: white !important;
+      color: black;
+      font-weight: bold;
+      padding: 0.3rem 3rem !important;
+      border: none;
+      /* margin: auto; */
+      border-radius: 0;
+      margin: 0 3px 3.5px 3px;
+    }
+
+    .p-selectbutton .p-button {
+      background-color: #eaeaea;
+    }
+  }
+
+  .upperRow {
+    color: var(--text-color);
+    font-weight: bold;
+  }
+  .score {
+    .names {
+      p:first-child,
+      p:last-child {
+        width: 130px !important;
+      }
+    }
+  }
+  .row {
+    .boss2 {
+      ::ng-deep {
+        .p-inputtext {
+          border: none;
+          padding: 0;
+        }
+      }
+    }
+  }
+}
+
+.savebtn {
+  padding-bottom: 2px;
+  border: 1px solid var(--secondary-color);
+  text-align: center;
+  border-radius: 7px;
+  background: var(--green-color);
+  color: var(--primary-color);
+  letter-spacing: 1px;
+}
+.names {
+  gap: 1rem;
+}

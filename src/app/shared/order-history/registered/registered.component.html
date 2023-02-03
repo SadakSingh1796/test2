@@ -1,0 +1,35 @@
+<div class="common-dialog">
+    <div class="innerContent">
+        <div class="main" *ngFor="let item of _showDetailsonIcon.players;let i = index">
+            <div class="common-list mt-4">
+                <div class="flex-sb flex-vc">
+                    <div class="flex-vc">
+                        <p-avatar label="DL" styleClass="mr-2" shape="circle"></p-avatar>
+                        <div class="playerInfo ms-3">
+                            <p class="p-green text-overflow"><b>{{item.participant_name}}</b></p>
+                            <p class="p-green text-overflow">{{item.email
+                            }}</p>
+                        </div>
+                    </div>
+                    <div class="checkbox-chain mx-3" *ngFor="let category of item.categories;let catIndex = index">
+                        <div class="flex-vc flex-hc">
+                            <div class="flex-sb flexBase ">
+                                <div class="flex-vc field-checkbox ">
+                                    <input id="checkInput" type="checkbox" class="htmlCheckbox me-2"
+                                        [checked]="true">
+                                    <label for="checkInput" class="text-overflow">{{category}}</label>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="end amount">
+                            <p class="p-green"><b>${{category.total}}</b></p>
+                        </div> -->
+                    </div>
+
+                    <p class="p-green"><b>${{item.total}}</b></p>
+                </div>
+            </div>
+            <p-divider></p-divider>
+        </div>
+    </div>
+</div>

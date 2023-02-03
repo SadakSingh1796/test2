@@ -1,0 +1,15 @@
+.container-xxl {
+    ::ng-deep {
+        .p-dialog {
+            overflow-y: auto;
+        }
+    }
+    .common-table {
+        .p-datatable-thead > tr > th {
+            text-align: start;
+        }
+        .p-datatable-tbody > tr > td {
+            text-align: start;
+        }
+    }
+}

@@ -1,21 +1,27 @@
-import { Component } from '@angular/core';
-
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import * as AOS from 'aos';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'mux-video';
-  dataList: any = [
-    { id: 'Sm1VDwh2dvXSZXesQP8sXWd9Xutyb7Q8SybEhqjlYnQ' },
-    { id: '00o02PFE8Vf023Xj00L9UNyA00OqBWnp8AmLZmVSpRxijEws' },
-    { id: 'S9mnAjMMAp3iT15Q01l02O2wMrXwEk02aKjLjNZW91hXRA' },
-    { id: '00o02PFE8Vf023Xj00L9UNyA00OqBWnp8AmLZmVSpRxijEws' }
-  ]
-  PLAYBACK_ID: any = 'https://stream.mux.com/22eyC2mYPtcPjuCE1FK4cs5Xx01oTqncR3XXPWADegpI/high.mp4'
-  playbackId: string = "00o02PFE8Vf023Xj00L9UNyA00OqBWnp8AmLZmVSpRxijEws"
-  constructor() {
-
+export class AppComponent implements OnInit {
+  title = 'stupa';
+  supportLanguages = ['English', 'Portuguese'];
+  favIcon: any = document.querySelector('#appIcon');
+  constructor(private translateService: TranslateService) {
+    this.translateService.addLangs(this.supportLanguages);
+    this.translateService.setDefaultLang('English');
+    this.changeIcon();
+  }
+  ngOnInit(): void {
+    AOS.init();
+  }
+  changeIcon() {
+    document.title = 'CBTM';
+  }
+  selectLang(lang: string) {
+    this.translateService.use(lang);
   }
 }

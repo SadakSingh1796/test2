@@ -1,0 +1,90 @@
+<div class="admin-layout">
+    <div class="d-flex overlayContainers">
+        <div class="profile-header">
+            <div class="flex-vc">
+                <p class="me-3">
+                    Select Language:
+                    <select (click)="selectLang($any($event.target).value)">
+                        <option *ngFor="let items of supportLanguages">{{items}}</option>
+                    </select>
+                </p>
+                <p-overlayPanel appendTo="body" #menuPopup [showCloseIcon]="false" [style]="{width: '200px'}">
+                    <ng-template pTemplate>
+                        <div class="common-popup">
+                            <div class="innerContent">
+                                <div class="overlay-item menuItem ">
+                                    <div class="subMenus flex-vc flex-s">
+                                        <div class="imgSetting">
+                                            <div class="imgBackground ">
+                                                <img src="../../../assets/icons/user_profile.png" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="userText">
+                                            <p> {{'profile.myAccount'|translate}} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="overlay-item menuItem ">
+                                    <div class="subMenus flex-vc flex-s">
+                                        <div class="imgSetting">
+                                            <div class="imgBackground ">
+                                                <img src="../../../assets/icons/money_bag.png" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="userText">
+                                            <p> {{'profile.dashboard'|translate}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="overlay-item menuItem " (click)="toLoginForm()">
+                                    <div class="subMenus flex-vc flex-s">
+                                        <div class="imgSetting">
+                                            <div class="imgBackground ">
+                                                <img src="../../../assets/icons/logout_outline.png" alt="">
+                                            </div>
+                                        </div>
+                                        <div class="userText">
+                                            <p> {{'profile.logout'|translate}} </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-overlayPanel>
+                <div class="side-icons">
+                    <div class="flex-vc">
+                        <div class="profile-imgContainer bellSize">
+                            <img src="../../../assets/icons/bell-icon-black.png" class="img-fluid p-links" alt="">
+                        </div>
+                        <div class="profile-imgContainer" (click)="menuPopup.toggle($event)">
+                            <img src="../../../assets/icons/profile-icon.png" class="img-fluid p-links" alt="">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="innerWidth < 800" id="menu" (click)="display = true">
+            <div id="bar1" class="bar"></div>
+            <div id="bar2" class="bar"></div>
+            <div id="bar3" class="bar"></div>
+        </div>
+        <div class="sidebar" *ngIf="innerWidth > 800">
+            <div class="adminSidebar">
+                <app-admin-sidebar></app-admin-sidebar>
+            </div>
+
+        </div>
+        <p-sidebar *ngIf="innerWidth < 800" [(visible)]="display">
+            <div class="sidebar w-100">
+                <div class="adminSidebar w-100">
+                    <app-admin-sidebar (closeSide)="closeSide($event)"></app-admin-sidebar>
+                </div>
+            </div>
+        </p-sidebar>
+        <div class="content">
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+
+</div>

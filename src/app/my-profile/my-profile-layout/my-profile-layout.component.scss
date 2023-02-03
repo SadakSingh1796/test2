@@ -1,0 +1,19 @@
+.body{
+    display: flex;
+    // height: calc(100vh - 50px);
+    height:100vh;
+}
+
+
+.stupa-my-profile-sidebar{
+    min-width: 300px;
+    // background: lightcoral;
+}
+
+.stupa-personal-details{
+    // height: 100vh;
+    height: 90vh;
+    width: 100%;
+    margin-top: 1rem ;
+    background-color: #F7F7F7;
+}

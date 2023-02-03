@@ -1,0 +1,35 @@
+<div class="common-svg-msg">
+  <!-- <div class="outer-layer w-100"> -->
+  <div class="container-xxl">
+    <div class="innerContent">
+      <div class="heading">
+        <h4 class="p-green">
+          <b>{{ _pageMainTitle }}</b>
+        </h4>
+      </div>
+      <div class="sub-heading mt-3">
+        <p class="p-green">{{ _pageSubTitle }}</p>
+      </div>
+      <div class="row">
+        <div class="col-8">
+          <div *ngIf="!isSigned" class="flex-s fullHeight" (click)="login()">
+            <div class="flex-ve">
+              <h2 class="fw-lighter p-links">Login</h2>
+              <i class="ms-3 fs-6 pi pi-arrow-right p-combine mb-1"></i>
+            </div>
+          </div>
+          <div *ngIf="isSigned" class="flex-s fullHeight" (click)="eventClick()">
+            <div class="flex-ve">
+              <h2 class="fw-lighter p-links">{{ _buttonTitle }}</h2>
+              <i class="ms-3 fs-6 pi pi-arrow-right p-combine mb-1"></i>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <img src="../../../assets/icons/svg/official-viewMember.svg" alt="" />
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- </div> -->
+</div>

@@ -1,0 +1,934 @@
+<div class="eventDetail-container">
+    <div class="detail-content">
+        <form [formGroup]="_eventDetailForm" action="">
+            <div class="topHeading">
+                <div class="flex-sb">
+                    <h4 class="p-green">
+                        <b>{{ "tms.eventDetails" | translate }}</b>
+                    </h4>
+                    <div *ngIf="!_updateEventFlag" class="flex-vc">
+                        <div class="flex-vc publish">
+                            <p class="p-green">
+                                <b>{{ "banner.Published" | translate }}</b>
+                            </p>
+                            <div class="switch">
+                                <p-inputSwitch (onChange)="isPublished($event)" [formControlName]="'isPublish'">
+                                </p-inputSwitch>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngIf="_updateEventFlag" class="flex-vc">
+                        <div class="flex-vc">
+                            <div class="flex-vc publish">
+                                <p class="p-green">
+                                    <b>{{ "banner.Published" | translate }}</b>
+                                </p>
+                                <div class="switch">
+                                    <p-inputSwitch (onChange)="isPublished($event)" [formControlName]="'isPublish'">
+                                    </p-inputSwitch>
+                                </div>
+                            </div>
+                        </div>
+                        <p-overlayPanel appendTo="body" #menuPopup1 [showCloseIcon]="false"
+                            [style]="{ width: '200px' }">
+                            <ng-template pTemplate>
+                                <div class="common-popup">
+                                    <div class="innerContent">
+                                        <div class="overlay-item menuItem">
+                                            <p class="p-links" (click)="cancelCreatedEvent()">
+                                                Cancel Event
+                                            </p>
+                                        </div>
+                                        <div class="overlay-item menuItem">
+                                            <p class="p-links" (click)="deleteCreatedEvent()">
+                                                {{ "eventDetails.deleteEvent" | translate }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-overlayPanel>
+
+                        <div class="dropbtn">
+                            <div class="dropdownUnpublish">
+                                <button pButton pRipple (click)="menuPopup1.toggle($event)" type="button"
+                                    icon="pi pi-ellipsis-v"
+                                    class="p-button-plain p-button-text p-button-rounded"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex-s mt-3">
+                    <p class="p-green">
+                        <b>{{ "eventDetails.section" | translate }}</b>
+                    </p>
+                </div>
+            </div>
+            <div class="centerElement">
+                <div class="row mt-3">
+                    <div class="col-lg-6">
+                        <div class="detail-input">
+                            <label for="detailInput">{{
+                                "eventDetails.eventName" | translate
+                                }}</label>
+                            <input type="text" [formControlName]="'eventName'" pInputText
+                                placeholder="Enter Your Event Name" />
+                            <div class="error-txt-msg mb-2" *ngIf="
+                  _isSubmitEventDetail &&
+                  _eventDetailForm.controls['eventName'].hasError('required')
+                " style="color: red">
+                                <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-input">
+                                    <label for="dropdown">{{
+                                        "eventDetails.eventLevel" | translate
+                                        }}</label>
+                                    <p-dropdown [options]="_eventLevels" placeholder="Select Level Of Event"
+                                        [formControlName]="'eventLevel'" optionLabel="name" optionValue="level_id">
+                                    </p-dropdown>
+
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventLevel'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="detail-input">
+                                    <label for="multiselect">Eligible For Entry</label>
+                                    <p-multiSelect inputId="multiselect" [options]="_userRoles" [filter]="false"
+                                        [showHeader]="false" optionValue="id" [formControlName]="'accessPermission'"
+                                        optionLabel="name"></p-multiSelect>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['accessPermission'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bannerSection mt-3">
+                    <div class="flex-vc bannerFlex">
+                        <div class="flexBox1">
+                            <div class="heading mb-2">
+                                <p class="p-secondary">
+                                    <b>{{ "eventDetails.bannerImg" | translate }}</b>
+                                </p>
+                            </div>
+                            <div class="bannerBox _dashed" *ngIf="!_showBanner && !_updateEventFlag">
+                                <input type="file" (change)="fileDetail($any($event.target).files)" class="fileUploader"
+                                    accept="image/x-png, image/jpg, image/jpeg" />
+                                <div class="overlap">
+                                    <div class="flex-sb">
+                                        <div class="info">
+                                            <p class="p-secondary-dark">
+                                                {{ "eventDetails.drag" | translate
+                                                }}<b class="p-green">{{
+                                                    "eventDetails.drop" | translate
+                                                    }}</b>
+                                            </p>
+                                            <div class="choose">
+                                                <p class="p-secondary-dark">
+                                                    {{ "eventDetails.preselected" | translate }}
+                                                </p>
+                                            </div>
+                                            <p class="p-secondary">
+                                                <b>{{ "eventDetails.dimension" | translate }}</b>
+                                            </p>
+                                        </div>
+                                        <div class="imgContainer">
+                                            <img src="../../../../assets/tms/content/image-upload.png" class="img-fluid"
+                                                alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bannerBox" *ngIf="_updateEventFlag">
+                                <div class="relativeBody">
+                                    <input type="image" class="imgCover img-fluid" [src]="_selectedBanner" alt="" />
+
+                                    <!-- <img class="imgCover img-fluid" [src]="_selectedBanner" alt=""> -->
+                                    <div class="innerColor">
+                                        <p>This will be the sample image of your event banner</p>
+                                        <!-- <div class="reupload p-links flex-e"> -->
+                                        <!-- <div class="flex-vc reuploadBox">
+                                                    <p (change)="fileDetail($any($event.target).files)">{{'eventDetails.reupload' |translate}}</p>
+                                                    <i class="pi pi-upload ms-2"></i>
+                                                </div> -->
+
+
+
+                                        <div class="reuploadBoxie">
+                                            <input style="cursor:pointer" type="file" id="option-1"
+                                                (change)="fileDetail($any($event.target).files)"
+                                                accept="image/x-png, image/jpg, image/jpeg" />
+                                            <label for="option-1">
+                                                <div class="uploadbtn">
+                                                    Reupload
+                                                </div>
+                                                <!-- <img src="https://img.icons8.com/material-outlined/48/000000/upload-to-cloud.png"/> -->
+                                                <img src="../../../../assets/icons/admin_dropdown_icons/reuploadtoevent.png" width="17"
+                                                    height="17" alt="">
+                                            </label>
+
+                                        </div>
+
+
+
+                                        <!-- <div class="flex-vc reuploadBox">
+                                                <div>
+                                                    <input type="file" id="option-1"
+                                                        (change)="fileDetail($any($event.target).files)"
+                                                        accept="image/x-png, image/jpg, image/jpeg" />
+                                                    <label for="option-1">{{
+                                                        "eventDetails.reupload" | translate
+                                                        }}</label>
+                                                </div>
+                                            </div> -->
+
+                                        <!-- </div> -->
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="bannerBox" *ngIf="_showBanner && !_updateEventFlag">
+                                <div class="relativeBody">
+                                    <input type="image" class="imgCover img-fluid" [src]="_selectedBanner" alt="" />
+
+                                    <!-- <img class="imgCover img-fluid" [src]="_selectedBanner" alt=""> -->
+                                    <div class="innerColor">
+                                        <p>This will be the sample image of your event banner</p>
+                                        <div class="reupload p-links flex-e">
+                                            <!-- <div class="flex-vc reuploadBox">
+                                                <p (change)="fileDetail($any($event.target).files)">{{'eventDetails.reupload' |translate}}</p>
+                                                <i class="pi pi-upload ms-2"></i>
+                                            </div> -->
+                                            <div class="flex-vc reuploadBoxie">
+                                                <div>
+                                                    <!-- <p>{{'eventDetails.reupload' |translate}} </p> -->
+                                                    <input type="file" id="option-1"
+                                                        (change)="fileDetail($any($event.target).files)"
+                                                        accept="image/x-png, image/jpg, image/jpeg" />
+                                                    <label for="option-1">
+                                                        <div class="uploadbtn">
+                                                            Reupload
+                                                        </div>
+                                                        
+                                                        <!-- <img src="../../../../assets/icons/reupload_icon.png" width="15"
+                                                            height="15" alt=""> -->
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="error-txt-msg mb-2" *ngIf="_isImageFlag && !_selectedBanner" style="color: red">
+                                <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                            </div>
+                        </div>
+                        <div class="flex-line">
+                            <span class="divider"></span>
+                        </div>
+                        <div class="flexBox1">
+                            <div class="heading mb-2">
+                                <p class="p-secondary">
+                                    <b>{{ "eventDetails.defaultBanner" | translate }}</b>
+                                </p>
+                            </div>
+                            <div class="bannerBox _solid">
+                                <div class="row">
+                                    <div class="col-4 setCheck mt-2" *ngFor="let images of _getBannerUrl">
+                                        <!-- <input type ="image"  class="img-fluid" #imgData [src]="images.url" alt=""
+                                        (click)="selectedImage(images)" [formControlName]="'selectedImage'"> -->
+
+                                        <img class="img-fluid" #imgData [src]="images.url" alt=""
+                                            (click)="selectedImage(images)" />
+
+                                        <div class="checkImage" *ngIf="imgData.src == _selectedBanner">
+                                            <img src="../../../../assets/tms/content/OliveTick.png" width="20" alt="" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="fieldSection mt-5">
+                    <div class="fields">
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="detail-input">
+                                    <label for="dropdown">{{
+                                        "eventDetails.eventStatus" | translate
+                                        }}</label>
+                                    <p-dropdown [formControlName]="'eventStatus'" [options]="_eventStatus"
+                                        optionValue="id" optionLabel="name"
+                                        placeholder="{{ 'eventDetails.selectStatus' | translate }}">
+                                    </p-dropdown>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventStatus'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="detail-input">
+                                    <label for="dropdown">{{
+                                        "eventDetails.eventCycle" | translate
+                                        }}</label>
+                                    <p-dropdown [formControlName]="'eventCycle'" [options]="_eventCycleList"
+                                        optionLabel="name" placeholder="{{ 'eventDetails.selectCycle' | translate }}"
+                                        optionValue="id">
+                                    </p-dropdown>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventCycle'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="detail-input">
+                                    <label for="dropdown">{{
+                                        "eventDetails.country" | translate
+                                        }}</label>
+                                    <p-dropdown (onChange)="getState()" [formControlName]="'eventCountry'"
+                                        [options]="_countryList" optionLabel="name" optionValue="country_id"
+                                        [filter]="true" placeholder="{{ 'eventDetails.selectCountry' | translate }}">
+                                    </p-dropdown>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventCountry'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="detail-input">
+                                    <label for="dropdown">State</label>
+                                    <p-dropdown (onChange)="getCityList()" [formControlName]="'eventState'"
+                                        [options]="_stateList" optionLabel="name" placeholder="Select State"
+                                        [filter]="true" optionValue="state_id">
+                                    </p-dropdown>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventState'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-lg-6">
+                                <div class="detail-input">
+                                    <label for="dropdown">{{
+                                        "eventDetails.city" | translate
+                                        }}</label>
+                                    <p-dropdown [formControlName]="'eventCity'" [options]="_cityList" optionLabel="name"
+                                        [filter]="true" optionValue="city_id"
+                                        placeholder="{{ 'eventDetails.selectCity' | translate }}">
+                                    </p-dropdown>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventCity'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 mt-2">
+                                <div class="detail-input">
+                                    <label for="detailInput">{{
+                                        "eventDetails.address" | translate
+                                        }}</label>
+                                    <input type="text" [formControlName]="'eventAddress'" pInputText
+                                        placeholder="{{ 'eventDetails.selectAddress' | translate }}" />
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventAddress'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="dateSection">
+                    <div class="dates">
+                        <div class="flex-vc dateFlex">
+                            <div class="eventDate flex1">
+                                <div class="dateBox">
+                                    <div class="startDate">
+                                        <label for="basic">{{
+                                            "eventDetails.eventDates" | translate
+                                            }}</label>
+                                        <p-calendar #startDate1 inputId="basic"
+                                            placeholder="{{ 'eventDetails.selectDate' | translate }}"
+                                            [minDate]="_currentDate" [formControlName]="'eventStartDate'">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="flex-vc statDate-flexLine">
+                                        <p [ngClass]="
+                        startDate1.value !== '' ? 'p-combine text' : 'text'
+                      ">
+                                            From Date
+                                        </p>
+                                        <span class="divider"></span>
+                                    </div>
+                                    <div class="endDate">
+                                        <p-calendar #startDate1 inputId="basic"
+                                            placeholder="{{ 'eventDetails.selectDate' | translate }}" [disabled]="
+                        _eventDetailForm.controls['eventStartDate'].value == ''
+                      " dateFormat="mm/dd/yy" #endDate1 [minDate]="
+                        _eventDetailForm.controls['eventStartDate'].value ||
+                        _currentDate
+                      " [formControlName]="'eventEndDate'">
+                                        </p-calendar>
+                                        <div class="flex-e">
+                                            <p [ngClass]="
+                          endDate1.value !== '' ? 'p-combine text' : 'text'
+                        ">
+                                                {{ "eventDetails.endDate" | translate }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventStartDate'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['eventEndDate'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="flex-line">
+                                <span class="divider"></span>
+                            </div>
+                            <div class="eventDate flex1">
+                                <div class="dateBox">
+                                    <div class="startDate">
+                                        <label for="basic">Registration Date</label>
+                                        <p-calendar #startDate2 placeholder="Select Date" inputId="basic"
+                                            [minDate]="_currentDate"
+                                            [formControlName]="'registrationStartDate'"></p-calendar>
+                                    </div>
+
+                                    <div class="flex-vc statDate-flexLine">
+                                        <p [ngClass]="
+                        startDate2.value !== '' ? 'p-combine text' : 'text'
+                      ">
+                                            {{ "eventDetails.startDate" | translate }}
+                                        </p>
+                                        <span class="divider"></span>
+                                    </div>
+                                    <div class="endDate">
+                                        <p-calendar #endDate2 inputId="basic"
+                                            placeholder="{{ 'eventDetails.selectDate' | translate }}" [disabled]="
+                        _eventDetailForm.controls['registrationStartDate']
+                          .value == ''
+                      " dateFormat="mm/dd/yy" [minDate]="
+                        _eventDetailForm.controls['registrationStartDate']
+                          .value || _currentDate
+                      " [formControlName]="'registrationEndDate'">
+                                        </p-calendar>
+                                        <div class="flex-e">
+                                            <p [ngClass]="
+                          endDate2.value !== '' ? 'p-combine text' : ''
+                        ">
+                                                {{ "eventDetails.endDate" | translate }}
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls[
+                        'registrationStartDate'
+                      ].hasError('required')
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                    <div class="error-txt-msg mb-2" *ngIf="
+                      _isSubmitEventDetail &&
+                      _eventDetailForm.controls['registrationEndDate'].hasError(
+                        'required'
+                      )
+                    " style="color: red">
+                                        <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <form action="" [formGroup]="_eventForm">
+                    <div class="category mt-4">
+                        <div class="row">
+                            <div class="col-lg-6 flex-vc">
+                                <div class="innerContent">
+                                    <p class="p-green">
+                                        <b>{{ "eventDetails.addCategory" | translate }}</b>
+                                    </p>
+                                    <p>
+                                        You can add events either in Normal category or Para Class.
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="innerContent">
+                                    <div *ngIf="!_updateEventFlag" class="detail-input">
+                                        <label for="dropdown">{{
+                                            "eventDetails.eventType" | translate
+                                            }}</label>
+                                        <p-dropdown [formControlName]="'eventType'" [options]="_eventTypes"
+                                            optionLabel="typeName" optionValue="id" placeholder="{{
+                        'eventDetails.selectTypeEvent' | translate
+                      }}" (onChange)="selectedEventType($event)">
+                                        </p-dropdown>
+
+                                        <div class="error-txt-msg mb-2" *ngIf="
+                        _isSubmitEvent &&
+                        _eventForm.controls['eventType'].hasError('required')
+                      " style="color: red">
+                                            <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                        </div>
+                                    </div>
+                                    <div *ngIf="_updateEventFlag && this._ddFlag == 1" class="detail-input">
+                                        <label for="dropdown">{{
+                                            "eventDetails.eventType" | translate
+                                            }}</label>
+                                        <p-dropdown optionDisabled="inactive" [autoDisplayFirst]="true"
+                                            [formControlName]="'eventType'" [options]="_abled" optionLabel="typeName"
+                                            optionValue="id" (onChange)="selectedEventType($event)">
+                                        </p-dropdown>
+                                    </div>
+                                    <div *ngIf="_updateEventFlag && this._ddFlag == 2" class="detail-input">
+                                        <label for="dropdown">{{
+                                            "eventDetails.eventType" | translate
+                                            }}</label>
+                                        <p-dropdown optionDisabled="inactive" [autoDisplayFirst]="true"
+                                            [options]="_disabled" optionLabel="typeName" optionValue="id">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="innerContent">
+                                    <button *ngIf="!_isEventEdit && !_updateEventFlag" class="btn btn_green"
+                                        (click)="creatEvents()">
+                                        Add
+                                    </button>
+                                    <button *ngIf="!_isEventEditAfterView && _updateEventFlag" class="btn btn_green"
+                                        (click)="createAfterView()">
+                                        Add
+                                    </button>
+                                    <button *ngIf="_isEventEdit && !_updateEventFlag" class="btn btn_green"
+                                        (click)="updateEvents($event)">
+                                        {{ "footer.update" | translate }}
+                                    </button>
+                                    <button *ngIf="_isEventEditAfterView && _updateEventFlag" class="btn btn_green"
+                                        (click)="updateAfterEditViewEvents($event)">
+                                        {{ "footer.update" | translate }}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="categoryForm1 mt-3" *ngIf="
+                !_showDisabled && _showDisableAndAbleDiv && !_updateEventFlag
+              ">
+                            <div class="detail-input">
+                                <label for="detailInput">Category</label>
+                                <p-dropdown optionLabel="category_description" placeholder="Select Category"
+                                    [options]="_masterCategoriesList" [formControlName]="'categoryName'">
+                                </p-dropdown>
+                                <div class="error-txt-msg mb-2" *ngIf="
+                    _isSubmitEvent &&
+                    _eventForm.controls['categoryName'].hasError('required')
+                  " style="color: red">
+                                    <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                </div>
+                                <div class="row mt-3">
+                                    <div class="col-lg-6">
+                                        <div class="detail-input">
+                                            <div class="startDate">
+                                                <label for="basic">Born After</label>
+                                                <p-calendar #startDate1 inputId="basic" placeholder="{{
+                            'eventDetails.selectDate' | translate
+                          }}" [formControlName]="'bornAfter'">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+                                        <div class="error-txt-msg mb-2" *ngIf="
+                        _isSubmitEvent &&
+                        _eventForm.controls['bornAfter'].hasError('required')
+                      " style="color: red">
+                                            <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="categoryForm1 mt-3" *ngIf="_updateEventFlag && this._ddFlag == 1">
+                            <div class="detail-input">
+                                <label for="detailInput">Category</label>
+                                <p-dropdown optionLabel="category_description" placeholder="Select Category"
+                                    [options]="_masterCategoriesList" [formControlName]="'categoryName'">
+                                </p-dropdown>
+
+                                <div class="row mt-3">
+                                    <div class="col-lg-6">
+                                        <div class="detail-input">
+                                            <div class="startDate">
+                                                <label for="basic">Born After</label>
+                                                <p-calendar #startDate1 inputId="basic" placeholder="{{
+                            'eventDetails.selectDate' | translate
+                          }}" [formControlName]="'bornAfter'">
+                                                </p-calendar>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="categoryForm1 mt-3" *ngIf="
+                _showDisabled && _showDisableAndAbleDiv && !_updateEventFlag
+              ">
+                            <div class="detail-input">
+                                <label for="detailInput">Class Select</label>
+                                <p-dropdown optionLabel="name" [formControlName]="'eventClass'"
+                                    placeholder="Class Select" [options]="_eventClassList">
+                                </p-dropdown>
+                                <div class="error-txt-msg mb-2" *ngIf="
+                    _isSubmitEvent &&
+                    _eventForm.controls['eventClass'].hasError('required')
+                  " style="color: red">
+                                    <span style="color: red">*</span>{{ "signupmanagement.req" | translate }}
+                                </div>
+                            </div>
+                            <div class="inputRow mt-3">
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="detail-input">
+                                            <label for="dropdown">{{
+                                                "eventDetails.participantType" | translate
+                                                }}</label>
+                                            <p-dropdown optionLabel="name" [formControlName]="'participantType'"
+                                                [options]="_eventParticipantType" placeholder="{{
+                          'eventDetails.selectParticipantType' | translate
+                        }}">
+                                            </p-dropdown>
+                                            <div class="error-txt-msg mb-2" *ngIf="
+                          _isSubmitEvent &&
+                          _eventForm.controls['participantType'].hasError(
+                            'required'
+                          )
+                        " style="color: red">
+                                                <span style="color: red">*</span>{{ "signupmanagement.req" | translate
+                                                }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="detail-input">
+                                            <label for="dropdown">{{
+                                                "eventDetails.gender" | translate
+                                                }}</label>
+                                            <p-dropdown optionLabel="name" [formControlName]="'gender'" placeholder="{{
+                          'eventDetails.selectGender' | translate
+                        }}" [options]="_gender">
+                                            </p-dropdown>
+                                            <div class="error-txt-msg mb-2" *ngIf="
+                          _isSubmitEvent &&
+                          _eventForm.controls['gender'].hasError('required')
+                        " style="color: red">
+                                                <span style="color: red">*</span>{{ "signupmanagement.req" | translate
+                                                }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="categoryForm1 mt-3" *ngIf="_updateEventFlag && this._ddFlag == 2">
+                            <div class="inputRow mt-3">
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="detail-input">
+                                            <label for="detailInput">Class Select</label>
+                                            <p-dropdown optionLabel="name" [formControlName]="'categoryName'"
+                                                placeholder="Class Select" [options]="_eventClassList">
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                        <div class="detail-input">
+                                            <label for="dropdown">{{
+                                                "eventDetails.gender" | translate
+                                                }}</label>
+                                            <p-dropdown optionLabel="name" [formControlName]="'gender'" placeholder="{{
+                          'eventDetails.selectGender' | translate
+                        }}" [options]="_gender">
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="detail-input">
+                                            <label for="dropdown">{{
+                                                "eventDetails.participantType" | translate
+                                                }}</label>
+                                            <p-dropdown optionLabel="name" [formControlName]="'participantType'"
+                                                [options]="_eventParticipantType" placeholder="{{
+                          'eventDetails.selectParticipantType' | translate
+                        }}">
+                                            </p-dropdown>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div *ngIf="!_updateEventFlag" class="bottomSection mt-5">
+                <owl-carousel-o [options]="_eventSlider">
+                    <ng-container *ngFor="let item of _categoryClassList; let i = index">
+                        <ng-template carouselSlide>
+                            <div class="relativeCard">
+                                <div class="flex-sb">
+                                    <div class="text p-2">
+                                        <p class="p-secondary-dark">
+                                            <b>{{ item.category_description }}</b>
+                                        </p>
+                                        <!-- <p class="p-small mt-1 p-combine">{{item.dob_cap | date: 'dd/MM/YYYY'}}</p> -->
+                                        <p class="p-small p-green mt-3">
+                                            {{ item.participant_type_id + "," + item.gender_id }}
+                                        </p>
+                                    </div>
+                                    <div class="clickEvents">
+                                        <div class="events">
+                                            <div class="imgContainer p-links" (click)="deleteEvent(i)">
+                                                <img src="../../../../assets/tms/content/delete-icon.png" alt="" />
+                                            </div>
+                                            <hr />
+                                            <div class="imgContainer p-links" (click)="editEvent(item, i)">
+                                                <img src="../../../../assets/tms/content/UnionEdit.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+            <div *ngIf="_updateEventFlag" class="bottomSection mt-5">
+                <owl-carousel-o [options]="_eventSlider">
+                    <ng-container *ngFor="let item of _categoriesData; let i = index">
+                        <ng-template carouselSlide>
+                            <div class="relativeCard">
+                                <div class="flex-sb">
+                                    <div class="text p-2">
+                                        <p class="p-secondary-dark">
+                                            <b>{{ item.category_description }}</b>
+                                        </p>
+                                        <!-- <p class="p-small mt-1 p-combine">{{item.dob_cap| date: 'dd/MM/YYYY'}}</p> -->
+                                        <p class="p-small p-green mt-3">
+                                            {{ item.participant_type_id + "," + item.gender_id }}
+                                        </p>
+                                    </div>
+                                    <div class="clickEvents">
+                                        <div class="events">
+                                            <div class="imgContainer p-links" (click)="deleteViewedEvent(i, item)">
+                                                <img src="../../../../assets/tms/content/delete-icon.png" alt="" />
+                                            </div>
+                                            <hr />
+                                            <div class="imgContainer p-links" (click)="editViewedEvent(item, i)">
+                                                <img src="../../../../assets/tms/content/UnionEdit.png" alt="" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </ng-container>
+                </owl-carousel-o>
+            </div>
+        </form>
+        <div class="bottomElement">
+            <div class="">
+                <!-- <div class="flex-sb" *ngIf="_showMessage">
+                    <div class="successInfo animate__animated animate__fadeInLeft"> -->
+                <!-- <div class="flex-sb"> -->
+                <!-- <i class="far fa-check-circle p-fs-6 p-mr-2"></i>
+                        <span style="color:#1b403a ;" class="p-fs-6">Tournament created successfully.</span> -->
+                <!-- </div> -->
+                <!-- <div class="flex-sb" > -->
+                <!-- <span>To Add Officials</span> <a (click)="goToOffial()" class="p-ml-1 p-links"> Click here </a> -->
+                <!-- </div> -->
+                <!-- </div> -->
+
+            </div>
+            <!-- <div class="flex-e">
+                <div class="flex-sb" *ngIf="_showMessage">
+                    <div class="successInfo animate__animated animate__fadeInLeft">
+                        <i class="far fa-check-circle p-fs-6 p-mr-2"></i>
+                        <span style="color:#1b403a ;" class="p-fs-6">Tournament created successfully.</span>
+                        <span>To Add Officials</span> <a (click)="goToOffial()" class="p-ml-1 p-links"> Click here
+                        </a>
+                    </div>
+                </div>
+                <button *ngIf="!_updateEventFlag" class="btn btn_green w-auto" (click)="creatEvent()">Create</button>
+                <button *ngIf="_updateEventFlag" class="btn btn_green w-auto"
+                    (click)="updateViewedEvents()">Update</button>
+            </div> -->
+            <div class="newbottom">
+                <div class="left_section">
+                    <div class="" *ngIf="_showMessage">
+                        <div style="font-size:1.1rem" class="successInfo animate__animated animate__fadeInLeft">
+                            <i class="far fa-check-circle p-fs-6 p-mr-2"></i>
+                            <span *ngIf="_showSuccess&& !_showUpdateMessage" style="color:#00720B ; font-weight:bold;" class="p-fs-6">Event created successfully.</span>
+                            <span *ngIf="_showUpdateMessage" style="color:#00720B ; font-weight:bold;" class="p-fs-6">Event updated successfully.</span>
+                            <span *ngIf="_showSuccess&&!_showUpdateMessage" style="font-weight:bold;">To Add Officials.</span><a *ngIf="_showSuccess" (click)="goToOffial()" class="p-ml-1 p-links">Click here
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="right_section">
+                    <button *ngIf="!_updateEventFlag" class="btn btn_green w-auto"
+                        (click)="creatEvent()">Create</button>
+                    <button *ngIf="_updateEventFlag" class="btn btn_green w-auto"
+                        (click)="updateViewedEvents()">Update</button>
+                </div>
+            </div>
+
+
+
+        </div>
+
+        <!-- if show success message -->
+
+        <!-- <div class="flex-sb flex-vc">
+                <div class="sucess-text">
+                    <p class="p-success">Your details have been successfully updated.</p>
+                </div>
+                <button class="btn btn_green w-auto">Update</button>
+            </div> -->
+    </div>
+</div>
+<!-- </div> -->
+<!-- </div> -->
+<div class="dialog">
+    <p-dialog #pDialog [(visible)]="_showPublish" [style]="_dialogStyle" [closable]="true" [draggable]="false"
+        [modal]="true" (onHide)="closeDialog(pDialog)">
+        <div class="review_portal">
+            <div class="innerContent">
+                <div class="flexContainer">
+                    <!-- [ngSwitch]="_publishResponse" -->
+                    <!-- <div class="info" *ngSwitchCase="'default'">
+                        <h5><b>{{'eventDetails.successMsg' |translate}}</b></h5>
+                        <p class="mt-3">{{'eventDetails.successMsgSend' |translate}} <a
+                                class="p-green p-links"><b>xyz@gmail.com”</b></a></p>
+                    </div>
+                    <div class="info" *ngSwitchCase="'success'">
+                        <h5><b>Congratulations!!</b></h5>
+                        <p class="mt-3">{{'eventDetails.verified' |translate}}
+                        </p>
+                    </div>
+                    <div class="info" *ngSwitchCase="'failed'">
+                        <h5><b>{{'eventDetails.rejected' |translate}}</b></h5>
+                        <p class="mt-3">{{'eventDetails.rejectedReason' |translate}}
+                        </p>
+                    </div> -->
+                    <div class="info">
+                        <!-- <h5><b>We will review the details of what you have provided.
+                            If the details are valid and appropriate we will allow
+                            you to publish this event to our platform. In case the
+                            details are not valid and found any malicious activity
+                            then in that case we will reject your event. To verify
+                            your details again after rejection you need to mail us
+                            at </b></h5> -->
+                        <h5 class="mt-3">
+                            {{ "eventDetails.successMsgSend" | translate }}
+                            <a href="mailto:comunicacao@cbtm.org.br"
+                                class="p-green p-links"><b>comunicacao@cbtm.org.br</b></a>
+                        </h5>
+                    </div>
+                    <div class="imgContainer p-3 pe-0">
+                        <img class="img-fluid" src="../../../../assets/icons/Layer 1.png" alt="" />
+                    </div>
+                    <!-- <div class="image_portal">
+                        <div class="imgContainer p-3 pe-0" *ngSwitchCase="'default'">
+                            <img class="img-fluid" src="../../../../assets/icons/Layer 1.png" alt="">
+                        </div>
+                        <div class="imgContainer p-3 pe-0" *ngSwitchCase="'success'">
+                            <img class="img-fluid" src="../../../../assets/icons/Layer 1.png" alt="">
+                        </div>
+                        <div class="imgContainer p-3 pe-0" *ngSwitchCase="'failed'">
+                            <img class="img-fluid" src="../../../../assets/tms/content/failedPublish.png" alt="">
+                        </div>
+                    </div> -->
+                </div>
+                <div class="flex-e continue mt-4">
+                    <div class="flex-vc p-links">
+                        <a (click)="continueToOfficial()" class="p-combine p-links">{{
+                            "eventDetails.continue" | translate
+                            }}</a>
+                        <i class="pi pi-arrow-right ms-2"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </p-dialog>
+</div>
+
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

@@ -1,0 +1,161 @@
+<!-- <div class="registration-common-row my-2" *ngIf="!_nextScreen">
+    <div class="row my-3">
+        <div class="col-lg-8">
+            <div class="topbar mt-4">
+                <div class="flex-sb flex-vc">
+                    <button class="btn btn_green m-0 w-auto flex-vc">
+                        Create Team
+                        <i class="pi pi-plus-circle i-small text-light ms-5"></i>
+                    </button>
+                    <div class="flex-vc p-links" (click)="_nextScreen = true">
+                        <p class="p-combine">Continue to Registration</p>
+                        <i class="pi pi-arrow-right i-small p-combine ms-2"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="card-row">
+                <div class="flex-vc flex-wrap">
+                    <div class="flex-card" *ngFor="let item of _group">
+                        <div class="card-heading">
+                            <input *ngIf="_isClicked" type="text" # pInputText
+                                [ngModelOptions]="{standalone: true}" (focusout)="editField(false)"
+                                placeholder="Enter Team Name" [(ngModel)]="">
+                            <p class="text-light"><b></b></p>
+                            <div class="card-input">
+                                <input class="text-overflow" type="text" [(ngModel)]="_teamName" (focusout)="setName()"
+                                    pInputText placeholder="Enter Team Name">
+                            </div>
+                        </div>
+                        <div class="card-body py-3">
+                            <div class="flex-sb flex-vc my-2" *ngFor="let item of _players">
+                                <p-avatar label="PS" styleClass="mr-2 ms-2" shape="circle"></p-avatar>
+                                <div class="detail-input">
+                                    <input id="cardInput" type="text" pInputText value="Divyanshu" readonly>
+                                </div>
+                            </div>
+                            <div class="flex-e">
+                                <p-dropdown placeholder="Add player" optionLabel="name" [options]="_players">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-4">
+            <div class="rightSection">
+                <div class="topHeading flex-sb">
+                    <h4 class="p-secondary">Total Players</h4>
+                    <p class="p-green ms-3">32/75</p>
+                </div>
+                <div class="top-searchbar mt-3">
+                    <div class="flex-vc">
+                        <div class="innerBox-input">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input type="text" pInputText placeholder="Find Player" />
+                            </span>
+                        </div>
+                        <div class="innerBox p-links">
+                            <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+                        </div>
+                        <div class="innerBox p-links">
+                            <i class="pi pi-align-right i-small p-secondary-dark"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="centerTable mt-3">
+                    <p-table [value]="_playersTable" [tableStyle]="{'font-size': '80%'}">
+                        <ng-template pTemplate="header">
+                        </ng-template>
+                        <ng-template pTemplate="body" let-player>
+                            <tr class="flex-vc">
+                                <p-avatar label="PS" styleClass="mr-2 ms-2" shape="circle"></p-avatar>
+                                <td class="p-green"><b>{{player.name}}</b></td>
+                                <td class="p-green">{{player.email}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div> -->
+<div class="nextScreen">
+    <div class="registration-common-row my-2">
+        <div class="row mt-3">
+            <div class="col-lg-9">
+                <div class="top-searchbar">
+                    <div class="flex-vc">
+                        <div class="innerBox-input">
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input type="text" [(ngModel)]="_searchTeams" (keyup)="findTeams()"
+                                    (keypress)="findTeams()" (keydown)="findTeams()" pInputText
+                                    placeholder="Find Team" />
+                            </span>
+                        </div>
+                        <div class="innerBox p-links">
+                            <i class="pi pi-filter-fill i-small p-secondary-dark"></i>
+                        </div>
+                        <div class="innerBox p-links">
+                            <i class="pi pi-align-right i-small p-secondary-dark"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="main" *ngFor="let team of _players;let i = index">
+                    <div class="common-list mt-4">
+                        <div class="flex-vc mb-3">
+                            <div class="avatar" *ngFor="let item of _playerArray">
+                                <p-avatar label="PS" styleClass="mr-2" shape="circle"></p-avatar>
+                            </div>
+                            <div class="playerInfo ms-3">
+                                <p class="p-green text-overflow"><b>{{team.player_name}}</b></p>
+                            </div>
+                        </div>
+                        <div class="flex-sb flex-vc">
+
+                            <div class="checkbox-chain mx-3">
+                                <div class="flex-vc flex-hc ">
+                                    <div class="flex-sb flexBase flex-wrap">
+                                        <div class="flex-vc flex-wrap field-checkbox "
+                                            *ngFor="let item of team.categories_list;let catIndex = index">
+                                            <input id="checkInput" (click)="currentEvent($event,i,catIndex)"
+                                                type="checkbox" class="htmlCheckbox me-2" [checked]="item.checked">
+                                            <label for="checkInput" class="text-overflow">{{item.categoryName}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="end amount">
+                                <p class="p-green"><b>${{team.eventAmount}}</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <p-divider></p-divider>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="flex-h-sb">
+                    <div class="topHeading flex-h">
+                        <h4 class="p-secondary">Total Payment</h4>
+                    </div>
+                    <div class="totalBill">
+                        <p-divider></p-divider>
+                        <div class="flex-sb">
+                            <h6 class="p-green">Total Bill</h6>
+                            <h6 class="p-combine">${{_totalAmount}}</h6>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="paynow">
+            <div class="flex-e">
+                <h4 class="p-combine p-links" (click)="payNow()"><b>Pay Now</b></h4>
+            </div>
+        </div>
+    </div>
+</div>

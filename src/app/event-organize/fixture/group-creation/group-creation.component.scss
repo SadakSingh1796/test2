@@ -1,0 +1,276 @@
+.container-xxl {
+  .matchRow {
+    padding: 10px 0;
+    border-bottom: 1px solid #e8e8e8;
+  }
+
+  .dialogHeader {
+    .p-dialog-header {
+      color: var(--main-coalor);
+    }
+  }
+
+  .fullViewBut {
+    background-color: var(--main-color);
+    padding: 0.8rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50px;
+    cursor: pointer;
+  }
+
+  .heading {
+    font-size: 13px !important;
+    color: var(--secondary-color) !important;
+    margin: 1rem 0 !important;
+  }
+
+  .topBar,
+  .bottomBar {
+    .greyBox {
+      background-color: #fbfbfb;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      padding: 0.5rem;
+      position: relative;
+
+      .innerContent {
+        font-size: 90% !important;
+        height: 150px;
+        overflow: hidden;
+        overflow-y: auto;
+
+        .detail-input {
+          label {
+            color: var(--secondary-color);
+          }
+
+          input {
+            border-bottom: 1px solid var(--secondary-color) !important;
+            border: none;
+            border-radius: 0 !important;
+            background-color: transparent;
+            font-size: 18px;
+            color: var(--main-color);
+            font-weight: bold;
+            padding-left: 0;
+          }
+
+          ::ng-deep {
+            .p-multiselect {
+              border: none;
+              border-bottom: 1px solid #5555;
+              border-radius: 0;
+            }
+
+            .p-dropdown {
+              border-bottom: 1px solid var(--secondary-color) !important;
+              border: none;
+              border-radius: 0 !important;
+              background-color: transparent;
+              font-size: 18px;
+              margin: 0 !important;
+
+              .p-dropdown-label {
+                padding-left: 0;
+                color: var(--main-color);
+              }
+
+              .p-dropdown-label.p-placeholder {
+                color: #6c757d !important;
+                font-size: 12px !important;
+              }
+            }
+          }
+        }
+      }
+
+      .noPlayer {
+        position: absolute;
+        top: 61%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #bfbfbf;
+      }
+    }
+  }
+
+  .right-eventHandler {
+    .iconBox:not(:last-child) {
+      margin-right: 0.2rem;
+    }
+
+    .iconBox {
+      padding: 8px 6px;
+      border-radius: 3px;
+      border: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+
+      svg.merge {
+        rotate: 180deg;
+        width: 12px !important;
+      }
+    }
+  }
+
+  .groups {
+    .accordianHeader {
+      width: 100%;
+    }
+
+    .accordianContent {
+      .p-inputtext {
+        max-height: 32px;
+        color: black;
+        margin: 5px 0;
+      }
+
+      .tableFlex {
+        display: flex;
+        justify-content: space-between;
+        gap: 5px;
+        margin-top: 5px;
+
+        .gFlex {
+          font-size: 12px;
+          width: 100%;
+          display: flex;
+          justify-content: space-around;
+          align-items: center;
+          border: 1px solid #f0f0f0;
+          border-radius: 7px;
+
+          p {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: black;
+            width: 56px;
+          }
+        }
+
+        .gFlex2 {
+          display: flex;
+          gap: 5px;
+        }
+      }
+
+      // .row{
+      //     border: 1px solid #F0F0F0;
+      //     border-radius:7px ;
+      //     width: 100%;
+      //    .col{
+      //     overflow: hidden;
+      //     text-overflow: ellipsis;
+      //    }
+      // }
+      // .Gml{
+      //     margin-left: 1rem !important;
+      // }
+
+      .p-inputtext::placeholder {
+        color: black;
+      }
+    }
+
+    ::ng-deep {
+      .p-button-icon {
+        font-size: 12px !important;
+      }
+
+      .p-dropdown {
+        max-height: 35px !important;
+      }
+    }
+
+    .iconBox {
+      border: 1px solid #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      padding: 8px 6px;
+      height: 32px;
+      border-radius: 3px;
+
+      svg.merge {
+        rotate: 90deg;
+        width: 12px !important;
+      }
+    }
+
+    .header-add {
+      padding: 8px 6px;
+    }
+
+    .p-button:focus {
+      box-shadow: none;
+    }
+
+    .p-button.p-button-icon-only.p-button-rounded {
+      width: 1.5rem;
+      height: 1.5rem;
+      padding: 0.2rem;
+    }
+  }
+
+  .dialog {
+    .greyBox {
+      // height: 620px !important;
+      // max-height: 620px !important;
+    }
+  }
+
+  .bottomBar {
+    .greyBox {
+      max-height: 64vh !important;
+      // height: auto !important;
+      // max-height: 350px;
+      overflow: hidden;
+      overflow-y: auto;
+    }
+  }
+
+  ::ng-deep {
+    .common-table {
+      .p-datatable-table {
+        font-size: 90% !important;
+      }
+
+      .p-datatable-thead > tr > th {
+        border: none;
+        padding: 0.5rem;
+        text-align: center;
+      }
+
+      .p-datatable-tbody > tr > td {
+        padding: 0.5rem;
+        font-size: 90%;
+        white-space: nowrap;
+        text-align: center;
+      }
+    }
+  }
+}
+
+.gridRemove {
+  color: #ff783e;
+}
+
+.bk-color {
+  background-color: red;
+}
+.battans {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  white-space: nowrap;
+}
+
+.groupBox{
+  max-height: 64vh !important;
+}

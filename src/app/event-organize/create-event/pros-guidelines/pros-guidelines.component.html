@@ -1,0 +1,95 @@
+<div class="prosContainer" *ngIf="_eventId!=null">
+    <div class="topHeading">
+        <div class="flex-sb" (click)="reset()">
+            <h4 class="p-green"><b>{{'tms.prospectusGuidelines' |translate}}</b></h4>
+            <div class="right-text p-links">
+                <p (click)="reset()">Reset</p>
+                <img src="../../../../assets/icons/round-arrow.png" width="11" height="11" alt="">
+            </div>
+        </div>
+        <div class="flex-sb mt-3">
+            <p class="p-green"><b>You can upload document of prospectus and Guidelines here.</b></p>
+        </div>
+        <br>
+        <!-- PDF URL IS NOT THERE -->
+        <div *ngIf="!pdfUrl" class="mainContainer">
+            <div class="textContainer" appDnd (fileDropped)="onFileDropped($event)">
+                <h3>Upload your documents on event guidelines <br>and rules</h3>
+                <input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($any($event.target).files)"
+                    accept="application/pdf" />
+                <br>
+                <br>
+                <p>{{'eventDetails.drag' | translate}} {{'eventDetails.drop' | translate}}</p>
+                <!-- <p>Drag & Drop your image here or browse</p> -->
+                <br>
+                <br>
+                <a>pdf and doc files only</a>
+            </div>
+            <div class="imageContainer">
+                <img src="../../../../assets/icons/Group 535.png" alt="icon" height="220px" />
+            </div>
+        </div>
+
+        <!-- PDF URL IS THERE -->
+        <div *ngIf="pdfUrl" class="pdfContainer">
+            <div class="pdfViewContainer">
+                <img align="center" src="../../../../assets/icons/Group 647.png" width="200" height="200" />
+                <p style="color:var(--success-color); white-space: nowrap;">{{fileName}}</p>
+
+                <p *ngIf="!_updateFlag">{{this.fileToUpload.name }}</p>
+                <p *ngIf="_updateFlag"></p>
+            </div>
+            <div class="pdfViewTextContainer">
+                <!-- <h4>Selected Files has been successfully uploaded</h4> -->
+                <!-- <br>
+                <br> -->
+                <p style="font-size: 1rem;margin-top: 1rem;">Only a <span style="color:var(--combinating-color);">Single
+                        file</span> can
+                    be uploaded in this
+                    section</p>
+                <br>
+                <div class="textContainer" appDnd (fileDropped)="onFileDropped($event)">
+                    <button class="__reupload">
+                        <div class="flex-vc greenie ">
+                            <!-- <img src="https://img.icons8.com/material-outlined/24/000000/upload-to-cloud.png"/> -->
+                            <img src="../../../../assets/icons/admin_dropdown_icons/42 reupload.png" width="17"
+                                height="17" alt="">
+                            <p>Reupload</p>
+                        </div>
+                        <input type="file" #fileDropRef id="fileDropRef"
+                            (change)="fileBrowseHandler($any($event.target).files)" accept="application/pdf" />
+                    </button>
+                </div>
+                <!-- <button class="reupload" appDnd (change)="fileBrowseHandler($event)">
+                    <input type="file" #fileDropRef id="fileDropRef"
+                        (change)="fileBrowseHandler($any($event.target).files)" accept="application/pdf" />
+                  <img src="../../../../assets/icons/reupload_icon.png" width="15" height="15" alt="">
+                    <p>Reupload</p> 
+                </button> -->
+                <!-- <p style="color:green">{{fileName}}</p> -->
+                <!-- <div class="textContainer" appDnd (fileDropped)="onFileDropped($event)">
+                    <h3>Upload your documents on event guidelines <br>and rules</h3>
+                    <input type="file" #fileDropRef id="fileDropRef" (change)="fileBrowseHandler($any($event.target).files)"
+                        accept="application/pdf" />
+                    <br>
+                    <br>
+                    <p>{{'eventDetails.drag' | translate}} {{'eventDetails.drop' | translate}}</p>
+                    <br>
+                    <br>
+                    <a>pdf and doc files only</a>
+                </div> -->
+
+            </div>
+            <!-- <div class="icon">
+                <img style="cursor:pointer" src="../../../../assets/icons/cancle_circle.png" height="20" width="20" />
+            </div> -->
+        </div>
+    </div>
+    <br>
+    <div class="flexing">
+        <p *ngIf="pdfUrl" style="color: green;">Your details have been successfully updated</p>
+        <button class="update" *ngIf="true">Update</button>
+    </div>
+
+</div>
+<stupa-common-svg-msg *ngIf="_eventId===null" (eventClicked)="eventClicked()"></stupa-common-svg-msg>

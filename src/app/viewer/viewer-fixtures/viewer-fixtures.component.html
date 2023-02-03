@@ -1,0 +1,93 @@
+<div class="container-xxl">
+    <div class="topBar">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="innerContent me-4">
+                    <p class="heading mb-0"><b class="">Participant Type</b></p>
+                    <p-dropdown class="m-0" [options]="_participantTypesList" [(ngModel)]="_selectedParticipantTypes"
+                        optionLabel="participant_description" appendTo="body" (onChange)="setType($event)"
+                        placeholder="Type">
+                    </p-dropdown>
+                    <!-- <div class="radioBox mt-2">
+                        <div class="flex-vc gap-4">
+                            <div class="flex-vc field-radiobutton" *ngFor="let item of _participantTypesList">
+                                <p-radioButton name="participantType" [(ngModel)]="_selectedParticipantTypes"
+                                    (onClick)="currentParticipant($event)" [value]="item"
+                                    [inputId]="item.participant_type_id"></p-radioButton>
+                                <label for="{{item.participant_type_id}}">{{item.participant_description}}</label>
+
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+            <div *ngIf="_showFixtureFormat" class="col-lg-6">
+                <div class="innerContent ms-4">
+                    <p class="heading mb-0"><b>Category</b></p>
+                    <p-dropdown class="m-0" [options]="_categoryList" [(ngModel)]="_categoryList.category_description"
+                        optionLabel="category_description" [autoDisplayFirst]="true" appendTo="body"
+                        placeholder="Category" (onChange)="tabSelection($event)">
+                    </p-dropdown>
+                    <!-- <div class="radioBox mt-2">
+                        <div class="flex-vc gap-4">
+                            <div class="flex-vc field-radiobutton" *ngFor="let item of _fixtureFormat">
+                                <p-radioButton name="participantType" [value]="item" [(ngModel)]="_fixtureFormat[0]"
+                                    [inputId]="item.key"></p-radioButton>
+                                <label for="city1">{{item.name}}</label>
+                            </div>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="centerElement">
+        <div class="category">
+            <div class="radioBox mt-2">
+                <div class="flex-vc gap-4">
+                    <div class="flex-vc field-radiobutton" *ngFor="let item of _fixtureFormat">
+                        <p-radioButton name="participantType" [value]="item" [(ngModel)]="_fixtureFormat[0]"
+                            [inputId]="item.key"></p-radioButton>
+                        <label for="city1">{{item.name}}</label>
+                    </div>
+                </div>
+            </div>
+            <!-- <p class="heading mb-0"><b class="">Category</b></p> -->
+            <!-- <p-dropdown class="m-0" [options]="_categoryList" [(ngModel)]="_currentCategoryId"
+                optionLabel="category_description" [autoDisplayFirst]="true" appendTo="body" placeholder="category"
+                (onChange)="tabSelection($event)">
+            </p-dropdown> -->
+            <!-- <div class="common-tabView mt-3">
+                <p-tabView (onChange)="tabSelection($event)">
+                    <p-tabPanel *ngFor="let item of _categoryList" [header]="item.category_description">
+                        <div class="innerContent mt-3">
+                            <div class="topBar">
+                                <div class="flex-sb flex-vc">
+
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div> -->
+        </div>
+    </div>
+    <div *ngIf="_isAPICompleted">
+        <div *ngIf="this._selectedFixtureFormat=='Group-PlayOff'">
+            <stupa-viewer-grp-play-off *ngIf="this._categoryList.length>0"
+                [_currentParticipantId]="_currentParticipantId" [_currentCategoryId]="_currentCategoryId"
+                [totalPlayer]="_totalPlayer"></stupa-viewer-grp-play-off>
+        </div>
+        <div *ngIf="this._selectedFixtureFormat=='Knockout'">
+            <stupa-viewer-knockout [_currentParticipantId]="_currentParticipantId"
+                [_currentCategoryId]="_currentCategoryId" [totalPlayer]="_totalPlayer"></stupa-viewer-knockout>
+        </div>
+        <div *ngIf="this._selectedFixtureFormat=='Round-Robin'">
+            <stupa-viewer-round-robin *ngIf="this._categoryList.length>0"
+                [_currentParticipantId]="_currentParticipantId" [_currentCategoryId]="_currentCategoryId"
+                [totalPlayer]="_totalPlayer" [_fixtureFormat]="_fixtureFormat"
+                [_tabIndex]="_tabIndex"></stupa-viewer-round-robin>
+        </div>
+    </div>
+</div>

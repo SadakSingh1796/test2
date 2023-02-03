@@ -1,0 +1,155 @@
+<div class="container-xxl mt-3">
+    <div class="flex-e my-2">
+        <a class="p-green p-links" (click)="_showFull = true" *ngIf="!_showFull">Hide</a>
+        <a class="p-green p-links" (click)="_showFull = false" *ngIf="_showFull">Show Controller</a>
+    </div>
+    <section class="firsScreen">
+        <div *ngIf="!_showFull" class="topBar">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="greyBox">
+                        <div class="empty h-100">
+                            <div class="row flex-vc h-100">
+                                <div class="col-5">
+                                    <img width="150" src="../../../../assets/icons/svg/empty.svg" alt="">
+                                </div>
+                                <div class="col-7">
+                                    <p class="p-small p-secondary lineSpace">If you have any problem in creating
+                                        fixture you
+                                        can contact our support. Reach out to us at support@stupaanalytics.com
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="greyBox">
+                        <div class="header mb-2">
+                            <div class="flex-sb flex-vc">
+                                <div class="leftSection">
+                                    <div class="flex-vc">
+                                        <p>Total Number of player in this category are </p>
+                                        <p class="p-combine ms-2">{{_topPlayers.length}}</p>
+                                    </div>
+                                </div>
+                                <div class="right-eventHandler flex-vc">
+                                    <div class="iconBox">
+                                        <i class="i-small p-green pi pi-eye"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="divider m-0">
+                        <div class="innerContent">
+                            <div class="detail-input mt-4">
+                                <!-- <p-dropdown appendTo="body" placeholder="Fixture of 8" [optionLabel]="'name'">
+                                </p-dropdown> -->
+                            </div>
+                            <div class="mt-4">
+                                <button *ngIf="_arrangePlayer.length==0" (click)="generateFixtures()"
+                                    class="btn btn_green btnDone w-100">
+                                    Create Fixture
+                                </button>
+                                <button *ngIf="_arrangePlayer.length!=0" class="btn btn-danger m-0 w-100"
+                                    (click)="deleteFixture()">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="centerElement mt-4">
+
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="topButs my-3 p-links">
+                        <div class="gap-4 flex-vc p-links">
+                            <button pTooltip="Save fixture to create matches." *ngIf="_arrangePlayer.length!=0"
+                                (click)="saveCustomizedFixture()" class="btn btn_green btnDone m-0 p-links">Save
+                                Fixture</button>
+                            <button
+                                pTooltip="Just save if you want matches between players in same order as displayed below. Otherwise drag and drop to create customized fixture."
+                                *ngIf="_arrangePlayer.length!=0" (click)="justSaveKnockout()"
+                                class="btn btn_green btnDone m-0 p-links">Just Save</button>
+                        </div>
+                    </div>
+
+                    <div class="parentContainer">
+
+
+                        <div *ngFor="let item of _arrangePlayer; let position = index" appDragDropSwap
+                            [elemPosition]="position" [list]="_arrangePlayer" class="note flex-sb flex-vc"
+                            (returnUpdatedList)="returnUpdatedList($event)">
+                            <div class="col-1 absolute">
+                                <div class="flex-vc flex-hc h-100">
+                                    <p><b>{{position +1}}</b></p>
+                                </div>
+                            </div>
+                            <div class="flex-vc spec">
+                                <p-avatar class="avatar-small me-2" label="PS" shape="circle"></p-avatar>
+                                <p style="overflow: hidden;
+                                text-overflow: ellipsis;
+                                white-space: nowrap;
+                                max-width: 6rem;">{{item.participant_name}}</p>
+                            </div>
+                            <div class="flex-e dropdownIcon me-2">
+                                <p class="p-combine">Points: {{item.points==null?0:item.points}}</p>
+                                <i pTooltip={{item.state}} class="pi pi-info-circle p-secondary ms-2 p-links"
+                                    tooltipPosition="right"></i>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-lg-6">
+                    <div class="bottomBox greyBox">
+                        <div *ngIf="_arrangePlayer.length !== 0;else emptyBox2">
+                            <p-table class="common-table text-center" [value]="_arrangePlayer">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>State</th>
+                                        <th>Club</th>
+                                        <th>Point</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-player>
+                                    <tr>
+                                        <td>{{ player.participant_name }}</td>
+                                        <td>{{player.state}}</td>
+                                        <td>{{player.club}}</td>
+                                        <td>{{player.points==null?0:player.points}}</td>
+                                        <td>{{player.email}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                    <ng-template #emptyBox2>
+                        <!-- <div class="player-empty greyBox">
+                            <div class="innerContent h-100 flex-hc flex-vc">
+                                <div class="m-3">
+                                    <img src="../../../../assets/icons/svg/fixure_noPlayer.svg" width="200" alt="">
+                                </div>
+                                <p class="text-center p-secondary">No player left!</p>
+                            </div>
+                        </div> -->
+                    </ng-template>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+</div>
+<p-toast position="bottom-center" key="bc"></p-toast>
+<stupa-gif-loader *ngIf="_showLoader"></stupa-gif-loader>

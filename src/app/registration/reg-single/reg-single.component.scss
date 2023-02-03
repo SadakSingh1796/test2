@@ -1,0 +1,21 @@
+.registration-common-row {
+    .common-list {
+        .playerInfo {
+            max-width: 150px;
+        }
+        .checkbox-chain {
+            width: 100%;
+            .flexBase {
+                width: 100% !important;
+                .field-checkbox {
+                    width: 100px;
+                }
+            }
+        }
+    }
+    .paynow {
+        margin: 30px 160px;
+    }
+}
+
+

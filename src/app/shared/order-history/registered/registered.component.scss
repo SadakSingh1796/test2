@@ -1,0 +1,16 @@
+.common-dialog {
+    .common-list {
+        .playerInfo {
+            max-width: 150px;
+        }
+        .checkbox-chain {
+            width: 100%;
+            .flexBase {
+                width: 100% !important;
+                .field-checkbox {
+                    width: 100px;
+                }
+            }
+        }
+    }
+}

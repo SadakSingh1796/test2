@@ -1,0 +1,265 @@
+<div class="container-xxl mt-3">
+    <section class="firsScreen" *ngIf="_isAllAPIExcecuted && !_showTree">
+        <div class="topBar">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="greyBox">
+                        <div *ngIf="_topPlayers.length !==0;else emptyBox">
+                            <div class="header mb-2">
+                                <div class="flex-sb flex-vc ">
+                                    <div class="leftSection">
+                                        <div class="flex-vc">
+                                            <p>Number of players sent to Main Draw</p>
+                                            <p class="ms-2">0</p>
+                                        </div>
+                                    </div>
+                                    <div class="right-eventHandler flex-vc">
+                                        <div class="iconBox">
+                                            <i class="i-small p-green pi pi-eye"></i>
+                                        </div>
+                                        <div class="iconBox">
+                                            <i class="i-small p-green pi pi-user-plus"></i>
+                                        </div>
+                                        <div class="iconBox">
+                                            <svg width="8" hight="8" viewBox="0 0 9 12" fill="none"
+                                                xmlns="http://www.w3.org/2000/svg">
+                                                <path
+                                                    d="M1.16565 6.30964C1.07629 5.14805 1.99473 4.15625 3.15975 4.15625H6.2092C7.37422 4.15625 8.29266 5.14805 8.20331 6.30964L7.98465 9.15225C7.90449 10.1942 7.03561 10.9989 5.99054 10.9989H3.37841C2.33334 10.9989 1.46446 10.1942 1.38431 9.15224L1.16565 6.30964Z"
+                                                    stroke="#CA0D0D" />
+                                                <path d="M7.84262 2.58594H1.52637" stroke="#CA0D0D"
+                                                    stroke-linecap="round" />
+                                                <path
+                                                    d="M3.63184 2C3.63184 1.44771 4.07955 1 4.63184 1H4.73725C5.28954 1 5.73725 1.44772 5.73725 2V2.57906H3.63184V2Z"
+                                                    stroke="#CA0D0D" />
+                                                <path d="M5.7373 6.25781V8.88958" stroke="#CA0D0D"
+                                                    stroke-linecap="round" />
+                                                <path d="M3.63184 6.25781V8.88958" stroke="#CA0D0D"
+                                                    stroke-linecap="round" />
+                                            </svg>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="divider m-0">
+                            <div class="innerContent">
+                                <p-table class="common-table text-center" [value]="_topPlayers">
+                                    <ng-template pTemplate="header">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>State</th>
+                                            <th>Club</th>
+                                            <th>Point</th>
+                                            <th>Email</th>
+                                            <th></th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-player>
+                                        <tr>
+                                            <td>{{player.name}}</td>
+                                            <td>{{player.state}}</td>
+                                            <td>{{player.point}}</td>
+                                            <td>{{player.email}}</td>
+                                            <td></td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <ng-template #emptyBox>
+                            <div class="empty h-100">
+                                <div class="row flex-vc h-100">
+                                    <div class="col-5">
+                                        <img width="150" src="../../../../assets/icons/svg/empty.svg" alt="">
+                                    </div>
+                                    <div class="col-7">
+                                        <p class="p-small p-secondary lineSpace">If you have any problem in creating
+                                            fixture you
+                                            can contact our support. Reach out to us at support@stupaanalytics.com
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="greyBox">
+                        <div class="header mb-2">
+                            <div class="flex-sb flex-vc">
+                                <div class="leftSection">
+                                    <div class="flex-vc">
+                                        <p>Total Number of player in this category are </p>
+                                        <p class="p-combine ms-2">0</p>
+                                    </div>
+                                </div>
+                                <div class="right-eventHandler flex-vc">
+                                    <div class="iconBox">
+                                        <i class="i-small p-green pi pi-eye"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr class="divider m-0">
+                        <div class="innerContent">
+                            <div class="detail-input mt-4">
+                                <p-dropdown appendTo="body" [options]="_fixture" [optionLabel]="'name'"
+                                    placeholder="Fixture Number">
+                                </p-dropdown>
+                            </div>
+                            <div class="mt-4">
+                                <button class="btn btn-danger m-0 w-100">
+                                    Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="centerElement mt-4">
+            <div class="flex-vc gap-4">
+                <button class="btn btn_green btnDone m-0" (click)="generateCustomeKO()">Save Changes</button>
+                <button class="btn btn_green btnDone m-0" (click)="saveAsBefore()">Save As Before</button>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="card-column">
+                        <div class="row mt-2" *ngFor="let item of _arrangePlayer; let i = index" appDragDropSwap
+                            [elemPosition]="i" [list]="_arrangePlayer" (returnUpdatedList)="returnUpdatedList($event)">
+                            <div class="col-1">
+                                <div class="flex-vc flex-hc h-100">
+                                    <p><b>{{i +1}}</b></p>
+                                </div>
+                            </div>
+                            <div class="col-7">
+                                <div class="card px-2 py-2">
+                                    <!-- <p class="card-heading p-small p-green">{{item.club}}</p> -->
+                                    <div class="flex-sb flex-vc my-2">
+                                        <div class="flex-vc">
+                                            <p-avatar class="avatar-small" label="PS" shape="circle"></p-avatar>
+                                            <p class="name p-secondary-dark ms-2">{{item.participant_name}}</p>
+                                        </div>
+                                        <div class="dropdownIcon me-2" *ngIf="false">
+                                            <p-overlayPanel #menuPopup [showCloseIcon]="false"
+                                                [style]="{height: '80px'}">
+                                                <ng-template pTemplate>
+                                                    <div class="common-popup">
+                                                        <div class="innerContent">
+                                                            <a class="p-links no-line"
+                                                                (click)="swapPlayer.show($event)">Swap
+                                                                player with
+                                                                another</a>
+                                                            <hr class="m-0">
+                                                            <a class="p-links no-line">Remove</a>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-overlayPanel>
+                                            <p-overlayPanel #swapPlayer [showCloseIcon]="false"
+                                                [style]="{width:'300px'}">
+                                                <ng-template pTemplate>
+                                                    <div class="common-popup">
+                                                        <div class="innerContent">
+                                                            <div class="topBar flex-sb flex-vc">
+                                                                <p class="p-green"><b>Swap With..</b></p>
+                                                                <i class="pi pi-times-circle p-combine p-links"
+                                                                    (click)="swapPlayer.hide()"></i>
+                                                            </div>
+                                                            <hr class="m-0">
+                                                            <div class="rest-players">
+                                                                <div class="player-list flex-vc"
+                                                                    *ngFor="let item of _arrangePlayer">
+                                                                    <p-avatar class="avatar-small" label="PS"
+                                                                        shape="circle"></p-avatar>
+                                                                    <p class="p-secondary-dark ms-2">
+                                                                        {{item.participant_name}}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </ng-template>
+                                            </p-overlayPanel>
+                                            <button (click)="menuPopup.toggle($event)" pButton pRipple
+                                                icon="pi pi-ellipsis-v"
+                                                class="p-button-plain p-button-text p-button-rounded"></button>
+                                        </div>
+                                    </div>
+                                    <div class="row ">
+                                        <div class="col-5">
+                                            <!-- <p class="state p-secondary">{{item.state}}</p> -->
+                                        </div>
+                                        <div class="col-7">
+                                            <p class="points p-combine">{{item.points==null?0:item.points}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="bottomBox greyBox">
+                        <div *ngIf="_arrangePlayer.length !== 0;else emptyBox2">
+                            <p-table class="common-table text-center" [value]="_arrangePlayer">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>State</th>
+                                        <th>Club</th>
+                                        <th>Point</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-player>
+                                    <tr>
+                                        <td>{{ player.participant_name }}</td>
+                                        <td>{{player.state}}</td>
+                                        <td>{{player.club}}</td>
+                                        <td>{{player.points==null?0:player.points}}</td>
+                                        <td>{{player.email}}</td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </div>
+                    <ng-template #emptyBox2>
+                        <div class="player-empty greyBox">
+                            <div class="innerContent h-100 flex-hc flex-vc">
+                                <div class="m-3">
+                                    <img src="../../../../assets/icons/svg/fixure_noPlayer.svg" width="200" alt="">
+                                </div>
+                                <p class="text-center p-secondary">No player left!</p>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </div>
+
+        </div>
+    </section>
+    <section class="secondScreen" *ngIf="_isAllAPIExcecuted && _showTree">
+        <ng-container *ngIf="true">
+            <!-- <div class="fixture-header" *ngIf="singleEliminationTournament">
+            <div *ngFor="let round of singleEliminationTournament.rounds" class="round-name">
+                <div>
+                    {{ round.roundName }}
+                </div>
+            </div>
+        </div> -->
+            <stupa-fix-single-tree [tournament]="singleEliminationTournament" *ngIf="singleEliminationTournament"
+                [matchTemplate]="matchTemplate"></stupa-fix-single-tree>
+        </ng-container>
+        <!-- <ng-container *ngIf="renderedTree === 'de'">
+
+        <ngtt-double-elimination-tree [tournament]="doubleEliminationTournament"
+            [matchTemplate]="matchTemplate"></ngtt-double-elimination-tree>
+    </ng-container> -->
+
+        <ng-template #matchTemplate let-match let-index="i" let-round="winnersBracket">
+            <stupa-match [fillList]="singleEliminationTournament" [match]="match" [index]="index" [parentIndex]="index"
+                [round]="round" (updatedPullList)="updatedPullList($event)"></stupa-match>
+        </ng-template>
+    </section>
+    <!-- <stupa-drag-drop-fixture></stupa-drag-drop-fixture> -->
+
+</div>
