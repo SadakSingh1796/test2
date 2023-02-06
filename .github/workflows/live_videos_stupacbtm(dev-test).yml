@@ -52,5 +52,5 @@ jobs:
         with:
           app-name: 'stupacbtm'
           slot-name: 'dev-test'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_DCE67009568C4F7BA5C3C87F53EDDD59 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_269A91AE33F744EDBD1364DD8CA021F2 }}
           package: .
